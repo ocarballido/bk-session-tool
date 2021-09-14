@@ -1,18 +1,18 @@
 {
-  "name": "bootstrap5-webpack-boilerplate",
+  "name": "bkool-scheduled-sessions-manager",
   "version": "1.0.1",
-  "description": "A simple boilerplate using Bootstrap 5, Webpack and Babel.",
+  "description": "Manage BKOOL scheduled sessions.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "webpack --config webpack.config.js --mode development --watch",
     "images": "node ./bin/images.js"
   },
-  "author": "Dominik Hanke",
+  "author": "Oscar Carballido",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/noreading/bootstrap5-webpack-boilerplate.git"
+    "url": "git@github.com:ocarballido/bk-session-tool.git"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
