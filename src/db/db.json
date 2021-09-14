@@ -1,0 +1,28 @@
+{
+    "clientes": [
+        {
+            "id": "1",
+            "userId": "b949a83a-6de6-4787-808e-12c8951afb41",
+            "profileId": "string",
+            "sessionId": "9e16-5c4098382883-69e11a7c-be9d-45cd",
+            "eventId": "GIV2021",
+            "roundsDefinition": [
+                {
+                    "startDate": "2016-05-18T16:00:00.000Z",
+                    "featuredUserIds": [
+                        "b949a83a-6de6-4787-808e-12c8951afb41"
+                    ]
+                }
+            ],
+            "maxUsers": 150,
+            "rules": "COMPETITIVE",
+            "isRealWeather": true,
+            "launchOptions": {
+                "maxInstances": 3,
+                "maxSeconds": 300
+            },
+            "warmupSeconds": 600,
+            "mainPartMinSeconds": 300
+        }
+    ]
+}
