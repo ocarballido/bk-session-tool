@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -74,6 +75,11 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "css/[name].css",
             chunkFilename: "[id].css"
+        }),
+
+        new HtmlWebpackPlugin({
+            title: 'Bootstrap 5 & WebPack 5 Boilerplate',
+            template: 'src/index.html'
         }),
     ],
 };

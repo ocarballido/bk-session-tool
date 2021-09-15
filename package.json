@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "dev": "webpack --config webpack.config.js --mode development --watch",
+    "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
+    "server": "json-server --watch src/db/db.json",
     "images": "node ./bin/images.js"
   },
   "author": "Oscar Carballido",
@@ -26,6 +27,8 @@
     "css-loader": "^6.0.0",
     "dotenv-webpack": "^7.0.3",
     "fast-glob": "^3.2.7",
+    "html-webpack-plugin": "^5.3.2",
+    "json-server": "^0.16.3",
     "mime-types": "^2.1.32",
     "mini-css-extract-plugin": "^2.2.0",
     "node-sass": "^6.0.1",
@@ -38,7 +41,8 @@
     "style-loader": "^3.2.1",
     "trash": "^7.1.1",
     "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0"
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4"
