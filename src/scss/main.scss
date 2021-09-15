@@ -12,9 +12,11 @@
 // 1. Basics
 //---------------------------------------------
 
-@import "variables";
-@import "bootstrap";
-@import "fonts";
+// @import "variables";
+// @import "bootstrap";
+// @import "fonts";
+@import "bkool-variables";
+@import "bootstrap-general";
 
 //---------------------------------------------
 // 2. Page Layout
@@ -27,4 +29,5 @@ body {
 // 3.Components
 //---------------------------------------------
 
-@import "components/slider";
+// @import "components/slider";
+@import "components/bkool-alert";

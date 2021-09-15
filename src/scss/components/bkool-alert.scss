@@ -1,0 +1,45 @@
+// @each $color, $value in $theme-colors {
+// 	.alert-#{$color} {
+// 		//border-color: darken($value, 10);
+// 	}
+// }
+.alert {
+	font-family: "HKGrotesk-Medium";
+	margin-left: auto;
+	margin-right: auto;
+	&.alert-primary {
+		color: $dark;
+		.alert-link {
+			color: $dark;
+		}
+	}
+	&.alert-light {
+		color: $dark;
+		.alert-link {
+			color: $dark;
+		}
+	}
+	&.alert-lighter {
+		color: $dark;
+		.alert-link {
+			color: $dark;
+		}
+	}
+	&.alert-white {
+		color: $dark;
+		.alert-link {
+			color: $dark;
+		}
+	}
+	.alert-link {
+		color: inherit;
+		text-decoration: underline;
+	}
+	&.alert-dismissible {
+		.close {
+			padding: 0.1rem;
+			right: .5rem;
+			top: .5rem;
+		}
+	}
+}
