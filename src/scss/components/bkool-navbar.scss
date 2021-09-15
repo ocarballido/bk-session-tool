@@ -1,0 +1,104 @@
+nav.navbar {
+	.navbar-brand {
+		&:hover {
+			img.logo-light {
+				filter: invert(0.24) sepia(1) saturate(4) hue-rotate(360deg) brightness(0.98);
+			}
+		}
+	}
+}
+
+.navbar-dark {
+	.navbar-nav {
+		.nav-link {
+			color: $white;
+			&:hover {
+				color: $primary;
+			}
+		}
+		.active {
+			& > .nav-link {
+				color: $primary;
+			}
+		}
+	}
+}
+
+.nav-link {
+	font-family: "HKGrotesk-Medium";
+	&.btn {
+		padding-left: 1.5rem !important;
+		padding-right: 1.5rem !important;
+	}
+}
+
+.navbar-collapse {
+	&.show {
+		.dropdown, .btn-group {
+			.dropdown-menu {
+				box-shadow: none;
+			}
+		}
+	}
+}
+
+.dropdown-language.dropdown {
+	.dropdown-menu {
+		a {
+			background-image: url("../images/icons/flags/flag-france.svg");
+			background-position: .8rem .7rem;
+			background-repeat: no-repeat;
+			background-size: 1rem 1rem;
+			padding-left: 2.3rem;
+			&[hreflang="es"] {
+				background-image: url("../images/icons/flags/flag-spain.svg");
+			}
+			&[hreflang="en"] {
+				background-image: url("../images/icons/flags/flag-uk.svg");
+			}
+			&[hreflang="de"] {
+				background-image: url("../images/icons/flags/flag-gernamny.svg");
+			}
+			&[hreflang="fr"] {
+				background-image: url("../images/icons/flags/flag-france.svg");
+			}
+			&[hreflang="it"] {
+				background-image: url("../images/icons/flags/flag-italy.svg");
+			}
+		}
+	}
+}
+
+.navbar-toggler {
+	background-color: $white;
+	border: 2px solid $white !important;
+	color: $dark !important;
+	border-radius: 50%;
+	font-size: 24px;
+	padding: .5rem .5rem;
+	&:hover {
+		background-color: $white !important;
+	}
+}
+
+.get-fixed, .sticky-header {
+	@include transition();
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1001;
+}
+.get-shadowed {
+	@include transition();
+	box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 992px) {
+	.navbar {
+		.pages-labels {
+			.nav-item {
+				margin: 0 .5rem;
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+.page-link {
+	@include transition();
+	border-radius: $pagination-border-radius;
+	font-family: "HKGrotesk-Medium";
+}
+.page-item {
+	&.disabled {
+		opacity: .25;
+	}
+}

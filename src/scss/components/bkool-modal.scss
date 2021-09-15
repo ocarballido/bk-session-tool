@@ -1,0 +1,64 @@
+.modal-header {
+	.close {
+		margin: inherit;
+		padding: unset;
+		&.btn-icon {
+			border-radius: 50%;
+			padding-left: .5rem;
+			padding-right: .5rem;
+			&.btn-sm {
+				padding: $input-btn-padding-y-sm 0.16rem;
+			}
+			&.btn-lg {
+				padding: $input-btn-padding-y-lg 0.16rem;
+			}
+		}
+	}
+}
+
+.modal-content {
+	box-shadow: $modal-content-box-shadow-xs;
+}
+
+.modal-dialog.modal-full-width {
+	max-width: 100%;
+}
+.modal-dialog.modal-video {
+	margin: 0;
+	max-width: 100%;
+	.modal-body {
+		padding: 0;
+	}
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	.modal-xl {
+		max-width: 800px;
+		width: 90%;
+	}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+	.modal-xl {
+		max-width: 800px;
+		width: 90%;
+	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+	.modal-xl {
+		max-width: 800px;
+		width: 90%;
+	}
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+	.modal-xl {
+		max-width: 1200px;
+		width: 90%;
+	}
+}

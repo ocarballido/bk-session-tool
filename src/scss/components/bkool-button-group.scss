@@ -1,0 +1,19 @@
+.btn-group-toggle {
+	.btn {
+		&:hover {
+			cursor: pointer;
+		}
+		&.active {
+			pointer-events: none;
+		}
+	}
+	&.btn-group-toggle-filter {
+		.btn-white {
+			&.active {
+				background-color: $dark !important;
+				border-radius: $border-radius;
+				color: $white;
+			}
+		}
+	}
+}

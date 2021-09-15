@@ -1,0 +1,199 @@
+.form-control {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	padding: $input-padding-y 0;
+	&:disabled,
+	&[readonly] {
+		background-color: $input-disabled-bg;
+		opacity: .4;
+	}
+	&::placeholder {
+		color: $input-placeholder-color;
+		font-size: $input-font-size;
+		opacity: 1;
+	}
+	&:focus, &.focus {
+		box-shadow: none;
+		&::placeholder {
+			opacity: 0;
+		}
+	}
+	&.is-invalid {
+		&:focus {
+			box-shadow: none;
+		}
+		background-image: none;
+		background-position: right;
+		background-size: 24px;
+	}
+	&.is-valid {
+		&:focus {
+			box-shadow: none;
+		}
+		background: none;
+	}
+	&[type="range"] {
+		border: none;
+	}
+}
+
+.was-validated .form-control:invalid {
+	&:focus {
+		box-shadow: none;
+	}
+	background-image: none;
+	background-position: right;
+	background-size: 24px;
+}
+
+.was-validated .form-control:valid {
+	&:focus {
+		box-shadow: none;
+	}
+	background: none;
+}
+
+label {
+	color: $gray-500;
+	font-family: "HKGrotesk-Medium";
+}
+input:-internal-autofill-selected {
+	background-color: white !important;
+}
+
+// New text field
+.label-active {
+	font-size: 12px;
+	line-height: 20px;
+	top: 8px;
+	padding: 0;
+	left: 1rem;
+}
+.floating-label {
+	display: block;
+	padding: 0;
+	position: relative;
+	input.form-control, textarea.form-control, .custom-select {
+		background-color: transparent !important;
+		border: 1px solid rgba(32, 32, 32, .2);
+		border-radius: 5px !important;
+		height: calc(1.5em + 1.5rem + 10px);
+		padding: 1.75rem 1rem .5rem;
+		width: 100%;
+		&:focus + label {
+			@extend .label-active;
+		}
+		&:not(:placeholder-shown) ~ label {
+			@extend .label-active;
+		}
+		&:focus {
+			border: 2px solid rgba(32, 32, 32, 1);
+			padding-left: calc(1rem - 1px);
+			box-shadow: none;
+			outline: none;
+		}
+		&:hover {
+			border-color: $secondary;
+		}
+		&:disabled {
+			background-color: $lighter !important;
+			border-color: rgba(32, 32, 32, .2);
+			& + label {
+				color: rgba(32, 32, 32, .2);
+			}
+		}
+		&::placeholder {
+			color: transparent;
+		}
+		&.is-invalid {
+			background-image: none;
+			border: 2px solid $danger;
+			padding-left: calc(1rem - 1px);
+			&:focus {
+				border-bottom-color: $danger;
+			}
+		}
+	}
+	.custom-select {
+		background-image: url("../../images/icons/icon-expand-more.svg") !important;
+		background-repeat: no-repeat;
+		background-size: 24px 24px;
+		background-position: right 8px center;
+		appearance: none;
+		padding-bottom: .3rem;
+		&.is-valid {
+			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
+			background-position: right 8px center;
+
+		}
+		&:valid {
+			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
+			background-position: right 8px center;
+
+		}
+		&.is-invalid {
+			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
+			background-position: right 8px center;
+
+		}
+		&:focus {
+			padding-bottom: 0;
+			padding-top: 1.5rem;
+		}
+	}
+	textarea {
+		height: auto !important;
+	}
+	label {
+		color: rgba(32, 32, 32, .4);
+		font-size: 1rem;
+		left: 1rem;
+		line-height: 56px;
+		margin-bottom: 0;
+		position: absolute;
+		top: 1px;
+		transition: 200ms all;
+		z-index: 6;
+	}
+	.input-group-append {
+		// display: block;
+		align-items: center;
+		height: 56px;
+		position: absolute;
+		top: 1px;
+		right: 6px;
+		z-index: 3;
+		.btn {
+			border-radius: $border-radius;
+			&.btn-icon {
+				border-radius: 50%;
+				height: 44px;
+			}
+		}
+	}
+}
+.form-row {
+	.form-group.floating-label {
+		.label-active {
+			left: 24px;
+		}
+		label {
+			left: 24px;
+		}
+	}
+	.input-group.floating-label {
+		.label-active {
+			left: 16px;
+		}
+		label {
+			left: 16px;
+		}
+	}
+}

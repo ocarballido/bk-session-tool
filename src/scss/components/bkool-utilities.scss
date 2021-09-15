@@ -1,0 +1,68 @@
+// Divider
+.vertical-divider {
+	width: 1px;
+}
+.horizontal-divider {
+	height: 1px;
+}
+
+// Border rounded
+.rounded {
+	border-radius: $card-border-radius !important;
+}
+
+.rounded-top {
+	border-top-left-radius: $card-border-radius !important;
+	border-top-right-radius: $card-border-radius !important;
+}
+
+.rounded-right {
+	border-top-right-radius: $card-border-radius !important;
+	border-bottom-right-radius: $card-border-radius !important;
+}
+
+.rounded-bottom {
+	border-bottom-right-radius: $card-border-radius !important;
+	border-bottom-left-radius: $card-border-radius !important;
+}
+
+.rounded-left {
+	border-top-left-radius: $card-border-radius !important;
+	border-bottom-left-radius: $card-border-radius !important;
+}
+
+// Help bubble
+#help-bubble {
+	bottom: 30px;
+	box-shadow: 0 15px 20px rgba(0, 0, 0, .15);
+	position: fixed;
+	right: 30px;
+	width: 300px;
+	z-index: 9999;
+}
+
+.text-gothic {
+	font-family: "HKGothic-Medium";
+}
+.text-grotesk {
+	font-family: "HKGrotesk-Medium";
+}
+.font-weight-bold {
+	font-family: "HKGrotesk-Bold";
+}
+
+// Opacity
+@for $i from 0 through 9 {
+	.opacity-#{$i} {
+		opacity: #{$i * 0.1};
+	}
+}
+
+// Darken
+@for $i from 0 through 9 {
+	@each $color, $value in $theme-colors {
+		.darken-#{$i} {
+			background-color: darken($value, 10%);
+		}
+	}
+}
