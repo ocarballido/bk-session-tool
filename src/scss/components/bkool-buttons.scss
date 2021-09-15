@@ -1,0 +1,317 @@
+// BKOOL BUTTONS
+$gray-50: 						#f5f5f5 !default;
+
+.btn {
+	font-family: "HKGrotesk-Medium";
+	&.btn-primary {
+		color: $black;
+		&:hover, &:active, &.active {
+			background-color: darken($primary, 12%) !important;
+		}
+	}
+	&.btn-secondary, &.btn-outline-secondary {
+		&:hover, &:active, &.active {
+			color: $primary !important;
+		}
+	}
+	&:focus {
+		box-shadow: none !important;
+	}
+	&.active, &:active {
+		border-color: transparent !important;
+	}
+	&.btn-pill {
+		border-radius: 100px;
+	}
+	&:hover {
+		border-color: transparent;
+	}
+	&.btn-text-icon {
+		span[class^="icon-"] {
+			margin-left: .25rem;
+		}
+	}
+	&.btn-warning {
+		color: $white;
+		&:active, &.active {
+			color: $white !important;
+		}
+	}
+	&.btn-light {
+		&:hover {
+			background-color: $gray-200 !important;
+		}
+		&.active, &:active {
+			background-color: $gray-200 !important;
+		}
+	}
+	&.btn-lighter {
+		&:hover {
+			background-color: $gray-100 !important;
+		}
+		&.active, &:active {
+			background-color: $gray-100 !important;
+		}
+	}
+	&.btn-white {
+		&:hover {
+			background-color: darken($white, 5%) !important;
+		}
+		&.active, &:active {
+			background-color: darken($white, 5%) !important;
+		}
+	}
+	&.btn-link {
+		border-bottom: 2px solid;
+		border-bottom-color: $primary;
+		color: $primary;
+		padding-left: 0;
+		padding-right: 0;
+		span[class^="icon-"] {
+			margin-left: .5rem;
+		}
+		&:hover {
+			//border-bottom: 2px solid;
+			//color: #ecdd0e;
+			color: darken($primary, 15%);
+			text-decoration: none;
+		}
+		&:active {
+			border-bottom-color: $dark !important;
+		}
+		&.focus, &:focus {
+			text-decoration: none;
+		}
+		&.active {
+			border-bottom: 2px solid !important;
+			color: darken($link-color, 15%);
+			//color: #ecdd0e;
+		}
+		&.text-dark {
+			&:hover {
+				color: $black !important;
+			}
+			&.active {
+				color: $black !important;
+			}
+		}
+		&.text-light {
+			&:hover {
+				color: $gray-200 !important;
+			}
+			&.active, &:active {
+				color: $gray-200 !important;
+			}
+		}
+		&.text-lighter {
+			&:hover {
+				color: $gray-100 !important;
+			}
+			&.active, &:active {
+				color: $gray-100 !important;
+			}
+		}
+		&.text-white {
+			&:hover {
+				color: $gray-50 !important;
+			}
+			&.active {
+				color: $gray-50 !important;
+			}
+		}
+		&.text-success {
+			&:hover {
+				color: #0f7142 !important;
+			}
+			&.active {
+				color: #0f7142 !important;
+			}
+		}
+		&.text-danger {
+			&:hover {
+				color: #cc1a20 !important;
+			}
+			&.active {
+				color: #cc1a20 !important;
+			}
+		}
+		&.text-warning {
+			&:hover {
+				color: #e68709 !important;
+			}
+			&.active {
+				color: #e68709 !important;
+			}
+		}
+		&.text-info {
+			&:hover {
+				color: #2487a5 !important;
+			}
+			&.active {
+				color: #2487a5 !important;
+			}
+		}
+	}
+	&.btn-icon {
+		border-radius: 50%;
+		padding-left: .5rem;
+		padding-right: .5rem;
+		&.btn-sm {
+			padding-left: 0.16rem;
+			padding-right: 0.16rem;
+		}
+		&.btn-lg {
+			padding-left: 1.2rem;
+			padding-right: 1.2rem;
+		}
+	}
+	&.btn-facebook {
+		background-color: #3b5998;
+		color: white;
+	}
+}
+
+.accordion {
+	.card {
+		box-shadow: none;
+	}
+	.card-header {
+		button {
+			&.btn-primary {
+				background-color: darken($primary, 12%);
+				border-color: darken($primary, 12%);
+				&.collapsed {
+					background-color: $primary;
+					border-color: $primary;
+				}
+				&:hover {
+					background-color: darken($primary, 12%);
+					border-color: darken($primary, 12%);
+				}
+			}
+			&.btn-secondary {
+				background-color: darken($secondary, 12%);
+				border-color: darken($secondary, 12%);
+				color: $primary;
+				&.collapsed {
+					background-color: $secondary;
+					border-color: $secondary;
+					color: $white;
+				}
+				&:hover {
+					background-color: darken($secondary, 12%);
+					border-color: darken($secondary, 12%);
+				}
+			}
+			&.collapsed {
+				span[class^="icon-"] {
+					transform: rotate(0deg);
+				}
+			}
+			span[class^="icon-"] {
+				@include transition();
+				transform: rotate(180deg);
+			}
+			&.btn-link {
+				/*@each $color, $value in $theme-colors {
+					border-bottom-color: $value;
+				}*/
+				border-bottom-color: $dark;
+				&.collapsed {
+					//border-bottom-color: $gray-50;
+					border-bottom-color: lighten($dark, 80%);
+					/*@each $color, $value in $theme-colors {
+						border-bottom-color: lighten($value, 90%);
+					}*/
+				}
+			}
+		}
+	}
+}
+.btn-block-xs {
+	width: 100%;
+}
+.btn-block-sm {
+	width: 100%;
+}
+.btn-block-md {
+	width: 100%;
+}
+.btn-block-lg {
+	width: 100%;
+}
+.btn-block-xl {
+	width: 100%;
+}
+
+.btn-outline:focus, button.focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.btn {
+	&.focus {
+		box-shadow: none !important;
+	}
+}
+
+.btn-group-toggle {
+	.btn {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+button:focus {
+	outline: none;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	.btn-block-xs {
+		width: auto;
+	}
+	.btn-block-sm {
+		width: 100%;
+	}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+	.btn-block-sm {
+		width: auto;
+	}
+	.btn-block-md {
+		width: 100%;
+	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+	.btn-block-sm {
+		width: auto;
+	}
+	.btn-block-md {
+		width: auto;
+	}
+	.btn-block-lg {
+		width: 100%;
+	}
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+	.btn-block-sm {
+		width: auto;
+	}
+	.btn-block-md {
+		width: auto;
+	}
+	.btn-block-lg {
+		width: auto;
+	}
+	.btn-block-xl {
+		width: 100%;
+	}
+}

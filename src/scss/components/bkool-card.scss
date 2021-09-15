@@ -1,0 +1,201 @@
+.card-session, .card-event {
+	overflow: hidden;
+	&:before {
+		//bottom: 0;
+		background: -moz-linear-gradient(top, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.85) 100%);
+		background: -webkit-linear-gradient(top, rgba(0,0,0,0.25) 40%,rgba(0,0,0,0.85) 100%);
+		background: linear-gradient(to bottom, rgba(0,0,0,0.25) 40%,rgba(0,0,0,0.85) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a202020', endColorstr='#b3202020',GradientType=0 );
+		content: "";
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+	.card-img-overlay {
+		z-index: 1;
+		.card-title {
+			font-size: 1.25rem;
+		}
+	}
+	.card-title {
+		font-family: "HKGothic-SemiBold";
+	}
+}
+
+.card-event {
+	overflow: hidden;
+	&:before {
+		//bottom: 0;
+		background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.7) 100%);
+		background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.7) 100%);
+		background: linear-gradient(to bottom, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.7) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a202020', endColorstr='#b3202020',GradientType=0 );
+		content: "";
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+}
+
+.card-event-light {
+	.event-image-title {
+		position: relative;
+		.card-img-overlay {
+			z-index: 2;
+		}
+		&:after {
+			//bottom: 0;
+			background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.7) 100%);
+			background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.7) 100%);
+			background: linear-gradient(to bottom, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.7) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a202020', endColorstr='#b3202020',GradientType=0 );
+			content: "";
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+}
+
+.card-steps {
+    box-shadow:
+        0 8.1px 1.5px rgba(0, 0, 0, 0.077),
+        0 18.1px 5.9px rgba(0, 0, 0, 0.089),
+        0 31px 13.7px rgba(0, 0, 0, 0.093),
+        0 48.5px 26px rgba(0, 0, 0, 0.094),
+        0 75px 45.2px rgba(0, 0, 0, 0.099)
+    ;
+	a:not([class]) {
+		color: white;
+	}
+    &:hover {
+        background-color: $primary !important;
+        color: $dark !important;
+		a:not([class]) {
+			box-shadow: inset 0 -2px 0 $dark;
+			color: $dark;
+			&:hover {
+				box-shadow: inset 0 -2px 0 $dark;
+				color: $dark;
+			}
+		}
+        .step-avatar {
+            background-color: $dark !important;
+            border-color: $primary !important;
+            color: $primary !important;
+        }
+    }
+    .step-avatar {
+        align-items: center!important;
+        border: 2px solid;
+        display: flex;
+        font-size: 1.5rem;
+        height: 4rem;
+        justify-content: center;
+        //line-height: 3.6rem;
+        margin-top: -2rem;
+        width: 4rem;
+    }
+}
+
+.card-media-asset {
+	.card-img-overlay {
+		@include transition();
+		background-color: rgba(0, 0, 0, .5);
+		opacity: 0;
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.card-promo {
+    .card-promo-headding {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-bottom: -100px;
+        padding: 4rem 1.5rem 120px;
+		position: relative;
+        .heading-content {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1000px;
+			position: relative;
+			z-index: 1;
+        }
+		&:before {
+			background-color: rgba(0, 0, 0, .6);
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 0;
+		}
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+	.session-info {
+		h3 {
+			font-size: 1.2rem;
+		}
+		h5 {
+			font-size: 1rem;
+		}
+		.card-text {
+			display: -webkit-box;
+			max-height: 72px;
+			overflow: hidden;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+		}
+	}
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+	.session-info {
+		.card-text {
+			display: -webkit-box;
+			max-height: 150px;
+			overflow: hidden;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 4;
+			-webkit-box-orient: vertical;
+		}
+	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+	.session-info {
+		.card-text {
+			display: -webkit-box;
+			max-height: 200px;
+			overflow: hidden;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 6;
+			-webkit-box-orient: vertical;
+		}
+	}
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}

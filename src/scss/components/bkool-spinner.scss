@@ -1,0 +1,40 @@
+.bkSpinner {
+	align-items: center;
+	background-color: rgba(245, 245, 245, .95);
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999999;
+	.bkSpinner-wrapper {
+		height: 46px;
+		position: relative;
+		width: 80px;
+	}
+	.spinnerPath {
+		stroke-dasharray: 150;
+		animation: dash 2.5s linear infinite;
+	}
+	#spinnerSymbolStatic {
+		left: 0;
+		position: absolute;
+		z-index: -1;
+	}
+	.spinnerText {
+		display: block;
+		font-size: 10px;
+		left: 0;
+		letter-spacing: .5px;
+		position: absolute;
+		bottom: -10px;
+		transform-origin: center;
+		width: 100%;
+	}
+}
+@keyframes dash {
+	0%		{ stroke-dashoffset: 300; }
+	100%	{ stroke-dashoffset: -300; }
+}
