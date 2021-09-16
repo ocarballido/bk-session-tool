@@ -31,7 +31,7 @@ import '../scss/main.scss';
 
 // console.log(`Hello ${process.env.HELLO}`);
 
-const host = 'http://localhost:3000';
+const host = 'http://localhost:3001';
 
 const loadClientes = () => new Promise((resolve, reject) => {
     fetch(`${host}/clientes`)
@@ -49,3 +49,5 @@ const loadClientes = () => new Promise((resolve, reject) => {
 loadClientes()
     .then(clientes => console.log(clientes))
     .catch((error) => console.log(error));
+
+console.log('sdsds');
