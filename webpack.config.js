@@ -61,6 +61,15 @@ module.exports = {
                     'sass-loader'
                 ],
             },
+            // File loader
+            {
+                test: /\.(woff(2)?|ttf|eot|otf|svg|png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            }
         ],
     },
 
