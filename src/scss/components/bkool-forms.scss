@@ -116,28 +116,28 @@ input:-internal-autofill-selected {
 		}
 	}
 	.custom-select {
-		background-image: url("../../images/icons/icon-expand-more.svg") !important;
+		/*background-image: url("../../images/icons/icon-expand-more.svg") !important;*/
 		background-repeat: no-repeat;
 		background-size: 24px 24px;
 		background-position: right 8px center;
 		appearance: none;
 		padding-bottom: .3rem;
 		&.is-valid {
-			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			/*background-image: url("../../images/icons/icon-expand-more.svg") !important;*/
 			background-repeat: no-repeat;
 			background-size: 24px 24px;
 			background-position: right 8px center;
 
 		}
 		&:valid {
-			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			/*background-image: url("../../images/icons/icon-expand-more.svg") !important;*/
 			background-repeat: no-repeat;
 			background-size: 24px 24px;
 			background-position: right 8px center;
 
 		}
 		&.is-invalid {
-			background-image: url("../../images/icons/icon-expand-more.svg") !important;
+			/*background-image: url("../../images/icons/icon-expand-more.svg") !important;*/
 			background-repeat: no-repeat;
 			background-size: 24px 24px;
 			background-position: right 8px center;

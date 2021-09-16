@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
-    "server": "json-server --watch --p3001 src/db/db.json",
+    "server": "json-server src/db/db.json --watch --p3001",
     "images": "node ./bin/images.js"
   },
   "author": "Oscar Carballido",
@@ -24,10 +24,10 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "bootstrap": "^5.1.0",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.0.0",
     "dotenv-webpack": "^7.0.3",
     "fast-glob": "^3.2.7",
-    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "json-server": "^0.16.3",
     "mime-types": "^2.1.32",
@@ -37,6 +37,7 @@
     "postcss": "^8.3.6",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
+    "resolve-url-loader": "^5.0.0-beta.1",
     "sass-loader": "^12.1.0",
     "sharp": "^0.29.0",
     "style-loader": "^3.2.1",
