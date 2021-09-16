@@ -30,3 +30,22 @@ import '../scss/main.scss';
 // loadSessions();
 
 // console.log(`Hello ${process.env.HELLO}`);
+
+const host = 'http://localhost:3000';
+
+const loadClientes = () => new Promise((resolve, reject) => {
+    fetch(`${host}/clientes`)
+        .then(response => {
+            if (response.ok) {
+                response.json()
+                    .then(clientes => resolve(clientes));
+            } else {
+                reject();
+            }
+        })
+        .catch(() => reject());
+});
+
+loadClientes()
+    .then(clientes => console.log(clientes))
+    .catch((error) => console.log(error));
