@@ -11,9 +11,12 @@
 <!-- Header -->
     <header>
         <nav class="nav-main navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">Boilerplate Inc</a>
-                <img src="../dist/images/logo/bk-symbol.png" alt="Bkool" height="60" width="60">
+            <div class="container ms-0">
+                <!-- <a class="navbar-brand" href="#">Boilerplate Inc</a> -->
+                <div class="headerLogo d-flex align-items-center">
+                    <img src="../dist/images/logo/bk-symbol.png" alt="Bkool" height="60" width="60">
+                    <p class="text-white mb-0 me-3">Session Manager</p>
+                </div>
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
@@ -25,7 +28,8 @@
                 </button>
         
                 <div class="collapse navbar-collapse" id="nav-main">
-                    <ul class="navbar-nav me-auto">
+                    <button type="button" class="btn btn-primary">Primary</button>
+                    <!-- <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">
                                 Home <span class="sr-only">(current)</span>
@@ -54,7 +58,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
             <!-- /container -->
@@ -62,7 +66,7 @@
     </header>
 <!-- /Header -->
 
-<div class="container">
+<div class="container ms-0">
     <!-- JUMBOTRON -->
     <div class="alert alert-primary" role="alert">
         A simple primary alert—check it out!
