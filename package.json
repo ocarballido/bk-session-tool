@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
-    "server": "json-server src/db/db.json --watch --p3001",
+    "server": "json-server -p3001 --watch src/db/db.json",
     "images": "node ./bin/images.js"
   },
   "author": "Oscar Carballido",
