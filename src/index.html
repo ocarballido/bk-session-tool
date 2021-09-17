@@ -8,93 +8,79 @@
 </head>
 
 <body>
-<!-- NAVBAR -->
-
-<nav class="nav-main navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Boilerplate Inc</a>
-        <img src="<%=require('../src/images/bk-symbol.png')%>" alt="Bkool" height="60" width="60">
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#nav-main"
-                aria-controls="nav-main"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="nav-main">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
-                        Home <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="#"
-                       id="navbarDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false"
-                    >
-                        Portfolio
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#html-and-css">HTML &amp; CSS</a>
-                        <a class="dropdown-item" href="#javascript">JavaScript</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#react">React</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-            </ul>
-            <form class="d-flex"
-                  action="index.html"
-                  method="GET">
-                <div class="input-group">
-                    <input class="form-control"
-                           name="q"
-                           type="search"
-                           placeholder="Search"
-                           aria-label="Search"/>
-                    <button class="input-group-btn btn btn-primary" type="submit">Search</button>
+    <!-- Header -->
+    <header>
+        <nav class="nav-main navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container ms-0">
+                <!-- <a class="navbar-brand" href="#">Boilerplate Inc</a> -->
+                <div class="headerLogo d-flex align-items-center">
+                    <img src="<%=require('../src/images/bk-symbol.png')%>" alt="Bkool" height="60" width="60">
+                    <p class="text-white mb-0 me-3">Session Manager</p>
                 </div>
-            </form>
-        </div>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#nav-main"
+                        aria-controls="nav-main"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="nav-main">
+                    <button type="button" class="btn btn-primary">Primary</button>
+                    <!-- <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                Home <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            >
+                                Portfolio
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#html-and-css">HTML &amp; CSS</a>
+                                <a class="dropdown-item" href="#javascript">JavaScript</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#react">React</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
+            <!-- /container -->
+        </nav>
+    </header>
+    <!-- /Header -->
+
+    <!-- Content -->
+    <div class="container ms-0">
+        <h1>Hello, world!</h1>
+        <p>
+            This is a jumbotron example, that is used for many websites today and shows that Bootstrap is
+            successfully
+            loadedd, using all components. Bootstrap feature will help you to create the desired layouts.
+        </p>
+        <p>
+            <a class="btn btn-primary btn-lg"
+                href="https://getbootstrap.com/docs/4.1/components/jumbotron/"
+                role="button"
+            >Learn more</a>
+        </p>
     </div>
-    <!-- /container -->
-</nav>
-
-<div class="container">
-    <!-- JUMBOTRON -->
-    <div class="alert alert-primary" role="alert">
-        A simple primary alert—check it out!
-      </div>
-    <section id="jumbotron" class="my-4">
-        <div class="bg-light p-5">
-            <h1>Hello, world!</h1>
-            <p>
-                This is a jumbotron example, that is used for many websites today and shows that Bootstrap is
-                successfully
-                loadedd, using all components. Bootstrap feature will help you to create the desired layouts.
-            </p>
-            <p>
-                <a class="btn btn-primary btn-lg"
-                   href="https://getbootstrap.com/docs/4.1/components/jumbotron/"
-                   role="button"
-                >Learn more</a>
-            </p>
-        </div>
-    </section>
-</div>
-<!-- /container -->
-
+    <!-- /Content -->
 </body>
 </html>
