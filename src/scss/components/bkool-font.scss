@@ -1,0 +1,696 @@
+@font-face {
+    font-display: swap;
+      font-family: "HKGothic-Bold";
+    src:url('../../../fonts/HKGothic/HKGothic-Bold.eot');
+    src:url('../../../fonts/HKGothic/HKGothic-Bold.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGothic/HKGothic-Bold.woff') format('woff'),
+        url("../../../fonts/HKGothic/HKGothic-Bold.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-display: swap;
+      font-family: "HKGothic-Medium";
+    src:url('../../../fonts/HKGothic/HKGothic-Medium.eot');
+    src:url('../../../fonts/HKGothic/HKGothic-Medium.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGothic/HKGothic-Medium.woff') format('woff'),
+        url("../../../fonts/HKGothic/HKGothic-Medium.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-display: swap;
+      font-family: "HKGothic-SemiBold";
+    src:url('../../../fonts/HKGothic/HKGothic-SemiBold.eot');
+    src:url('../../../fonts/HKGothic/HKGothic-SemiBold.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGothic/HKGothic-SemiBold.woff') format('woff'),
+        url("../../../fonts/HKGothic/HKGothic-SemiBold.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-display: swap;
+      font-family: "HKGrotesk-Bold";
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Bold.eot');
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Bold.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGrotesk/HKGrotesk-Bold.woff') format('woff'),
+        url("../../../fonts/HKGrotesk/HKGrotesk-Bold.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-display: swap;
+      font-family: "HKGrotesk-Medium";
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Medium.eot');
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Medium.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGrotesk/HKGrotesk-Medium.woff') format('woff'),
+        url("../../../fonts/HKGrotesk/HKGrotesk-Medium.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  @font-face {
+    font-display: swap;
+      font-family: "HKGrotesk-Regular";
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Regular.eot');
+    src:url('../../../fonts/HKGrotesk/HKGrotesk-Regular.otf') format('embedded-opentype'),
+        url('../../../fonts/HKGrotesk/HKGrotesk-Regular.woff') format('woff'),
+        url("../../../fonts/HKGrotesk/HKGrotesk-Regular.ttf") format("ttf");
+      text-rendering: optimizeLegibility;
+  }
+  
+  // ICONS
+  @font-face {
+      font-family: 'icomoon';
+      src:url('../../../fonts/icons/icomoon/icomoon.eot');
+      src:url('../../../fonts/icons/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+          url('../../../fonts/icons/icomoon/icomoon.woff') format('woff'),
+          url('../../../fonts/icons/icomoon/icomoon.ttf') format('truetype'),
+          url('../../../fonts/icons/icomoon/icomoon.svg#icomoon') format('svg');
+      font-weight: normal;
+      font-style: normal;
+  }
+  [class^="icon-"], [class*=" icon-"] {
+      /* use !important to prevent issues with browser extensions that change fonts */
+      font-family: 'icomoon' !important;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      font-size:  1.5rem; /* Default */
+      line-height: 1rem;
+      speak: none;
+      text-transform: none;
+      vertical-align: middle;
+  
+      /* Enable Ligatures ================ */
+      letter-spacing: 0;
+      -webkit-font-feature-settings: "liga";
+      -moz-font-feature-settings: "liga=1";
+      -moz-font-feature-settings: "liga";
+      -ms-font-feature-settings: "liga" 1;
+      font-feature-settings: "liga";
+      -webkit-font-variant-ligatures: discretionary-ligatures;
+      font-variant-ligatures: discretionary-ligatures;
+  
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Rules for sizing the icon. */
+  .icon-18 { font-size: 18px; }
+  .icon-24 { font-size: 24px; }
+  .icon-36 { font-size: 36px; }
+  .icon-48 { font-size: 48px; }
+  
+  /* Rules for using icons as black on a light background. */
+  .icon-dark { color: rgba(0, 0, 0, 0.54); }
+  
+  /* Rules for using icons as white on a dark background. */
+  .icon-light { color: rgba(255, 255, 255, 1); }
+  
+  .icon-add-circle:before {
+    content: "\e900";
+  }
+  .icon-add-favorite:before {
+    content: "\e901";
+  }
+  .icon-add-user:before {
+    content: "\e902";
+  }
+  .icon-add:before {
+    content: "\e903";
+  }
+  .icon-alarm:before {
+    content: "\e904";
+  }
+  .icon-alert:before {
+    content: "\e905";
+  }
+  .icon-antplus-off:before {
+    content: "\e906";
+  }
+  .icon-antplus:before {
+    content: "\e907";
+  }
+  .icon-arrow-backward:before {
+    content: "\e908";
+  }
+  .icon-arrow-downward:before {
+    content: "\e909";
+  }
+  .icon-arrow-forward:before {
+    content: "\e90a";
+  }
+  .icon-arrow-upward:before {
+    content: "\e90b";
+  }
+  .icon-bell-notification:before {
+    content: "\e90c";
+  }
+  .icon-bkool-points:before {
+    content: "\e90d";
+  }
+  .icon-bkool-trainer:before {
+    content: "\e90e";
+  }
+  .icon-bluetooth-off:before {
+    content: "\e90f";
+  }
+  .icon-bluetooth:before {
+    content: "\e910";
+  }
+  .icon-cadence-off:before {
+    content: "\e911";
+  }
+  .icon-cadence-speedometer-off:before {
+    content: "\e912";
+  }
+  .icon-cadence-speedometer:before {
+    content: "\e913";
+  }
+  .icon-cadence:before {
+    content: "\e914";
+  }
+  .icon-calendar:before {
+    content: "\e915";
+  }
+  .icon-calories:before {
+    content: "\e916";
+  }
+  .icon-camara-1:before {
+    content: "\e917";
+  }
+  .icon-camara-2:before {
+    content: "\e918";
+  }
+  .icon-camara-3:before {
+    content: "\e919";
+  }
+  .icon-camara-4:before {
+    content: "\e91a";
+  }
+  .icon-camara-back-off:before {
+    content: "\e91b";
+  }
+  .icon-camara-back:before {
+    content: "\e91c";
+  }
+  .icon-camera-off:before {
+    content: "\e91d";
+  }
+  .icon-cart-empty:before {
+    content: "\e91e";
+  }
+  .icon-cart-full:before {
+    content: "\e91f";
+  }
+  .icon-center:before {
+    content: "\e920";
+  }
+  .icon-checked-circle:before {
+    content: "\e921";
+  }
+  .icon-cheked:before {
+    content: "\e922";
+  }
+  .icon-chevron-left-circle:before {
+    content: "\e923";
+  }
+  .icon-chevron-left:before {
+    content: "\e924";
+  }
+  .icon-chevron-right-circle:before {
+    content: "\e925";
+  }
+  .icon-chevron-right:before {
+    content: "\e926";
+  }
+  .icon-chrono:before {
+    content: "\e927";
+  }
+  .icon-clone:before {
+    content: "\e928";
+  }
+  .icon-close-circle:before {
+    content: "\e929";
+  }
+  .icon-close:before {
+    content: "\e92a";
+  }
+  .icon-cloudy:before {
+    content: "\e92b";
+  }
+  .icon-conection-off:before {
+    content: "\e92c";
+  }
+  .icon-conection:before {
+    content: "\e92d";
+  }
+  .icon-contract-screen:before {
+    content: "\e92e";
+  }
+  .icon-coupon:before {
+    content: "\e92f";
+  }
+  .icon-cycling-indoor:before {
+    content: "\e930";
+  }
+  .icon-cycling-outdoor:before {
+    content: "\e931";
+  }
+  .icon-delete:before {
+    content: "\e932";
+  }
+  .icon-delivery-cart:before {
+    content: "\e933";
+  }
+  .icon-difficulty:before {
+    content: "\e934";
+  }
+  .icon-distance:before {
+    content: "\e935";
+  }
+  .icon-document:before {
+    content: "\e936";
+  }
+  .icon-dpwnload:before {
+    content: "\e937";
+  }
+  .icon-drizzle:before {
+    content: "\e938";
+  }
+  .icon-edit:before {
+    content: "\e939";
+  }
+  .icon-expad-screen:before {
+    content: "\e93a";
+  }
+  .icon-expand-less-circle:before {
+    content: "\e93b";
+  }
+  .icon-expand-less:before {
+    content: "\e93c";
+  }
+  .icon-expand-more-circle:before {
+    content: "\e93d";
+  }
+  .icon-expand-more:before {
+    content: "\e93e";
+  }
+  .icon-export:before {
+    content: "\e93f";
+  }
+  .icon-facebook:before {
+    content: "\e940";
+  }
+  .icon-filter:before {
+    content: "\e941";
+  }
+  .icon-finish:before {
+    content: "\e942";
+  }
+  .icon-fitness:before {
+    content: "\e943";
+  }
+  .icon-foggy:before {
+    content: "\e944";
+  }
+  .icon-heartrate-off:before {
+    content: "\e945";
+  }
+  .icon-heartrate:before {
+    content: "\e946";
+  }
+  .icon-heavy-rain:before {
+    content: "\e947";
+  }
+  .icon-help:before {
+    content: "\e948";
+  }
+  .icon-home:before {
+    content: "\e949";
+  }
+  .icon-icy:before {
+    content: "\e94a";
+  }
+  .icon-import:before {
+    content: "\e94b";
+  }
+  .icon-info:before {
+    content: "\e94c";
+  }
+  .icon-instagram:before {
+    content: "\e94d";
+  }
+  .icon-league:before {
+    content: "\e94e";
+  }
+  .icon-lock:before {
+    content: "\e94f";
+  }
+  .icon-logout:before {
+    content: "\e950";
+  }
+  .icon-manuals:before {
+    content: "\e951";
+  }
+  .icon-map-pin:before {
+    content: "\e952";
+  }
+  .icon-mark-off:before {
+    content: "\e953";
+  }
+  .icon-mark:before {
+    content: "\e954";
+  }
+  .icon-menu:before {
+    content: "\e955";
+  }
+  .icon-message:before {
+    content: "\e956";
+  }
+  .icon-mobile-connected:before {
+    content: "\e957";
+  }
+  .icon-mobile:before {
+    content: "\e958";
+  }
+  .icon-more-horizontal:before {
+    content: "\e959";
+  }
+  .icon-more-vertical:before {
+    content: "\e95a";
+  }
+  .icon-night-cloudy:before {
+    content: "\e95b";
+  }
+  .icon-night:before {
+    content: "\e95c";
+  }
+  .icon-open-modal_1:before {
+    content: "\e95d";
+  }
+  .icon-open-modal:before {
+    content: "\e95e";
+  }
+  .icon-opponents:before {
+    content: "\e95f";
+  }
+  .icon-order:before {
+    content: "\e960";
+  }
+  .icon-partialy-cloudy:before {
+    content: "\e961";
+  }
+  .icon-pause:before {
+    content: "\e962";
+  }
+  .icon-play:before {
+    content: "\e963";
+  }
+  .icon-power-off:before {
+    content: "\e964";
+  }
+  .icon-power:before {
+    content: "\e965";
+  }
+  .icon-premium:before {
+    content: "\e966";
+  }
+  .icon-print:before {
+    content: "\e967";
+  }
+  .icon-protected:before {
+    content: "\e968";
+  }
+  .icon-rain:before {
+    content: "\e969";
+  }
+  .icon-remove-circle:before {
+    content: "\e96a";
+  }
+  .icon-remove-favorite:before {
+    content: "\e96b";
+  }
+  .icon-remove:before {
+    content: "\e96c";
+  }
+  .icon-repeat-lap:before {
+    content: "\e96d";
+  }
+  .icon-rotate-left:before {
+    content: "\e96e";
+  }
+  .icon-rotate-right:before {
+    content: "\e96f";
+  }
+  .icon-running:before {
+    content: "\e970";
+  }
+  .icon-score-position:before {
+    content: "\e971";
+  }
+  .icon-session-3d:before {
+    content: "\e972";
+  }
+  .icon-session-gps:before {
+    content: "\e973";
+  }
+  .icon-session-group:before {
+    content: "\e974";
+  }
+  .icon-session-velodrome:before {
+    content: "\e975";
+  }
+  .icon-session-video:before {
+    content: "\e976";
+  }
+  .icon-session:before {
+    content: "\e977";
+  }
+  .icon-share:before {
+    content: "\e978";
+  }
+  .icon-show-off:before {
+    content: "\e979";
+  }
+  .icon-show:before {
+    content: "\e97a";
+  }
+  .icon-simulator-cycling:before {
+    content: "\e97b";
+  }
+  .icon-slope:before {
+    content: "\e97c";
+  }
+  .icon-snow:before {
+    content: "\e97d";
+  }
+  .icon-sound-off:before {
+    content: "\e97e";
+  }
+  .icon-sound:before {
+    content: "\e97f";
+  }
+  .icon-speedometer-off:before {
+    content: "\e980";
+  }
+  .icon-speedometer:before {
+    content: "\e981";
+  }
+  .icon-star-filled:before {
+    content: "\e982";
+  }
+  .icon-star:before {
+    content: "\e983";
+  }
+  .icon-start:before {
+    content: "\e984";
+  }
+  .icon-stats:before {
+    content: "\e985";
+  }
+  .icon-storm-rain:before {
+    content: "\e986";
+  }
+  .icon-storm:before {
+    content: "\e987";
+  }
+  .icon-sunny:before {
+    content: "\e988";
+  }
+  .icon-swipe-left-right:before {
+    content: "\e989";
+  }
+  .icon-thumbs-down:before {
+    content: "\e98a";
+  }
+  .icon-thumbs-up:before {
+    content: "\e98b";
+  }
+  .icon-trainer-off:before {
+    content: "\e98c";
+  }
+  .icon-trainer:before {
+    content: "\e98d";
+  }
+  .icon-trophies:before {
+    content: "\e98e";
+  }
+  .icon-twitter:before {
+    content: "\e98f";
+  }
+  .icon-unlock:before {
+    content: "\e990";
+  }
+  .icon-upload:before {
+    content: "\e991";
+  }
+  .icon-usb:before {
+    content: "\e992";
+  }
+  .icon-user-group:before {
+    content: "\e993";
+  }
+  .icon-user:before {
+    content: "\e994";
+  }
+  .icon-very-cloudy:before {
+    content: "\e995";
+  }
+  .icon-view-l-off:before {
+    content: "\e996";
+  }
+  .icon-view-l:before {
+    content: "\e997";
+  }
+  .icon-view-m-off:before {
+    content: "\e998";
+  }
+  .icon-view-m:before {
+    content: "\e999";
+  }
+  .icon-view-s-off:before {
+    content: "\e99a";
+  }
+  .icon-view-s:before {
+    content: "\e99b";
+  }
+  .icon-view-xl-off:before {
+    content: "\e99c";
+  }
+  .icon-view-xl:before {
+    content: "\e99d";
+  }
+  .icon-view-xs-off:before {
+    content: "\e99e";
+  }
+  .icon-view-xs:before {
+    content: "\e99f";
+  }
+  .icon-vr:before {
+    content: "\e9a0";
+  }
+  .icon-wind:before {
+    content: "\e9a1";
+  }
+  .icon-workout-zones:before {
+    content: "\e9a2";
+  }
+  .icon-worldwide:before {
+    content: "\e9a3";
+  }
+  .icon-youtube:before {
+    content: "\e9a4";
+  }
+  .icon-zoom-in:before {
+    content: "\e9a5";
+  }
+  .icon-zoom-off:before {
+    content: "\e9a6";
+  }
+  .icon-zoom-out:before {
+    content: "\e9a7";
+  }
+  .icon-settings:before {
+    content: "\e9a8";
+  }
+  .icon-strava:before {
+    content: "\e9a9";
+  }
+  .icon-windows:before {
+    content: "\e9ac";
+  }
+  .icon-apple:before {
+    content: "\e9ab";
+  }
+  .icon-android:before {
+    content: "\e9aa";
+  }
+  .icon-battery-25:before {
+    content: "\e9ad";
+  }
+  .icon-battery-50:before {
+    content: "\e9ae";
+  }
+  .icon-battery-75:before {
+    content: "\e9af";
+  }
+  .icon-battery-empty:before {
+    content: "\e9b0";
+  }
+  .icon-battery-full:before {
+    content: "\e9b1";
+  }
+  .icon-connection-2-off:before {
+    content: "\e9b2";
+  }
+  .icon-connection-2:before {
+    content: "\e9b3";
+  }
+  .icon-first-page:before {
+    content: "\e9b4";
+  }
+  .icon-google:before {
+    content: "\e9b5";
+  }
+  .icon-last-page:before {
+    content: "\e9b6";
+  }
+  .icon-linkedin:before {
+    content: "\e9b7";
+  }
+  .icon-list:before {
+    content: "\e9b8";
+  }
+  .icon-maillot-off:before {
+    content: "\e9b9";
+  }
+  .icon-maillot:before {
+    content: "\e9ba";
+  }
+  .icon-off:before {
+    content: "\e9bb";
+  }
+  .icon-refresh:before {
+    content: "\e9bc";
+  }
+  .icon-road-message:before {
+    content: "\e9bd";
+  }
+  .icon-wifi:before {
+    content: "\e9be";
+  }
+  .icon-mail:before {
+    content: "\e9bf";
+  }
+  .icon-open-link:before {
+    content: "\e9c0";
+  }
+  .icon-reddit:before {
+    content: "\e9c2";
+  }
+  .icon-logo:before {
+    content: "\e9c1";
+  }
+  .icon-wordpress:before {
+    content: "\e9c3";
+  }
+  .icon-search:before {
+    content: "\e9c4";
+  }

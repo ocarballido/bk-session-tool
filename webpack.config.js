@@ -2,7 +2,8 @@ const webpack = require("webpack");
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     // Define the entry points of our application (can be multiple for different sections of a website)
@@ -35,18 +36,19 @@ module.exports = {
                     }
                 }
             },
-            // CSS, PostCSS, and Sass
+            // PostCSS, and Sass
             {
-                test: /\.(scss|css)$/,
+                test: /\.s(c|a)ss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
                         loader: "css-loader",
                         options: {
-                            importLoaders: 2,
                             sourceMap: true,
-                            url: false,
                         }
+                    },
+                    {
+                        loader: 'resolve-url-loader'
                     },
                     {
                         loader: 'postcss-loader',
@@ -61,6 +63,14 @@ module.exports = {
                     'sass-loader'
                 ],
             },
+            // Assets Modules
+            {
+                test: /\.(woff|woff2|eot|ttf|otf|png|gif|jpe?g|svg)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/[hash][ext]'
+                }
+            }
         ],
     },
 
@@ -70,6 +80,8 @@ module.exports = {
         new Dotenv({
             path: "./.env"
         }),
+
+        new CleanWebpackPlugin({}),
 
         // Extracts CSS into separate files
         new MiniCssExtractPlugin({

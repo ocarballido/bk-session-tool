@@ -45,25 +45,25 @@ nav.navbar {
 .dropdown-language.dropdown {
 	.dropdown-menu {
 		a {
-			background-image: url("../images/icons/flags/flag-france.svg");
+			/*background-image: url("../images/icons/flags/flag-france.svg");*/
 			background-position: .8rem .7rem;
 			background-repeat: no-repeat;
 			background-size: 1rem 1rem;
 			padding-left: 2.3rem;
 			&[hreflang="es"] {
-				background-image: url("../images/icons/flags/flag-spain.svg");
+				/*background-image: url("../images/icons/flags/flag-spain.svg");*/
 			}
 			&[hreflang="en"] {
-				background-image: url("../images/icons/flags/flag-uk.svg");
+				/*background-image: url("../images/icons/flags/flag-uk.svg");*/
 			}
 			&[hreflang="de"] {
-				background-image: url("../images/icons/flags/flag-gernamny.svg");
+				/*background-image: url("../images/icons/flags/flag-gernamny.svg");*/
 			}
 			&[hreflang="fr"] {
-				background-image: url("../images/icons/flags/flag-france.svg");
+				/*background-image: url("../images/icons/flags/flag-france.svg");*/
 			}
 			&[hreflang="it"] {
-				background-image: url("../images/icons/flags/flag-italy.svg");
+				/*background-image: url("../images/icons/flags/flag-italy.svg");*/
 			}
 		}
 	}
