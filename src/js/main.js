@@ -35,12 +35,12 @@ import { app } from './Controller';
 
 const host = 'http://localhost:3001';
 
-const loadClientes = () => new Promise((resolve, reject) => {
-    fetch(`${host}/clientes`)
+const loadSessions = () => new Promise((resolve, reject) => {
+    fetch(`${host}/sessions`)
         .then(response => {
             if (response.ok) {
                 response.json()
-                    .then(clientes => resolve(clientes));
+                    .then(sessions => resolve(sessions));
             } else {
                 reject();
             }
@@ -48,8 +48,8 @@ const loadClientes = () => new Promise((resolve, reject) => {
         .catch(() => reject());
 });
 
-loadClientes()
-    .then(clientes => console.log(clientes))
+loadSessions()
+    .then(sessions => console.log(sessions))
     .catch((error) => console.log(error));
 
 console.log('sdsds');
