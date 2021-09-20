@@ -30,46 +30,105 @@
     <!-- Content -->
     <div id="content-container">
         <div class="row g-0">
+            <!-- Sidebar -->
             <div id="filterSidebar" class="col-md bg-white border-end border-light p-3">
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                <form id="sessionFilters">
+                    <!-- Session name -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="text" class="form-control" id="sessionName" name="sessionName" placeholder="Nomnbre de sesion">
+                        <label for="sessionName">Nomnbre de sesión</label>
+                    </div>
+                    <!-- /Session name -->
+
+                    <!-- Date start -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="date" class="form-control" id="sessionDateStart" placeholder="Dede" tabindex="2" name="sessionDateStart" value="2018-07-22" min="2018-07-22" >
+                        <label for="sessionDateStart">Desde</label>
+                    </div>
+                    <!-- /Date start -->
+
+                    <!-- Date end -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="date" class="form-control" id="sessionDateEnd" placeholder="Hasta" tabindex="2" name="sessionDateEnd" value="" min="2018-07-22" >
+                        <label for="sessionDateEnd">Hasta</label>
+                    </div>
+                    <!-- /Date end -->
+
+                    <!-- Event -->
+                    <div class="form-group floating-label mb-2">
+                        <select id="sessionEvent" class="custom-select" >
+                            <option selected value="1">GIV</option>
+                        </select>
+                        <label for="sessionEvent">Evento</label>
+                    </div>
+                    <!-- /Event -->
+
+                    <!-- Session user -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="text" class="form-control" id="sessionUser" name="sessionUser" placeholder="Nombre de usuario">
+                        <label for="sessionUser">Nombre de usuario</label>
+                    </div>
+                    <!-- /Session user -->
+
+                    <!-- Button -->
+                    <div id="filterButtons" class="d-grid gap-2">
+                        <button id="submitFilterButton" type="submit" class="btn btn-secondary">Filtrar</button>
+                        <button id="clearFilterButton" type="button" class="btn btn-light disabled">Limpiar filtros</button>
+                    </div>
+                    <!-- /Button -->
+                </form>
             </div>
+            <!-- /Sidebar -->
+
+            <!-- Content -->
             <div id="content" class="col-md">
+                <!-- Sessions -->
                 <div id="sessionsContent">
                     <div class="container p-3">
-                        <div class="card bg-transparent overflow-hidden rounded">
+                        <div class="card bg-transparent rounded">
                             <table class="table table-hover m-0">
                                 <thead>
                                     <tr class="table-light">
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
+                                        <th class="sessionName" scope="col">Nombre</th>
+                                        <th class="sessionID" scope="col">ID</th>
+                                        <th class="sessionBegins" scope="col">Comienza</th>
+                                        <th class="sessionFeaturedUsers" scope="col">Pro</th>
+                                        <th class="sessionActions text-end" scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
+                                    <!-- Alert table row -->
+                                    <tr id="alertMessages" class="d-none">
+                                        <td colspan="5">
+                                            <div class="alert alert-info m-0 rounded-0 border-0" role="alert">No se encontraros sesiones programadas con estos filtros. Pruaba con otros parámetros.</div>
+                                        </td>
                                     </tr>
+                                    <!-- /Alert table row -->
                                     <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
+                                        <td data-name="Nombre de sesión" class="sessionName">Nombre de sesión</td>
+                                        <td data-id="dhsifdsifds54654454" class="sessionID">dhsifdsifds54654454</td>
+                                        <td data-date="3/25/19" class="sessionBegins">3/25/19</td>
+                                        <td data-pro="Nombre de usuario" class="sessionFeaturedUsers" scope="col">
+                                            <span class="badge bg-light text-dark">Nombre de usuario</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-lighter btn-icon dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><span class="icon-more-horizontal m-0"></span></button>
+                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                                    <li><a class="dropdown-item" href="#">Editar</a></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+                <!-- /Sessions -->
+
+                <!-- Pagination -->
                 <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-center">
                     <nav aria-label="Pagination">
                         <ul class="pagination m-0">
@@ -89,7 +148,9 @@
                         </ul>
                     </nav>
                 </div>
+                <!-- /Pagination -->
             </div>
+            <!-- /Content -->
         </div>
     </div>
     <!-- /Content -->
