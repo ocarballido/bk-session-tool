@@ -48,6 +48,13 @@ body {
         width: 100%;
     }
     #btnSidebar {
+        &.btn-outline-white {
+            &:focus {
+                background-color: transparent;
+                border: 2px solid white;
+                color: white;
+            }
+        }
         span {
             pointer-events: none;
         }

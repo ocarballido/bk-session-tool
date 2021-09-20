@@ -25,6 +25,8 @@ class View {
             const isBtnSidebar = elementId === 'btnSidebar';
             if (isBtnSidebar) {
                 this.sidebar.classList.toggle('expand');
+                element.classList.toggle('btn-white');
+                element.classList.toggle('btn-outline-white');
                 for(let i = 0; i < 2; i ++) {
                     this.btnSidebarSpans[i].classList.toggle('d-none');
                 }
