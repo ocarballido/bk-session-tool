@@ -4,89 +4,9 @@
 		border-top: none;
 		font-family: "HKGrotesk-Bold";
 	}
-	.thead-lighter {
-		th {
-			color: $light;
-			background-color: $table-head-lighter-bg;
-			border-color: $table-border-color;
-		}
-	}
-	.thead-light {
-		th {
-			color: $dark;
-		}
-	}
-}
-.table-dark {
-	thead th {
-		border-color: lighten($table-dark-bg, 15%);
-	}
 }
 th {
 	font-size: 0.85rem;
-}
-
-#table-history_wrapper {
-	overflow-x: scroll;
-	table {
-		width: 600px !important;
-	}
-}
-
-.table {
-	&.table-compatible {
-		td {
-			vertical-align: middle;
-		}
-		thead {
-			th {
-				&.model-celd {
-					width: 250px;
-				}
-				&.antplus-celd {
-					width: 120px;
-				}
-				&.bluetooth-celd {
-					width: 120px;
-				}
-				&.certified-celd {
-					width: 120px;
-				}
-			}
-		}
-	}
-	&.table-ranking {
-		thead {
-			tr {
-				th {
-					&.user-position {
-						width: 60px;
-					}
-					&.user-gap {
-						width: 60px;
-					}
-				}
-			}
-		}
-		tbody {
-			tr {
-				&.podium {
-					td, th {
-						background-color: $lighter;
-					}
-				}
-				&.my-place {
-					td, th {
-						background-color: $primary;
-					}
-				}
-				td, th {
-					vertical-align: middle;
-				}
-
-			}
-		}
-	}
 }
 
 // Small devices (landscape phones, 576px and up)
