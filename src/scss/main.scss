@@ -79,6 +79,9 @@ body {
             max-width: 300px;
             position: relative;
         }
+        #sessionsPagination {
+            width: calc(100% - 300px);
+        }
     }
 
 }
