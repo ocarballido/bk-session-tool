@@ -23,6 +23,12 @@
 //---------------------------------------------
 
 body {
+    #filterSidebar {
+        height: calc(100vh - 76px);
+        left: -100%;
+        position: absolute;
+        transition: all .25s;
+    }
 }
 
 //---------------------------------------------
@@ -46,3 +52,25 @@ body {
 @import "components/bkool-tables";
 @import "components/bkool-type";
 @import "components/bkool-utilities";
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    body {
+        #filterSidebar {
+            height: calc(100vh - 76px);
+            left: 0;
+            max-width: 300px;
+            position: relative;
+        }
+    }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
