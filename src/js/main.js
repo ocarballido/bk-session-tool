@@ -4,6 +4,8 @@ import bootstrap from 'bootstrap'
 // Load Styles
 import '../scss/main.scss';
 
+import { app } from './Controller';
+
 // App code
 // https://backend.pagesgitlab.bkooltech.com/bkool-session-api/
 // https://sessions-lab.bkool.com/sessions/scheduledSessions?limit=5&userId=b949a83a-6de6-4787-808e-12c8951afb41&profileId=1be4fd71-ef3d-4556-bd87-ea3fc2c9e273&eventId=GIV2021&startDate=2016-05-18T16%3A00%3A00.000Z&endDate=2016-05-18T16%3A00%3A00.000Z&featuredUserId=b949a83a-6de6-4787-808e-12c8951afb41
