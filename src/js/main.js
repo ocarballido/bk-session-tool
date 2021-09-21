@@ -4,7 +4,7 @@ import bootstrap from 'bootstrap'
 // Load Styles
 import '../scss/main.scss';
 
-import { app } from './Controller';
+import { app } from './controllers/Controller';
 
 // App code
 // https://backend.pagesgitlab.bkooltech.com/bkool-session-api/
@@ -33,23 +33,23 @@ import { app } from './Controller';
 
 // console.log(`Hello ${process.env.HELLO}`);
 
-const host = 'http://localhost:3001';
+// const host = 'http://localhost:3001';
 
-const loadSessions = () => new Promise((resolve, reject) => {
-    fetch(`${host}/scheduledSessions`)
-        .then(response => {
-            if (response.ok) {
-                response.json()
-                    .then(scheduledSessions => resolve(scheduledSessions));
-            } else {
-                reject();
-            }
-        })
-        .catch(() => reject());
-});
+// const loadSessions = () => new Promise((resolve, reject) => {
+//     fetch(`${host}/scheduledSessions`)
+//         .then(response => {
+//             if (response.ok) {
+//                 response.json()
+//                     .then(scheduledSessions => resolve(scheduledSessions));
+//             } else {
+//                 reject();
+//             }
+//         })
+//         .catch(() => reject());
+// });
 
-loadSessions()
-    .then(scheduledSessions => console.log(scheduledSessions))
-    .catch((error) => console.log(error));
+// loadSessions()
+//     .then(scheduledSessions => console.log(scheduledSessions))
+//     .catch((error) => console.log(error));
 
 console.log('sdsds');

@@ -1,5 +1,5 @@
-import { Model } from './Model';
-import { View } from './View';
+import { Model } from '../model/Model';
+import { View } from '../views/View';
 
 class Controller {
     constructor(model, view) {
