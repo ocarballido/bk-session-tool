@@ -36,11 +36,11 @@ import { app } from './Controller';
 const host = 'http://localhost:3001';
 
 const loadSessions = () => new Promise((resolve, reject) => {
-    fetch(`${host}/sessions`)
+    fetch(`${host}/scheduledSessions`)
         .then(response => {
             if (response.ok) {
                 response.json()
-                    .then(sessions => resolve(sessions));
+                    .then(scheduledSessions => resolve(scheduledSessions));
             } else {
                 reject();
             }
@@ -49,7 +49,7 @@ const loadSessions = () => new Promise((resolve, reject) => {
 });
 
 loadSessions()
-    .then(sessions => console.log(sessions))
+    .then(scheduledSessions => console.log(scheduledSessions))
     .catch((error) => console.log(error));
 
 console.log('sdsds');
