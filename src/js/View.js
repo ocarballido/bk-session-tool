@@ -23,6 +23,8 @@ class View {
             const element = event.target;
             const elementId = element.id;
             const isBtnSidebar = elementId === 'btnSidebar';
+            const isBtnNewSession = elementId === 'btnNewSession';
+            // If element is the "sidebar toggle" button
             if (isBtnSidebar) {
                 this.sidebar.classList.toggle('expand');
                 element.classList.toggle('btn-white');
@@ -30,6 +32,11 @@ class View {
                 for(let i = 0; i < 2; i ++) {
                     this.btnSidebarSpans[i].classList.toggle('d-none');
                 }
+            }
+
+            // If element is the "Add new session" button
+            if (isBtnNewSession) {
+                console.log(isBtnNewSession);
             }
         });
     }
