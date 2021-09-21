@@ -10,55 +10,16 @@
 <body>
     <!-- Header -->
     <header>
-        <nav class="nav-main navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container ms-0">
-                <!-- <a class="navbar-brand" href="#">Boilerplate Inc</a> -->
-                <div class="headerLogo d-flex align-items-center">
-                    <img src="<%=require('../src/images/bk-symbol.png')%>" alt="Bkool" height="60" width="60">
-                    <p class="text-white mb-0 me-3">Session Manager</p>
-                </div>
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#nav-main"
-                        aria-controls="nav-main"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-        
-                <div class="collapse navbar-collapse" id="nav-main">
-                    <button type="button" class="btn btn-primary">Primary</button>
-                    <!-- <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                Home <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdown"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            >
-                                Portfolio
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#html-and-css">HTML &amp; CSS</a>
-                                <a class="dropdown-item" href="#javascript">JavaScript</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#react">React</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul> -->
+        <nav class="nav-main navbar-dark bg-dark py-2 row align-items-center g-0">
+            <div id="headerLogo" class="col-auto">
+                <img src="<%=require('../src/images/bk-symbol.png')%>" alt="Bkool" height="60" width="60">
+                <p class="text-white mb-0 me-3 d-none d-sm-inline-block">Session Manager</p>
+            </div>
+
+            <div id="headerActions" class="col">
+                <div class="container px-3 d-flex justify-content-between">
+                    <button id="btnNewSession" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAddSessionModal">Nueva sesión</button>
+                    <button id="btnSidebar" type="button" class="btn btn-white btn-icon d-inline-block d-md-none"><span class="icon-filter"></span><span class="icon-close d-none"></span></button>
                 </div>
             </div>
             <!-- /container -->
@@ -67,20 +28,192 @@
     <!-- /Header -->
 
     <!-- Content -->
-    <div class="container ms-0">
-        <h1>Hello, world!</h1>
-        <p>
-            This is a jumbotron example, that is used for many websites today and shows that Bootstrap is
-            successfully
-            loadedd, using all components. Bootstrap feature will help you to create the desired layouts.
-        </p>
-        <p>
-            <a class="btn btn-primary btn-lg"
-                href="https://getbootstrap.com/docs/4.1/components/jumbotron/"
-                role="button"
-            >Learn more</a>
-        </p>
+    <div id="content-container">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div id="filterSidebar" class="col-md bg-white border-end border-light p-3">
+                <form id="sessionFilters">
+                    <!-- Session name -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="text" class="form-control" id="filterSessionName" name="filterSessionName" placeholder="Nomnbre de sesion">
+                        <label for="filterSessionName">Nomnbre de sesión</label>
+                    </div>
+                    <!-- /Session name -->
+
+                    <!-- Date start -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="date" class="form-control" id="filterSessionDateStart" placeholder="Dede" tabindex="2" name="filterSessionDateStart" value="2018-07-22" min="2018-07-22" >
+                        <label for="filterSessionDateStart">Desde</label>
+                    </div>
+                    <!-- /Date start -->
+
+                    <!-- Date end -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="date" class="form-control" id="filterSessionDateEnd" placeholder="Hasta" tabindex="2" name="filterSessionDateEnd" value="" min="2018-07-22" >
+                        <label for="filterSessionDateEnd">Hasta</label>
+                    </div>
+                    <!-- /Date end -->
+
+                    <!-- Event -->
+                    <div class="form-group floating-label mb-2">
+                        <select id="filterSessionEvent" class="custom-select" >
+                            <option selected value="1">GIV</option>
+                        </select>
+                        <label for="filterSessionEvent">Evento</label>
+                    </div>
+                    <!-- /Event -->
+
+                    <!-- Session user -->
+                    <div class="form-group floating-label mb-2">
+                        <input type="text" class="form-control" id="filterSessionUser" name="filterSessionUser" placeholder="Nombre de usuario">
+                        <label for="filterSessionUser">Nombre de usuario</label>
+                    </div>
+                    <!-- /Session user -->
+
+                    <!-- Button -->
+                    <div id="filterButtons" class="d-grid gap-2">
+                        <button id="submitFilterButton" type="submit" class="btn btn-secondary">Filtrar</button>
+                        <button id="clearFilterButton" type="button" class="btn btn-light disabled">Limpiar filtros</button>
+                    </div>
+                    <!-- /Button -->
+                </form>
+            </div>
+            <!-- /Sidebar -->
+
+            <!-- Content -->
+            <div id="content" class="col-md">
+                <!-- Sessions -->
+                <div id="sessionsContent">
+                    <div class="container p-3">
+                        <div class="card bg-transparent rounded">
+                            <table class="table table-hover m-0">
+                                <thead>
+                                    <tr class="table-light">
+                                        <th class="sessionName" scope="col">Nombre</th>
+                                        <th class="sessionID" scope="col">ID</th>
+                                        <th class="sessionBegins" scope="col">Comienza</th>
+                                        <th class="sessionFeaturedUsers" scope="col">Pro</th>
+                                        <th class="sessionActions text-end" scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Sessions -->
+
+                <!-- Pagination -->
+                <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-center">
+                    <nav aria-label="Pagination">
+                        <ul class="pagination m-0">
+                            <li class="page-item disabled">
+                                <a class="page-link px-2" href="#" aria-label="Previous">
+                                    <span class="icon-chevron-left" aria-hidden="true"></span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link px-2" href="#" aria-label="Next">
+                                    <span class="icon-chevron-right" aria-hidden="true"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- /Pagination -->
+            </div>
+            <!-- /Content -->
+        </div>
     </div>
     <!-- /Content -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="editAddSessionModal" tabindex="-1" aria-labelledby="editAddSessionLabel" aria-hidden="true" data-type="add">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddSessionLabel">Modal title</h5>
+                    <button type="button" class="close btn btn-secondary btn-icon btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"><span class="icon-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    <form id="sessionFilters">
+                        <!-- Session name -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addSessionName" name="addSessionName" placeholder="Nomnbre de sesion">
+                            <label for="addSessionName">Nomnbre de sesión</label>
+                        </div>
+                        <!-- /Session name -->
+    
+                        <!-- Date start -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="date" class="form-control" id="addSessionDateStart" placeholder="Dede" tabindex="2" name="addSessionDateStart" value="2018-07-22" min="2018-07-22" >
+                            <label for="addSessionDateStart">Desde</label>
+                        </div>
+                        <!-- /Date start -->
+    
+                        <!-- Date end -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="date" class="form-control" id="addSessionDateEnd" placeholder="Hasta" tabindex="2" name="addSessionDateEnd" value="" min="2018-07-22" >
+                            <label for="addSessionDateEnd">Hasta</label>
+                        </div>
+                        <!-- /Date end -->
+    
+                        <!-- Event -->
+                        <div class="form-group floating-label mb-2">
+                            <select id="addSessionEvent" class="custom-select" >
+                                <option selected value="1">GIV</option>
+                            </select>
+                            <label for="addSessionEvent">Evento</label>
+                        </div>
+                        <!-- /Event -->
+    
+                        <!-- Session user -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addSessionUser" name="addSessionUser" placeholder="Nombre de usuario">
+                            <label for="addSessionUser">Nombre de usuario</label>
+                        </div>
+                        <!-- /Session user -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Añadir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal -->
+
+    <!-- Template scheduled session -->
+    <template id="scheduledSessionTemplate">
+        <tr data-id="{{sessionID}}">
+            <td class="sessionName">{{sessionName}}</td>
+            <td class="sessionID">{{sessionID}}</td>
+            <td class="sessionBegins">{{sessionDate}}</td>
+            <td class="sessionFeaturedUsers" scope="col">
+                <span class="badge bg-light text-dark">{{sessionFeaturedUsers}}</span>
+            </td>
+            <td class="sessionActions text-end">
+                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+    </template>
+    <!-- /Template scheduled session -->
+
+    <!-- Template table alert -->
+    <template id="alertTemplate">
+        <tr id="alertMessages">
+            <td colspan="5">
+                <div class="alert alert-{{alertType}} m-0 rounded-0 border-0" role="alert">{{alertMassage}}</div>
+            </td>
+        </tr>
+    </template>
+    <!-- /Template table alert -->
 </body>
 </html>

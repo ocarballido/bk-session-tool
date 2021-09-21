@@ -252,8 +252,8 @@ $modal-content-border-radius:				0.3125rem !default;
 $modal-header-border-color:					$gray-100 !default;
 
 // Pagination
-$pagination-padding-y:						$input-btn-padding-y !default;
-$pagination-padding-x:						$input-btn-padding-x !default;
+// $pagination-padding-y:						$input-btn-padding-y !default;
+// $pagination-padding-x:						$input-btn-padding-x !default;
 //$pagination-color:						$link-color !default;
 $pagination-border-radius:					$border-radius !default;
 $pagination-border-width:					0 !default;
@@ -320,18 +320,18 @@ $list-group-active-border-color:			transparent !default;
 // Tables
 $table-cell-padding:						.63rem !default;
 $table-cell-padding-y:						$table-cell-padding !default;
-$table-cell-padding-x:						1.5rem !default;
+// $table-cell-padding-x:						1.5rem !default;
 $table-border-color:						$gray-100 !default;
-$table-dark-bg:								$dark !default;
-$table-dark-border-color:					lighten($table-dark-bg, 15%) !default;
-//$table-dark-color:							$gray-200 !default;
-$table-head-bg:								$gray-100 !default;
-$table-head-lighter-bg:						$gray-50 !default;
-$table-accent-bg:							$gray-50 !default;
-$table-hover-bg:							$gray-50 !default;
-$table-cell-padding-sm:						.25rem !default;
-$table-bg-level:							0 !default;
-$table-border-level:						0 !default;
+// $table-dark-bg:								$dark !default;
+// $table-dark-border-color:					lighten($table-dark-bg, 15%) !default;
+// //$table-dark-color:							$gray-200 !default;
+// $table-head-bg:								$gray-100 !default;
+// $table-head-lighter-bg:						$gray-50 !default;
+// $table-accent-bg:							$gray-50 !default;
+$table-hover-bg:							$white !default;
+// $table-cell-padding-sm:						.25rem !default;
+// $table-bg-level:							0 !default;
+// $table-border-level:						0 !default;
 
 // Card
 $card-spacer-y:								.5rem !default;

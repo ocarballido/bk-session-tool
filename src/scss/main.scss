@@ -23,6 +23,42 @@
 //---------------------------------------------
 
 body {
+    #filterSidebar {
+        height: calc(100vh - 76px);
+        left: -100%;
+        overflow-y: auto;
+        position: absolute;
+        transition: all .25s;
+        z-index: 10;
+        &.expand {
+            left: 0;
+        }
+    }
+    #content {
+        height: calc(100vh - 76px);
+        overflow-y: scroll;
+    }
+    #sessionsContent {
+        padding-bottom: 64px;
+    }
+    #sessionsPagination {
+        bottom: 0;
+        height: 64px;
+        position: fixed;
+        width: 100%;
+    }
+    #btnSidebar {
+        &.btn-outline-white {
+            &:focus {
+                background-color: transparent;
+                border: 2px solid white;
+                color: white;
+            }
+        }
+        span {
+            pointer-events: none;
+        }
+    }
 }
 
 //---------------------------------------------
@@ -46,3 +82,28 @@ body {
 @import "components/bkool-tables";
 @import "components/bkool-type";
 @import "components/bkool-utilities";
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    body {
+        #filterSidebar {
+            height: calc(100vh - 76px);
+            left: 0;
+            max-width: 300px;
+            position: relative;
+        }
+        #sessionsPagination {
+            width: calc(100% - 300px);
+        }
+    }
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
