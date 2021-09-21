@@ -7,16 +7,27 @@ class Controller {
         this.view = view;
 
         // First test
-        this.view.testView(this.testViewHandler.bind(this));
+        // this.view.testView(this.testViewHandler.bind(this));
 
         // Toggle saidebar action
         this.view.toggleSidebar(this.toggleSidebarHandler.bind(this));
+
+        // Binding view first app render
+        this.view.firstSessionLoadAction(this.firstSessionLoadHandler.bind(this));
     }
-    testViewHandler() {
-        this.view.testView();
-    }
+
+    // First test view
+    // testViewHandler() {
+    //     this.view.testView();
+    // }
+    
     toggleSidebarHandler() {
         this.view.toggleSidebar();
+    }
+
+    // First app render
+    firstSessionLoadHandler() {
+        this.view.firstSessionLoadAction();
     }
 }
 

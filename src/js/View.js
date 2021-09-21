@@ -13,8 +13,16 @@ class View {
     }
 
     // First test
-    testView() {
-        console.log('Oscar', this.btnSidebarSpans[0]);
+    // testView() {
+    //     console.log('Oscar', this.btnSidebarSpans[0]);
+    // }
+
+    // First app render action
+    firstSessionLoadAction() {
+        document.addEventListener("DOMContentLoaded", (event) => {
+            // handler();
+            console.log('Oscar');
+        });
     }
 
     // Sidebar actions
