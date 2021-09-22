@@ -1,10 +1,9 @@
 export const scheduledSessionTemplate = `
     <tr data-id="{{sessionID}}">
         <td class="sessionName">{{sessionName}}</td>
-        <td class="sessionID">{{sessionID}}</td>
         <td class="sessionBegins">{{sessionDate}}</td>
-        <td class="sessionFeaturedUsers" scope="col">
-            <span class="badge bg-light text-dark">{{sessionFeaturedUsers}}</span>
+        <td class="sessionTimes" scope="col">
+            
         </td>
         <td class="sessionActions text-end">
             <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
