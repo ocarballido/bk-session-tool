@@ -53,3 +53,40 @@ import { app } from './controllers/Controller';
 //     .catch((error) => console.log(error));
 
 console.log('sdsds');
+
+const dataModelExample = [
+    {
+        sessionName: "Nombre de sesión",
+        sessionID: 546546546565,
+        sessionRounds: [
+            {
+                startDate: "7/5/2022",
+                times: [
+                    "09:00",
+                    "11:00",
+                    "13:00"
+                ]
+            },
+            {
+                startDate: "8/5/2022",
+                times: [
+                    "09:00",
+                    "11:00"
+                ]
+            },
+            {
+                startDate: "9/5/2022",
+                times: [
+                    "09:00",
+                    "11:00",
+                    "13:00",
+                    "15:00",
+                    "18:00",
+                    "19:00",
+                    "20:00",
+                    "22:00"
+                ]
+            },
+        ]
+    }
+];

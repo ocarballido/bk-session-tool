@@ -1,8 +1,10 @@
    
-const SERVER = 'http://localhost:3001';
-const SERVER_SHEDULED_SESSIONS = `${SERVER}/scheduledSessions`;
-const SERVER_SESSIONS = `${SERVER}/sessions`;
-const SERVER_USERS = `${SERVER}/users`;
+const SCHEDULED_SESSIONS_SERVER = 'http://localhost:3001/scheduledSessions';
+const SESSIONS_SERVER = 'http://localhost:3001/sessions';
+const USERS_SERVER = 'http://localhost:3001/users';
+// const SERVER_SHEDULED_SESSIONS = `${SCHEDULED_SESSIONS_SERVER}`;
+// const SERVER_SESSIONS = `${SERVER}/sessions`;
+// const SERVER_USERS = `${SERVER}/users`;
 
 const fetchDb = (endpoint, method, data) => {
     const options = {
@@ -31,10 +33,13 @@ const fetchDb = (endpoint, method, data) => {
 
 class ApiServices {
     loadScheduledSessions() {
-        return fetchDb(SERVER_SHEDULED_SESSIONS, 'GET');
+        return fetchDb(SCHEDULED_SESSIONS_SERVER, 'GET');
     }
     loadSessions() {
-        return fetchDb(SERVER_SESSIONS, 'GET');
+        return fetchDb(SESSIONS_SERVER, 'GET');
+    }
+    loadUsers() {
+        return fetchDb(USERS_SERVER, 'GET');
     }
     // async loadScheduledSessions() {
     //     try {
