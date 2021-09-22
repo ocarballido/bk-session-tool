@@ -27,31 +27,30 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        // const scheduledSessionsMapped = scheduledSessions.map(session => {
-        //     return {
-        //         ...session
-        //     }
-        // });
         scheduledSessions.forEach(session => {
             // Getting session values
             const { sessionName, sessionID, sessionRounds } = session;
 
             // Loop sessionRounds
-            for(let i = 0; i < sessionRounds.length; i ++) {
+            sessionRounds.forEach((round, index) => {
                 // Creating badges
-                for(let y = 0; y < sessionRounds[i].times.length; y ++) {
+                /*for(let y = 0; y < sessionRounds[i].times.length; y ++) {
                     let timeBadge = `<span class="badge bg-light text-dark">${sessionRounds[i].times[y]}</span>`;
-                }
+                }*/
+
+                const hours = round.times.map((time) => {
+                    return `<span class="badge bg-light text-dark">${time}</span>`;
+                });
 
                 // Adding table row
                 this.sessionsTableBody.insertAdjacentHTML(
                     'beforeend',
                     `
-                        <tr class="${i === 0 ? 'sessionLeader' : ''}" data-id="${sessionID}">
+                        <tr class="${index === 0 ? 'sessionLeader' : ''}" data-id="${sessionID}">
                             <td class="sessionName">${sessionName}</td>
-                            <td class="sessionBegins">${sessionRounds[i].startDate}</td>
+                            <td class="sessionBegins">${round.startDate}</td>
                             <td class="sessionTimes" scope="col">
-                                
+                                ${ hours.join('&nbsp;') }
                             </td>
                             <td class="sessionActions text-end">
                                 <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
@@ -60,7 +59,7 @@ class View {
                         </tr>
                     `
                 );
-            }
+            });
         });
     }
 
@@ -76,7 +75,7 @@ class View {
     }
 
     // Sidebar toggle actions
-    toggleSidebar() {
+    bindSideBarEvents() {
         this.headerActions.addEventListener('click', event => {
             const element = event.target;
             const elementId = element.id;

@@ -8,72 +8,54 @@ class Model {
         this._filterObject = {};
     }
 
-    // Insert scheduled session to data model
-    _insertScheduledSession(session) {
-        this._scheduledSessions.push(session);
-        return session;
-    }
-
-    // Loadding scheduled sessions
-    async loadScheduledSessions() {
-        // Waiting regular sessions API load data to resolve
-        const sessions = await apiServices.loadSessions();
-
-        // Returning 
-        return new Promise((resolve, reject) => {
-            apiServices
-                .loadScheduledSessions()
-                .then((scheduledSessions) => {
-                    scheduledSessions.forEach(singleScheduledSession => {
-                        // Creating dta model object
-                        const singleSession = {
-                            sessionID: singleScheduledSession.id,
-                            sessionRounds: [],
-                            sessionName
-                        };
-                        
-                        // Traversing session API array
-                        const sessionName = sessions.map(session => {
-                            if (session.id === singleScheduledSession.id) {
-                                singleSession.sessionName = session.name;
-                            }
-                        });
-
-                        // Creating more readeble rounds array
-                        singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
-                            let startDate = this.dateTimeFormater(item.startDate).formattedDate;
-                            let time = this.dateTimeFormater(item.startDate).formattedDate;
-                            obj[startDate] = obj[startDate] || [];
-                            obj[startDate].push(time);
-                            return obj;
-                        }, {})).map((item) => ({
-                            startDate: item[0],
-                            times: item[1]
-                        }));
-
-                        // Inseting data
-                        this._insertScheduledSession(singleSession)
-                    });
-                    resolve();
-                })
-                .catch(error => {
-                    reject(error);
-                    console.log(error);
-                });
-        });
-    }
-
-    // Get scheduled sessions data
-    getScheduledSessions() {
-        console.log(this._scheduledSessions);
-        return this._scheduledSessions;
-    }
-
     // Return promise with data
-    loadData() {
-        return Promise.all([
-            this.loadScheduledSessions()
-        ]);
+    getScheduledSessions() {
+        return new Promise((resolve, reject) => {
+            if ( this._scheduledSessions.length ) {
+                resolve(this._scheduledSessions);
+            } else {
+                Promise.all([
+                    apiServices.loadSessions(),
+                    apiServices.loadScheduledSessions()
+                ])
+                    .then(([sessions, scheduledSessions]) => {
+
+                        this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                            const singleSession = {
+                                sessionID: singleScheduledSession.id,
+                                sessionRounds: [],
+                                sessionName
+                            };
+                            
+                            // Traversing session API array
+                            const sessionName = sessions.map(session => {
+                                if (session.id === singleScheduledSession.id) {
+                                    singleSession.sessionName = session.name;
+                                }
+                            });
+    
+                            // Creating more readeble rounds array
+                            singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
+                                let startDate = this.dateTimeFormater(item.startDate).formattedDate;
+                                let time = this.dateTimeFormater(item.startDate).formattedTime;
+                                obj[startDate] = obj[startDate] || [];
+                                obj[startDate].push(time);
+                                return obj;
+                            }, {})).map((item) => ({
+                                startDate: item[0],
+                                times: item[1]
+                            }));
+                            return singleSession;
+                        });
+                        resolve(this._scheduledSessions);                   
+                    })
+                    .catch(() => {
+                        reject(error);
+                        console.log(error);
+                    });
+            }
+
+        });
     }
 
     // API date and time formatter

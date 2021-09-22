@@ -9,36 +9,20 @@ class Controller {
         // First test
         // this.view.testView(this.testViewHandler.bind(this));
 
-        // Binding view toggle saidebar action
-        this.view.toggleSidebar(this.toggleSidebarHandler.bind(this));
-
         // Binding view first UI render action
-        this.view.firstUiAppRender(this.firstUiAppRenderAction.bind(this));
+        this.view.firstUiAppRender();
 
-        // Binding view spinner toggle
-        this.view.toggleSpinner(this.toggleSpinnerAction.bind(this));
+        // Binding view toggle saidebar action
+        this.view.bindSideBarEvents();        
 
         // Load data action
-        this.model.loadData()
-            .then(() => {
-                this.model.getScheduledSessions();
-                this.view.renderScheduledSessions(this.model.getScheduledSessions());
+        this.model.getScheduledSessions()
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                this.view.toggleSpinner();
             });
-    }
-
-    // First UI render controller
-    firstUiAppRenderAction() {
-        this.view.firstUiAppRender();
-    }
-    
-    // Toggle sidebar controller
-    toggleSidebarHandler() {
-        this.view.toggleSidebar();
-    }
-
-    // Toggle spinner controller
-    toggleSpinnerAction() {
-        this.view.toggleSidebar();
+            
     }
 }
 
