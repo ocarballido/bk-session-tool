@@ -8,6 +8,9 @@ class View {
         this.btnSidebarSpans = this.btnSidebar.getElementsByTagName('span');
         this.btnNewSession = document.getElementById('btnNewSession');
 
+        // Spinner
+        this.spinner = document.getElementById('spinner');
+
         // Sidebar
         this.sidebar = document.getElementById('filterSidebar');
         this.dateStart = document.getElementById('filterSessionDateStart');
@@ -22,6 +25,45 @@ class View {
     //     console.log('Oscar', this.btnSidebarSpans[0]);
     // }
 
+    // First scheduled sessions render
+    renderScheduledSessions(scheduledSessions) {
+        // const scheduledSessionsMapped = scheduledSessions.map(session => {
+        //     return {
+        //         ...session
+        //     }
+        // });
+        scheduledSessions.forEach(session => {
+            // Getting session values
+            const { sessionName, sessionID, sessionRounds } = session;
+
+            // Loop sessionRounds
+            for(let i = 0; i < sessionRounds.length; i ++) {
+                // Creating badges
+                for(let y = 0; y < sessionRounds[i].times.length; y ++) {
+                    let timeBadge = `<span class="badge bg-light text-dark">${sessionRounds[i].times[y]}</span>`;
+                }
+
+                // Adding table row
+                this.sessionsTableBody.insertAdjacentHTML(
+                    'beforeend',
+                    `
+                        <tr class="${i === 0 ? 'sessionLeader' : ''}" data-id="${sessionID}">
+                            <td class="sessionName">${sessionName}</td>
+                            <td class="sessionBegins">${sessionRounds[i].startDate}</td>
+                            <td class="sessionTimes" scope="col">
+                                
+                            </td>
+                            <td class="sessionActions text-end">
+                                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+                    `
+                );
+            }
+        });
+    }
+
     // First UI app render action
     firstUiAppRender() {
         document.addEventListener('DOMContentLoaded', event => {
@@ -33,7 +75,7 @@ class View {
         });
     }
 
-    // Sidebar actions
+    // Sidebar toggle actions
     toggleSidebar() {
         this.headerActions.addEventListener('click', event => {
             const element = event.target;
@@ -55,6 +97,11 @@ class View {
                 console.log(isBtnNewSession);
             }
         });
+    }
+
+    // Spinner toggle action
+    toggleSpinner() {
+        this.spinner.classList.toggle('d-none');
     }
 };
 

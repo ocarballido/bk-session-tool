@@ -15,10 +15,14 @@ class Controller {
         // Binding view first UI render action
         this.view.firstUiAppRender(this.firstUiAppRenderAction.bind(this));
 
+        // Binding view spinner toggle
+        this.view.toggleSpinner(this.toggleSpinnerAction.bind(this));
+
         // Load data action
         this.model.loadData()
             .then(() => {
                 this.model.getScheduledSessions();
+                this.view.renderScheduledSessions(this.model.getScheduledSessions());
             });
     }
 
@@ -29,6 +33,11 @@ class Controller {
     
     // Toggle sidebar controller
     toggleSidebarHandler() {
+        this.view.toggleSidebar();
+    }
+
+    // Toggle spinner controller
+    toggleSpinnerAction() {
         this.view.toggleSidebar();
     }
 }
