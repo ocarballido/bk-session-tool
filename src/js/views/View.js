@@ -27,11 +27,6 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        // const scheduledSessionsMapped = scheduledSessions.map(session => {
-        //     return {
-        //         ...session
-        //     }
-        // });
         scheduledSessions.forEach(session => {
             // Getting session values
             const { sessionName, sessionID, sessionRounds } = session;
