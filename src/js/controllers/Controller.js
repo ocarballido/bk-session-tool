@@ -9,14 +9,22 @@ class Controller {
         // First test
         // this.view.testView(this.testViewHandler.bind(this));
 
-        // Toggle saidebar action
+        // Binding view toggle saidebar action
         this.view.toggleSidebar(this.toggleSidebarHandler.bind(this));
+
+        // Binding view first UI render action
+        this.view.firstUiAppRender(this.firstUiAppRenderAction.bind(this));
 
         // Load data action
         this.model.loadData()
             .then(() => {
                 this.model.getScheduledSessions();
             });
+    }
+
+    // First UI render controller
+    firstUiAppRenderAction() {
+        this.view.firstUiAppRender();
     }
     
     // Toggle sidebar controller

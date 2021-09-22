@@ -10,6 +10,8 @@ class View {
 
         // Sidebar
         this.sidebar = document.getElementById('filterSidebar');
+        this.dateStart = document.getElementById('filterSessionDateStart');
+        this.dateEnd = document.getElementById('filterSessionDateEnd');
 
         // Table
         this.sessionsTableBody = document.getElementById('sessionsTableBody');
@@ -19,6 +21,17 @@ class View {
     // testView() {
     //     console.log('Oscar', this.btnSidebarSpans[0]);
     // }
+
+    // First UI app render action
+    firstUiAppRender() {
+        document.addEventListener('DOMContentLoaded', event => {
+            const currentDate = new Date();
+            const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
+            this.dateStart.value = currentDateToLocaleDateString;
+            console.log(currentDateToLocaleDateString);
+            // handler();
+        });
+    }
 
     // Sidebar actions
     toggleSidebar() {
