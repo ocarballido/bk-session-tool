@@ -12,8 +12,11 @@ class Controller {
         // Toggle saidebar action
         this.view.toggleSidebar(this.toggleSidebarHandler.bind(this));
 
-        // Binding view first app render
-        this.view.firstSessionLoadAction(this.firstSessionLoadHandler.bind(this));
+        // Load test
+        // this.model.loadData()
+        //     .then(() => {
+        //         this.model.getScheduledSessions();
+        //     });
     }
 
     // First test view
@@ -26,9 +29,9 @@ class Controller {
     }
 
     // First app render
-    firstSessionLoadHandler() {
-        this.view.firstSessionLoadAction();
-    }
+    // firstSessionLoadHandler() {
+    //     this.view.firstSessionLoadAction();
+    // }
 }
 
 const app = new Controller(new Model(), new View())

@@ -1,4 +1,4 @@
-
+import * as Templates from './templates';
 
 class View {
     constructor() {
@@ -10,20 +10,15 @@ class View {
 
         // Sidebar
         this.sidebar = document.getElementById('filterSidebar');
+
+        // Table
+        this.sessionsTableBody = document.getElementById('sessionsTableBody');
     }
 
     // First test
     // testView() {
     //     console.log('Oscar', this.btnSidebarSpans[0]);
     // }
-
-    // First app render action
-    firstSessionLoadAction() {
-        document.addEventListener("DOMContentLoaded", (event) => {
-            // handler();
-            console.log('Oscar');
-        });
-    }
 
     // Sidebar actions
     toggleSidebar() {

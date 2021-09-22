@@ -30,9 +30,21 @@ const fetchDb = (endpoint, method, data) => {
 };
 
 class ApiServices {
-    loadGuests() {
+    loadScheduledSessions() {
         return fetchDb(SERVER_SHEDULED_SESSIONS, 'GET');
     }
+    loadSessions() {
+        return fetchDb(SERVER_SESSIONS, 'GET');
+    }
+    // async loadScheduledSessions() {
+    //     try {
+    //         const result = await fetch(SERVER_SHEDULED_SESSIONS);
+    //         const scheduledSessions = await result.json();
+    //         return scheduledSessions;
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 }
 
 const apiServices = new ApiServices();
