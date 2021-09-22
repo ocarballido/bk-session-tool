@@ -12,13 +12,14 @@ class Controller {
         // Toggle saidebar action
         this.view.toggleSidebar(this.toggleSidebarHandler.bind(this));
 
-        // Load test
+        // Load data action
         this.model.loadData()
             .then(() => {
                 this.model.getScheduledSessions();
             });
     }
     
+    // Toggle sidebar controller
     toggleSidebarHandler() {
         this.view.toggleSidebar();
     }
