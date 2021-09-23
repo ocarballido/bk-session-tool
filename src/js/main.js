@@ -103,3 +103,10 @@ const dataModelExample = [
 //   .then(response => response.text())
 //   .then(result => console.log(result))
 //   .catch(error => console.log('error', error));
+
+
+
+// Get token
+// RESULT=`curl -s --data "grant_type=password&client_id=bkool-web&username=bkoolweb&password=bk00lweb" https://auth-staging.bkool.com/auth/realms/bkool/protocol/openid-connect/token`
+// TOKEN=`echo $RESULT | sed 's/.*access_token":"//g' | sed 's/".*//g'`
+// echo $TOKEN
