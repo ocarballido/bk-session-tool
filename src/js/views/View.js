@@ -39,7 +39,7 @@ class View {
                 }*/
 
                 const hours = round.times.map((time) => {
-                    return `<span class="badge bg-light text-dark">${time}</span>`;
+                    return `<span class="badge bg-light text-dark">${time[0]}</span>`;
                 });
 
                 // Adding table row
