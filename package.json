@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
-    "server": "json-server -p3001 --watch src/db/db.json",
+    "server": "node server/server.js",
     "images": "node ./bin/images.js"
   },
   "author": "Oscar Carballido",
@@ -27,6 +27,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.0.0",
     "dotenv-webpack": "^7.0.3",
+    "faker": "^5.5.3",
     "fast-glob": "^3.2.7",
     "html-webpack-plugin": "^5.3.2",
     "json-server": "^0.16.3",
