@@ -8,6 +8,15 @@
 </head>
 
 <body>
+    <!-- Spinner -->
+    <div id="spinner" class="bkSpinner">
+        <div class="bkSpinner-wrapper mb-2">
+            <svg id="spinnerSymbol" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 57"><title>Artboard 1</title><path class="spinnerPath" stroke="#202020" fill="transparent" stroke-width="8" d="M39.88,24.86s-5.67-6.43-12.7-6.43-13,3.95-14.53,9S5.7,52.23,5.7,52.23H35.86S51.42,22,55.29,14.32,65.79,4.77,69,4.77c5.93,0,13.27,2.45,15.64,11S94.3,52.23,94.3,52.23H53.79l-4.26-7.85"/></svg>
+            <svg id="spinnerSymbolStatic" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 57"><title>Artboard 1</title><path class="spinnerPathStatic" stroke="#e1e1e1" fill="transparent" stroke-width="8" d="M39.88,24.86s-5.67-6.43-12.7-6.43-13,3.95-14.53,9S5.7,52.23,5.7,52.23H35.86S51.42,22,55.29,14.32,65.79,4.77,69,4.77c5.93,0,13.27,2.45,15.64,11S94.3,52.23,94.3,52.23H53.79l-4.26-7.85"/></svg>
+        </div>
+    </div>
+    <!-- /Spinner -->
+
     <!-- Header -->
     <header>
         <nav class="nav-main navbar-dark bg-dark py-2 row align-items-center g-0">
@@ -90,14 +99,149 @@
                                 <thead>
                                     <tr class="table-light">
                                         <th class="sessionName" scope="col">Nombre</th>
-                                        <th class="sessionID" scope="col">ID</th>
                                         <th class="sessionBegins" scope="col">Comienza</th>
-                                        <th class="sessionFeaturedUsers" scope="col">Pro</th>
+                                        <th class="sessionTimes" scope="col">Time</th>
                                         <th class="sessionActions text-end" scope="col">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    
+                                <tbody id="sessionsTableBody">
+                                    <!-- <tr class="sessionLeader" data-id="{{sessionID}}">
+                                        <td class="sessionName">Verbania - Alpe Motta</td>
+                                        <td class="sessionBegins">7/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                            <span class="badge bg-light text-dark">19:00</span>
+                                            <span class="badge bg-light text-dark">22:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Verbania - Alpe Motta</td>
+                                        <td class="sessionBegins">8/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Verbania - Alpe Motta</td>
+                                        <td class="sessionBegins">9/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="sessionLeader" data-id="{{sessionID}}">
+                                        <td class="sessionName">Perugia - Montalcino</td>
+                                        <td class="sessionBegins">10/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="sessionLeader" data-id="{{sessionID}}">
+                                        <td class="sessionName">Torino</td>
+                                        <td class="sessionBegins">11/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Torino</td>
+                                        <td class="sessionBegins">12/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                            <span class="badge bg-light text-dark">19:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Torino</td>
+                                        <td class="sessionBegins">13/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Torino</td>
+                                        <td class="sessionBegins">14/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="sessionLeader" data-id="{{sessionID}}">
+                                        <td class="sessionName">Milano</td>
+                                        <td class="sessionBegins">15/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                            <span class="badge bg-light text-dark">19:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-id="{{sessionID}}">
+                                        <td class="sessionName">Milano</td>
+                                        <td class="sessionBegins">16/5/17</td>
+                                        <td class="sessionTimes" scope="col">
+                                            <span class="badge bg-light text-dark">09:00</span>
+                                            <span class="badge bg-light text-dark">10:00</span>
+                                            <span class="badge bg-light text-dark">11:00</span>
+                                            <span class="badge bg-light text-dark">12:00</span>
+                                            <span class="badge bg-light text-dark">13:00</span>
+                                            <span class="badge bg-light text-dark">14:00</span>
+                                            <span class="badge bg-light text-dark">15:00</span>
+                                            <span class="badge bg-light text-dark">16:00</span>
+                                            <span class="badge bg-light text-dark">17:00</span>
+                                            <span class="badge bg-light text-dark">18:00</span>
+                                        </td>
+                                        <td class="sessionActions text-end">
+                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -193,10 +337,9 @@
     <template id="scheduledSessionTemplate">
         <tr data-id="{{sessionID}}">
             <td class="sessionName">{{sessionName}}</td>
-            <td class="sessionID">{{sessionID}}</td>
             <td class="sessionBegins">{{sessionDate}}</td>
-            <td class="sessionFeaturedUsers" scope="col">
-                <span class="badge bg-light text-dark">{{sessionFeaturedUsers}}</span>
+            <td class="sessionTimes" scope="col">
+                
             </td>
             <td class="sessionActions text-end">
                 <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>

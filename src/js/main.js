@@ -4,7 +4,7 @@ import bootstrap from 'bootstrap'
 // Load Styles
 import '../scss/main.scss';
 
-import { app } from './Controller';
+import { app } from './controllers/Controller';
 
 // App code
 // https://backend.pagesgitlab.bkooltech.com/bkool-session-api/
@@ -33,23 +33,60 @@ import { app } from './Controller';
 
 // console.log(`Hello ${process.env.HELLO}`);
 
-const host = 'http://localhost:3001';
+// const host = 'http://localhost:3001';
 
-const loadSessions = () => new Promise((resolve, reject) => {
-    fetch(`${host}/scheduledSessions`)
-        .then(response => {
-            if (response.ok) {
-                response.json()
-                    .then(scheduledSessions => resolve(scheduledSessions));
-            } else {
-                reject();
-            }
-        })
-        .catch(() => reject());
-});
+// const loadSessions = () => new Promise((resolve, reject) => {
+//     fetch(`${host}/scheduledSessions`)
+//         .then(response => {
+//             if (response.ok) {
+//                 response.json()
+//                     .then(scheduledSessions => resolve(scheduledSessions));
+//             } else {
+//                 reject();
+//             }
+//         })
+//         .catch(() => reject());
+// });
 
-loadSessions()
-    .then(scheduledSessions => console.log(scheduledSessions))
-    .catch((error) => console.log(error));
+// loadSessions()
+//     .then(scheduledSessions => console.log(scheduledSessions))
+//     .catch((error) => console.log(error));
 
 console.log('sdsds');
+
+const dataModelExample = [
+    {
+        sessionName: "Nombre de sesión",
+        sessionID: 546546546565,
+        sessionRounds: [
+            {
+                startDate: "7/5/2022",
+                times: [
+                    "09:00",
+                    "11:00",
+                    "13:00"
+                ]
+            },
+            {
+                startDate: "8/5/2022",
+                times: [
+                    "09:00",
+                    "11:00"
+                ]
+            },
+            {
+                startDate: "9/5/2022",
+                times: [
+                    "09:00",
+                    "11:00",
+                    "13:00",
+                    "15:00",
+                    "18:00",
+                    "19:00",
+                    "20:00",
+                    "22:00"
+                ]
+            },
+        ]
+    }
+];
