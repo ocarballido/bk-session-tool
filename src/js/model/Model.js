@@ -37,10 +37,13 @@ class Model {
                                 let time = this.dateTimeFormater(item.startDate).formattedTime;
                                 obj[startDate] = obj[startDate] || [];
                                 obj[startDate].push(time);
+                                // obj[startDate].featuredUserIds = 'item.featuredUser'
+                                // obj[startDate].push(item.featuredUser);
                                 return obj;
                             }, {})).map((item) => ({
                                 startDate: item[0],
-                                times: item[1]
+                                times: item[1],
+                                featuredUserIds: 'item[3]'
                             }));
                             return singleSession;
                         });
