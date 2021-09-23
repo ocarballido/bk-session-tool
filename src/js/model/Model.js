@@ -3,9 +3,6 @@ import { apiServices } from '../services/ApiServices';
 class Model {
     constructor() {
         this._scheduledSessions = [];
-        // this._sessions = [];
-        // this._users = [];
-        this._filterObject = {};
     }
 
     // Return promise with data
@@ -49,7 +46,7 @@ class Model {
                         });
                         resolve(this._scheduledSessions);                   
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         reject(error);
                         console.log(error);
                     });

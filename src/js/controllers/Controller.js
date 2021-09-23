@@ -13,7 +13,7 @@ class Controller {
         this.view.firstUiAppRender();
 
         // Binding view toggle saidebar action
-        this.view.bindSideBarEvents();        
+        this.view.bindSideBarEvents();
 
         // Load data action
         this.model.getScheduledSessions()

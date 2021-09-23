@@ -52,8 +52,6 @@ import { app } from './controllers/Controller';
 //     .then(scheduledSessions => console.log(scheduledSessions))
 //     .catch((error) => console.log(error));
 
-console.log('sdsds');
-
 const dataModelExample = [
     {
         sessionName: "Nombre de sesión",

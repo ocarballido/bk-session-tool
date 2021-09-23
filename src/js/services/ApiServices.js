@@ -1,5 +1,6 @@
    
 const SCHEDULED_SESSIONS_SERVER = 'http://localhost:3001/scheduledSessions';
+const today = new Date().toISOString();
 const SESSIONS_SERVER = 'http://localhost:3001/sessions';
 const USERS_SERVER = 'http://localhost:3001/users';
 // const SERVER_SHEDULED_SESSIONS = `${SCHEDULED_SESSIONS_SERVER}`;
@@ -33,7 +34,20 @@ const fetchDb = (endpoint, method, data) => {
 
 class ApiServices {
     loadScheduledSessions() {
-        return fetchDb(SCHEDULED_SESSIONS_SERVER, 'GET');
+        return fetchDb(
+            SCHEDULED_SESSIONS_SERVER, 
+            'GET', 
+            // {
+            //     offset: 0,
+            //     limmit: 10,
+            //     userId: '',
+            //     profileId: '',
+            //     eventId: 'GIV2021',
+            //     startDate: today,
+            //     // endDate: weekFromToday,
+            //     featuredUserId: ''
+            // }
+        );
     }
     loadSessions() {
         return fetchDb(SESSIONS_SERVER, 'GET');
