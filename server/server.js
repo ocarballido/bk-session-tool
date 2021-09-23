@@ -29,6 +29,9 @@ router.render = (req, res) => {
       const startDate = getDate(params.get('startDate'), today);
       const future = new Date((new Date(startDate)).setMonth(startDate.getMonth() + 1));
       const endDate = getDate(params.get('endDate'), future);
+      const offset = params.get('offset')
+        ? +params.get('offset')
+        : 0;
       const limit = params.get('limit')
         ? + params.get('limit')
         : 10;
@@ -37,6 +40,7 @@ router.render = (req, res) => {
         generateScheduledSessions(
           startDate.toString(),
           endDate.toString(),
+          offset,
           limit
         )
       );
