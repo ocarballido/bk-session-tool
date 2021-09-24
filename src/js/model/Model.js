@@ -3,9 +3,6 @@ import { apiServices } from '../services/ApiServices';
 class Model {
     constructor() {
         this._scheduledSessions = [];
-        // this._sessions = [];
-        // this._users = [];
-        this._filterObject = {};
     }
 
     // Return promise with data
@@ -39,7 +36,7 @@ class Model {
                                 let startDate = this.dateTimeFormater(item.startDate).formattedDate;
                                 let time = this.dateTimeFormater(item.startDate).formattedTime;
                                 obj[startDate] = obj[startDate] || [];
-                                obj[startDate].push(time);
+                                obj[startDate].push([time, item.featuredUserIds]);
                                 return obj;
                             }, {})).map((item) => ({
                                 startDate: item[0],
@@ -49,7 +46,7 @@ class Model {
                         });
                         resolve(this._scheduledSessions);                   
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         reject(error);
                         console.log(error);
                     });

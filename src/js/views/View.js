@@ -39,7 +39,7 @@ class View {
                 }*/
 
                 const hours = round.times.map((time) => {
-                    return `<span class="badge bg-light text-dark">${time}</span>`;
+                    return `<span class="badge bg-light text-dark">${time[0]}</span>`;
                 });
 
                 // Adding table row
@@ -54,7 +54,7 @@ class View {
                             </td>
                             <td class="sessionActions text-end">
                                 <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+                                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger text-white">Eliminar</button>
                             </td>
                         </tr>
                     `
@@ -69,7 +69,7 @@ class View {
             const currentDate = new Date();
             const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
             this.dateStart.value = currentDateToLocaleDateString;
-            console.log(currentDateToLocaleDateString);
+            // console.log(currentDateToLocaleDateString);
             // handler();
         });
     }

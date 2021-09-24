@@ -307,15 +307,15 @@ $tooltip-shadow-bottom:						0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !default;
 $tooltip-shadow-left:						0.5rem 0 1rem rgba(0, 0, 0, 0.15) !default;
 
 // List group
-$list-group-bg:								$white !default;
-$list-group-item-padding-y:					$input-btn-padding-y !default;
-$list-group-item-padding-x:					$input-btn-padding-x !default;
-$list-group-border-color:					transparent !default;
-$list-group-disabled-bg:					$gray-100 !default;
-$list-group-disabled-color:					$dark !default;
-$list-group-hover-bg:						$gray-50 !default;
-$list-group-action-color:					$dark !default;
-$list-group-active-border-color:			transparent !default;
+$list-group-bg:								transparent !default;
+// $list-group-item-padding-y:					$input-btn-padding-y !default;
+// $list-group-item-padding-x:					$input-btn-padding-x !default;
+// $list-group-border-color:					transparent !default;
+// $list-group-disabled-bg:					$gray-100 !default;
+// $list-group-disabled-color:					$dark !default;
+// $list-group-hover-bg:						$gray-50 !default;
+// $list-group-action-color:					$dark !default;
+// $list-group-active-border-color:			transparent !default;
 
 // Tables
 $table-cell-padding:						.63rem !default;
