@@ -20,7 +20,7 @@ class Model {
                         this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
                             const singleSession = {
                                 sessionID: singleScheduledSession.id,
-                                sessionRounds: [],
+                                sessionRounds: singleScheduledSession.roundsDefinition,
                                 sessionName
                             };
                             
@@ -32,16 +32,16 @@ class Model {
                             });
     
                             // Creating more readeble rounds array
-                            singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
-                                let startDate = this.dateTimeFormater(item.startDate).formattedDate;
-                                let time = this.dateTimeFormater(item.startDate).formattedTime;
-                                obj[startDate] = obj[startDate] || [];
-                                obj[startDate].push([time, item.featuredUserIds]);
-                                return obj;
-                            }, {})).map((item) => ({
-                                startDate: item[0],
-                                times: item[1]
-                            }));
+                            // singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
+                            //     let startDate = this.dateTimeFormater(item.startDate).formattedDate;
+                            //     let time = this.dateTimeFormater(item.startDate).formattedTime;
+                            //     obj[startDate] = obj[startDate] || [];
+                            //     obj[startDate].push([time, item.featuredUserIds]);
+                            //     return obj;
+                            // }, {})).map((item) => ({
+                            //     startDate: item[0],
+                            //     times: item[1]
+                            // }));
                             return singleSession;
                         });
                         resolve(this._scheduledSessions);                   
