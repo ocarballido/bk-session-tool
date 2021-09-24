@@ -385,22 +385,6 @@
     </div>
     <!-- /Modal -->
 
-    <!-- Template scheduled session -->
-    <template id="scheduledSessionTemplate">
-        <tr data-id="{{sessionID}}">
-            <td class="sessionName">{{sessionName}}</td>
-            <td class="sessionBegins">{{sessionDate}}</td>
-            <td class="sessionTimes" scope="col">
-                
-            </td>
-            <td class="sessionActions text-end">
-                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-            </td>
-        </tr>
-    </template>
-    <!-- /Template scheduled session -->
-
     <!-- Template table alert -->
     <template id="alertTemplate">
         <tr id="alertMessages">
@@ -410,5 +394,44 @@
         </tr>
     </template>
     <!-- /Template table alert -->
+
+    <!-- Template scheduled session li -->
+    <template id="scheduledSessionLi">
+        <li class="list-group-item p-0" data-id="{{sessionID}}">
+            <div class="p-2" data-bs-toggle="collapse" href="#target-{{sessionID}}">
+                {{sessionName}}
+            </div>
+            <div class="collapse" id="target-{{sessionID}}">
+                <table class="table table-hover m-0">
+                    <thead>
+                        <tr class="table-light">
+                            <th class="sessionBegins" scope="col">Comienza</th>
+                            <th class="sessionTimes" scope="col">Time</th>
+                            <th class="sessionActions text-end" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </template>
+    <!-- Template scheduled session li -->
+
+    <!-- Template scheduled session table row -->
+    <template id="scheduledSessionTableRow">
+        <tr data-id="{{sessionID}}">
+            <td class="sessionBegins">{{sessionDate}}</td>
+            <td class="sessionTimes" scope="col">
+                <span class="badge bg-light text-dark">{{sessionTime}}</span>
+            </td>
+            <td class="sessionActions text-end">
+                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+    </template>
+    <!-- /Template scheduled session table row -->
 </body>
 </html>

@@ -18,6 +18,8 @@ class View {
 
         // Table
         this.sessionsTableBody = document.getElementById('sessionsTableBody');
+        this.scheduledSessionLi = document.getElementById('scheduledSessionLi');
+        this.scheduledSessionTableRow = document.getElementById('scheduledSessionTableRow');
     }
 
     // First test
