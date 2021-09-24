@@ -1,6 +1,7 @@
 .table {
 	thead {
 		tr {
+			position: sticky; top: 1rem; z-index: 1;
 			th {
 				border-bottom: none;
 				border-top: none;
@@ -12,7 +13,7 @@
 					border-top-right-radius: 5px;
 				}
 				&.sessionBegins {
-					width: 100px
+					width: 120px
 				}
 				// &.sessionFeaturedUsers {
 				// 	max-width: 250px
@@ -45,7 +46,7 @@
 			td {
 				vertical-align: middle;
 				&.sessionBegins {
-					width: 100px
+					width: 120px
 				}
 				// &.sessionFeaturedUsers {
 				// 	max-width: 250px
