@@ -36,10 +36,9 @@ class View {
             const { sessionName, sessionID, sessionRounds } = session;
 
             const sessionRows = sessionRounds.map((round, index) => {
+                // Adding sessions table row
                 const singleRow = Templates.scheduledSessionTableRowTemplate;
-                // Adding table row
                 return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`);
-
                 // return `
                 //     <tr data-id="${sessionID}">
                 //         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
@@ -52,7 +51,7 @@ class View {
                 // `
             });
 
-            // Adding session li
+            // Adding sessions li
             const singleLi = Templates.scheduledSessionLi.replaceAll('{{sessionID}}', `${sessionID}`).replaceAll('{{sessionName}}',`${sessionName}`).replaceAll('{{sessionShow}}', `${index === 0 ? "show" : ""}`).replaceAll('{{sessionFirst}}', `${index > 0 ? "collapsed" : ""}`).replaceAll('{{sessionTableRow}}', `${ sessionRows.join('') }`);
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
             // this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
@@ -86,8 +85,6 @@ class View {
             const currentDate = new Date();
             const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
             this.dateStart.value = currentDateToLocaleDateString;
-            // console.log(currentDateToLocaleDateString);
-            // handler();
         });
     }
 
