@@ -55,6 +55,31 @@ class Model {
         });
     }
 
+    deleteScheduledSession(sessionID, sessionDate) {
+        console.log(sessionID, sessionDate);
+
+        // const deletedSession= this._scheduledSessions.map( ssession =>  );
+
+        // return new Promise((resolve, reject) => {
+        //     const products = this._products.filter(product => product.buyer === id);
+        //     const deletes = products.map(product => this.deleteProduct(product.id));
+
+        //     const deletedSession= this._scheduledSessions.map( ssession =>  );
+        //     Promise.all(deletes)
+        //         .then(() => {
+        //             apiServices
+        //                 .deleteGuest(id)
+        //                 .then(() => {
+        //                     this._guests = this._guests.filter(guest => guest.id !== id);
+        //                     delete this._guestsObject[id];
+        //                     resolve(true);
+        //                 })
+        //                 .catch(error => console.log(error));
+        //         })
+        //         .catch(error => reject(error));
+        // });
+    }
+
     // API date and time formatter
     dateTimeFormater(APIDate) {
         const timeOptions = {

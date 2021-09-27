@@ -16,7 +16,7 @@ class Controller {
         this.view.bindSideBarEvents();
 
         // Binding delete session action
-        this.view.deleteSessionAction();
+        this.view.deleteScheduledSessionAction(this.deleteScheduledSessionHandler.bind(this));
 
         // Load data action
         this.model.getScheduledSessions()
@@ -27,9 +27,9 @@ class Controller {
             });
     }
 
-    // deleteSessionHandler() {
-    //     //
-    // }
+    deleteScheduledSessionHandler(sessionID, sessionDate) {
+        this.model.deleteScheduledSession(sessionID, sessionDate);
+    }
 }
 
 const app = new Controller(new Model(), new View())

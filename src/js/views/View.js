@@ -83,7 +83,7 @@ class View {
         });
     }
 
-    deleteSessionAction() {
+    deleteScheduledSessionAction(handler) {
         // this.btnDeleteSession
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
@@ -94,7 +94,8 @@ class View {
             if (isDeleteSessionButton) {
                 const sessionId = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
-                console.log(sessionId, sessionDate);
+                // console.log(sessionId, sessionDate);
+                handler(sessionId, sessionDate);
             }
         });
     }

@@ -38,8 +38,11 @@ class ApiServices {
     loadSessions() {
         return fetchDb(SESSIONS_SERVER, 'GET');
     }
-    loadUsers() {
-        return fetchDb(USERS_SERVER, 'GET');
+    deleteScheduledSession(sessionID) {
+        return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'DELETE');
+    }
+    updateScheduledSession(sessionID) {
+        return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'PUT');
     }
     // async loadScheduledSessions() {
     //     try {
