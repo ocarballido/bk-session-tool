@@ -39,10 +39,10 @@ class View {
                 return `
                     <tr data-id="${sessionID}">
                         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
-                        <td class="sessionTimes" scope="col"><span class="badge bg-light text-dark">${this.dateTimeFormater(round.startDate).formattedTime}</span></td>
+                        <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">${this.dateTimeFormater(round.startDate).formattedTime}</span></td>
                         <td class="sessionActions text-end">
                             <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger text-white">Eliminar</button>
+                            <button id="btnDeleteSession" type="button" class="btn bg-transparent text-danger btn-icon btn-sm"><span class="icon-delete"></span></button>
                         </td>
                     </tr>
                 `
