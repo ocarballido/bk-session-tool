@@ -1,0 +1,29 @@
+.collapse-trigger {
+    background-color: #e8e8e8;
+    // border-top: 1px solid #999;
+    font-family: "HKGrotesk-Bold";
+    &:hover {
+        background-color: #e8e8e8;
+        cursor: pointer;
+    }
+    &.collapsed {
+        background-color: transparent;
+        // border-top: 1px solid #999;
+        font-family: "HKGrotesk-Medium";
+        &:hover {
+            background-color: #e8e8e8;
+            cursor: pointer;
+        }
+        span {
+            transition: all .25s;
+            transform: rotate(0deg);
+        }
+    }
+    span {
+        transition: all .25s;
+        transform: rotate(180deg);
+    }
+}
+// .collapse-body {
+//     border-bottom: 1px solid #202020;
+// }

@@ -30,7 +30,7 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        scheduledSessions.forEach(session => {
+        scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, sessionID, sessionRounds } = session;
 
@@ -51,10 +51,11 @@ class View {
             // Adding session li
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
                 <li class="list-group-item p-0" data-id="${sessionID}">
-                    <div class="py-3" data-bs-toggle="collapse" href="#target-${sessionID}">
+                    <div class="${index > 0 ? "collapsed" : ""} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-${sessionID}">
                         ${sessionName}
+                        <span class="icon-expand-more text-dark"></span>
                     </div>
-                    <div class="collapse" id="target-${sessionID}">
+                    <div class="collapse collapse-body ${index === 0 ? "show" : ""}" id="target-${sessionID}">
                         <table class="table table-hover m-0">
                             <thead>
                                 <tr class="table-light">
