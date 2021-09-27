@@ -30,72 +30,53 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
+        // console.log(singleRow);
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, sessionID, sessionRounds } = session;
 
             const sessionRows = sessionRounds.map((round, index) => {
+                const singleRow = Templates.scheduledSessionTableRowTemplate;
                 // Adding table row
-                return `
-                    <tr data-id="${sessionID}">
-                        <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
-                        <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">${this.dateTimeFormater(round.startDate).formattedTime}</span></td>
-                        <td class="sessionActions text-end">
-                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                            <button id="btnDeleteSession" type="button" class="btn bg-transparent text-danger btn-icon btn-sm"><span class="icon-delete"></span></button>
-                        </td>
-                    </tr>
-                `
+                return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`);
+
+                // return `
+                //     <tr data-id="${sessionID}">
+                //         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
+                //         <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">${this.dateTimeFormater(round.startDate).formattedTime}</span></td>
+                //         <td class="sessionActions text-end">
+                //             <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                //             <button id="btnDeleteSession" type="button" class="btn bg-transparent text-danger btn-icon btn-sm"><span class="icon-delete"></span></button>
+                //         </td>
+                //     </tr>
+                // `
             });
 
             // Adding session li
-            this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
-                <li class="list-group-item p-0" data-id="${sessionID}">
-                    <div class="${index > 0 ? "collapsed" : ""} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-${sessionID}">
-                        ${sessionName}
-                        <span class="icon-expand-more text-dark"></span>
-                    </div>
-                    <div class="collapse collapse-body ${index === 0 ? "show" : ""}" id="target-${sessionID}">
-                        <table class="table table-hover m-0">
-                            <thead>
-                                <tr class="table-light">
-                                    <th class="sessionBegins" scope="col">Comienza</th>
-                                    <th class="sessionTimes" scope="col">Hora</th>
-                                    <th class="sessionActions text-end" scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            ${ sessionRows.join('') }
-                            </tbody>
-                        </table>
-                    </div>
-                </li>
-            `);
-
-            // Loop sessionRounds
-            // sessionRounds.forEach((round, index) => {
-            //     const hours = round.times.map((time) => {
-            //         return `<span class="badge bg-light text-dark">${time[0]}</span>`;
-            //     });
-
-            //     // Adding table row
-            //     this.sessionsTableBody.insertAdjacentHTML(
-            //         'beforeend',
-            //         `
-            //             <tr class="${index === 0 ? 'sessionLeader' : ''}" data-id="${sessionID}">
-            //                 <td class="sessionName">${sessionName}</td>
-            //                 <td class="sessionBegins">${round.startDate}</td>
-            //                 <td class="sessionTimes" scope="col">
-            //                     ${ hours.join('&nbsp;') }
-            //                 </td>
-            //                 <td class="sessionActions text-end">
-            //                     <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-            //                     <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger text-white">Eliminar</button>
-            //                 </td>
-            //             </tr>
-            //         `
-            //     );
-            // });
+            const singleLi = Templates.scheduledSessionLi.replaceAll('{{sessionID}}', `${sessionID}`).replaceAll('{{sessionName}}',`${sessionName}`).replaceAll('{{sessionShow}}', `${index === 0 ? "show" : ""}`).replaceAll('{{sessionFirst}}', `${index > 0 ? "collapsed" : ""}`).replaceAll('{{sessionTableRow}}', `${ sessionRows.join('') }`);
+            this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
+            // this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
+            //     <li class="list-group-item p-0" data-id="${sessionID}">
+            //         <div class="${index > 0 ? "collapsed" : ""} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-${sessionID}">
+            //             ${sessionName}
+            //             <span class="icon-expand-more text-dark"></span>
+            //         </div>
+            //         <div class="collapse collapse-body ${index === 0 ? "show" : ""}" id="target-${sessionID}">
+            //             <table class="table table-hover m-0">
+            //                 <thead>
+            //                     <tr class="table-light">
+            //                         <th class="sessionBegins" scope="col">Comienza</th>
+            //                         <th class="sessionTimes" scope="col">Hora</th>
+            //                         <th class="sessionActions text-end" scope="col">Acciones</th>
+            //                     </tr>
+            //                 </thead>
+            //                 <tbody>
+            //                 ${ sessionRows.join('') }
+            //                 </tbody>
+            //             </table>
+            //         </div>
+            //     </li>
+            // `);
         });
     }
 
