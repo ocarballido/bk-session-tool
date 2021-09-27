@@ -13,7 +13,10 @@ class Controller {
         this.view.firstUiAppRender();
 
         // Binding view toggle saidebar action
-        this.view.bindSideBarEvents();        
+        this.view.bindSideBarEvents();
+
+        // Binding delete session action
+        this.view.deleteSessionAction();
 
         // Load data action
         this.model.getScheduledSessions()
@@ -22,8 +25,11 @@ class Controller {
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.toggleSpinner();
             });
-            
     }
+
+    // deleteSessionHandler() {
+    //     //
+    // }
 }
 
 const app = new Controller(new Model(), new View())

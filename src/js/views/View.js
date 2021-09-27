@@ -16,11 +16,15 @@ class View {
         this.dateStart = document.getElementById('filterSessionDateStart');
         this.dateEnd = document.getElementById('filterSessionDateEnd');
 
-        // Table
+        // List
         this.scheduledSessionsList = document.getElementById('scheduledSessionsList');
         this.sessionsTableBody = document.getElementById('sessionsTableBody');
         this.scheduledSessionLi = document.getElementById('scheduledSessionLi').content;
         this.scheduledSessionTableRow = document.getElementById('scheduledSessionTableRow');
+
+        // Action buttons
+        this.btnDeleteSession = document.querySelector('.btnDeleteSession');
+        this.btnEditSession = document.querySelector('.btnEditSession');
     }
 
     // First test
@@ -38,7 +42,7 @@ class View {
             const sessionRows = sessionRounds.map((round, index) => {
                 // Adding sessions table row
                 const singleRow = Templates.scheduledSessionTableRowTemplate;
-                return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`);
+                return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`).replace('{{sessionUTCDate}}', `${round.startDate}`);
                 // return `
                 //     <tr data-id="${sessionID}">
                 //         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
@@ -76,6 +80,22 @@ class View {
             //         </div>
             //     </li>
             // `);
+        });
+    }
+
+    deleteSessionAction() {
+        // this.btnDeleteSession
+        this.scheduledSessionsList.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementClasses = element.classList;
+            const isDeleteSessionButton = elementClasses.contains('btnDeleteSession');
+            const isEditSessionButton = elementClasses.contains('btnEditSession');
+
+            if (isDeleteSessionButton) {
+                const sessionId = event.target.closest('tr').dataset.id;
+                const sessionDate = event.target.closest('tr').dataset.date;
+                console.log(sessionId, sessionDate);
+            }
         });
     }
 

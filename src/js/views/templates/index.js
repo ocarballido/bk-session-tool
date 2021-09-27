@@ -21,7 +21,7 @@ export const scheduledSessionLi = `
     </li>
 `;
 export const scheduledSessionTableRowTemplate = `
-    <tr data-id="{{sessionID}}">
+    <tr data-id="{{sessionID}}" data-date="{{sessionUTCDate}}">
         <td class="sessionBegins">{{sessionDate}}</td>
         <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">{{sessionTime}}</span></td>
         <td class="sessionActions text-end">
