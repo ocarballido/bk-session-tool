@@ -56,7 +56,20 @@ class Model {
     }
 
     deleteScheduledSession(sessionID, sessionDate) {
-        console.log(sessionID, sessionDate);
+        // Get session item
+        const sessionItem = this._scheduledSessions.find( session => session.sessionID === sessionID );
+
+        // Get if this sessions have 1 or more rounds
+        const isSingleRound = sessionItem.sessionRounds.length > 1;
+
+        // If have more than 1 session round we'll 'PUT'
+        // if (isSingleRound) {
+        //     //
+        // } else if () { // If have more than 1 session round we'll 'DELETE'
+
+        // }
+
+        console.log(sessionID, sessionDate, sessionItem, isSingleRound);
 
         // const deletedSession= this._scheduledSessions.map( ssession =>  );
 
