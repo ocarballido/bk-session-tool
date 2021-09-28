@@ -28,10 +28,6 @@ class Controller {
     }
 
     deleteScheduledSessionHandler(sessionID, sessionDate) {
-        // const deleteSession = () => {
-        //     // Update view
-        //     this.view
-        // }
         this.model.deleteScheduledSession(sessionID, sessionDate)
             .then(() => this.view.renderDeleteItem(sessionID, sessionDate))
             .catch(() => {
