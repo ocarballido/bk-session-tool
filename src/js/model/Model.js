@@ -63,11 +63,17 @@ class Model {
         const isSingleRound = sessionItem.sessionRounds.length > 1;
 
         // If have more than 1 session round we'll 'PUT'
-        // if (isSingleRound) {
-        //     //
-        // } else if () { // If have more than 1 session round we'll 'DELETE'
-
-        // }
+        if (isSingleRound) {
+            console.log(sessionID, sessionDate);
+        } else { // If have more than 1 session round we'll 'DELETE'
+            return apiServices
+                .deleteScheduledSession(sessionID)
+                .then((scheduledSessions) => {
+                    console.log(scheduledSessions);
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                })
+                .catch(error => console.log(error));
+        }
 
         console.log(sessionID, sessionDate, sessionItem, isSingleRound);
 
@@ -91,26 +97,6 @@ class Model {
         //         })
         //         .catch(error => reject(error));
         // });
-    }
-
-    // API date and time formatter
-    dateTimeFormater(APIDate) {
-        const timeOptions = {
-            hour: 'numeric', minute: 'numeric',
-            hour12: true
-        };
-        const date = new Date(APIDate);
-        const webLanguage = navigator.language;
-        const formattedDate = new Intl.DateTimeFormat(webLanguage).format(date);
-        const formattedTime = new Intl.DateTimeFormat(webLanguage, timeOptions).format(date);
-        const formattedDateTime = `${formattedTime}`;
-        return {
-            date,
-            formattedDate,
-            webLanguage,
-            formattedTime,
-            formattedDateTime
-        };
     }
 };
 

@@ -1,4 +1,5 @@
 import * as Templates from './templates';
+import { dateTimeFormater } from '../helpers/date-formatter';
 
 class View {
     constructor() {
@@ -34,7 +35,7 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        // console.log(singleRow);
+        // console.log(dateTimeFormater());
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, sessionID, sessionRounds } = session;
@@ -83,6 +84,7 @@ class View {
         });
     }
 
+    // Delete scheduled session
     deleteScheduledSessionAction(handler) {
         // this.btnDeleteSession
         this.scheduledSessionsList.addEventListener('click', (event) => {
@@ -98,6 +100,13 @@ class View {
                 handler(sessionId, sessionDate);
             }
         });
+    }
+
+    // Render items after delete session
+    renderDeleteItem(sessionID, sessionDate) {
+        const sessionToDelete = document.querySelector(`.list-group-item[data-id="${sessionID}"]`);
+        sessionToDelete.remove();
+        // console.log(sessionToDelete);
     }
 
     // First UI app render action

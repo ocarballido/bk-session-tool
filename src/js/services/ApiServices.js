@@ -44,15 +44,6 @@ class ApiServices {
     updateScheduledSession(sessionID) {
         return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'PUT');
     }
-    // async loadScheduledSessions() {
-    //     try {
-    //         const result = await fetch(SERVER_SHEDULED_SESSIONS);
-    //         const scheduledSessions = await result.json();
-    //         return scheduledSessions;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 }
 
 const apiServices = new ApiServices();
