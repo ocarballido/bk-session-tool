@@ -32,17 +32,21 @@ const fetchDb = (endpoint, method, data) => {
 };
 
 class ApiServices {
+    // Load scheduled sessions
     loadScheduledSessions() {
         return fetchDb(SCHEDULED_SESSIONS_SERVER, 'GET');
     }
+    // Load sessions
     loadSessions() {
         return fetchDb(SESSIONS_SERVER, 'GET');
     }
+    // Delete session
     deleteScheduledSession(sessionID) {
         return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'DELETE');
     }
-    updateScheduledSession(sessionID) {
-        return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'PUT');
+    // Update scheduled sessions rounds definition
+    updateRoundsDefinition(sessionID) {
+        return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'PUT', {roundsDefinition});
     }
 }
 

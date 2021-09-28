@@ -64,7 +64,13 @@ class Model {
 
         // If have more than 1 session round we'll 'PUT'
         if (isSingleRound) {
-            console.log(sessionID, sessionDate);
+            const roundsDefinition = [];
+            // return apiServices
+            //     .updateScheduledSession(sessionID, sessionDate)
+            //     .then(() => {
+            //         console.log(scheduledSessions);
+            //         this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+            //     });
         } else { // If have more than 1 session round we'll 'DELETE'
             return apiServices
                 .deleteScheduledSession(sessionID)
@@ -73,7 +79,7 @@ class Model {
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
                 });
         }
-        console.log(sessionID, sessionDate, sessionItem, isSingleRound);
+        // console.log(sessionID, sessionDate, sessionItem, isSingleRound);
     }
 };
 
