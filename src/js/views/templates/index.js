@@ -31,9 +31,5 @@ export const scheduledSessionTableRowTemplate = `
     </tr>
 `;
 export const alertTemplate = `
-    <tr id="alertMessages">
-        <td colspan="5">
-            <div class="alert alert-{{alertType}} m-0 rounded-0 border-0" role="alert">{{alertMassage}}</div>
-        </td>
-    </tr>
+    <div class="alert alert-{{alertType}} mx-0 mb-3 border-0" role="alert">{{alertMassage}}</div>
 `;

@@ -33,7 +33,10 @@ class Controller {
         //     this.view
         // }
         this.model.deleteScheduledSession(sessionID, sessionDate)
-            .then(() => this.view.renderDeleteItem(sessionID, sessionDate));
+            .then(() => this.view.renderDeleteItem(sessionID, sessionDate))
+            .catch(() => {
+                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+            });
     }
 }
 

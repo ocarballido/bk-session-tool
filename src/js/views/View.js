@@ -147,6 +147,16 @@ class View {
         this.spinner.classList.toggle('d-none');
     }
 
+    // Render alert messages
+    renderAlertMessages(alertMassage, alertType) {
+        const alertDiv = Templates.alertTemplate.replace('{{alertType}}', `${alertType}`).replace('{{alertMassage}}', `${alertMassage}`);
+        this.scheduledSessionsList.insertAdjacentHTML('beforebegin', alertDiv);
+        setTimeout(() => {
+            document.querySelector('.alert').remove();
+        }, 5000);
+        console.log(alertMassage, alertType, alertDiv);
+    }
+
     // API date and time formatter
     dateTimeFormater(APIDate) {
         const timeOptions = {
