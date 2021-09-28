@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
-    "server": "node server/server.js",
+    "fakeDev": "npm run fakeServer & webpack serve --config webpack.config.js --mode development",
+    "fakeServer": "node server/server.js",
+    "server": "json-server -p3001 --watch server/db.json",
     "images": "node ./bin/images.js"
   },
   "author": "Oscar Carballido",
