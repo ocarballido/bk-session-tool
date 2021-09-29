@@ -47,8 +47,8 @@ class View {
                 // Find-Replace elements in template
                 const findReplace = {
                     '{{sessionID}}': sessionID,
-                    '{{sessionDate}}': this.dateTimeFormater(round.startDate).formattedDate,
-                    '{{sessionTime}}': this.dateTimeFormater(round.startDate).formattedTime,
+                    '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
+                    '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
                     '{{sessionUTCDate}}': round.startDate
                 };
 
@@ -179,26 +179,6 @@ class View {
             document.querySelector('.alert').remove();
         }, 5000);
         console.log(alertMassage, alertType, alertDiv);
-    }
-
-    // API date and time formatter
-    dateTimeFormater(APIDate) {
-        const timeOptions = {
-            hour: 'numeric', minute: 'numeric',
-            hour12: true
-        };
-        const date = new Date(APIDate);
-        const webLanguage = navigator.language;
-        const formattedDate = new Intl.DateTimeFormat(webLanguage).format(date);
-        const formattedTime = new Intl.DateTimeFormat(webLanguage, timeOptions).format(date);
-        const formattedDateTime = `${formattedTime}`;
-        return {
-            date,
-            formattedDate,
-            webLanguage,
-            formattedTime,
-            formattedDateTime
-        };
     }
 };
 

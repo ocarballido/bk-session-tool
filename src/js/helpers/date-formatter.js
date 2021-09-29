@@ -7,7 +7,7 @@ export const dateTimeFormater = (APIDate) => {
     const webLanguage = navigator.language;
     const formattedDate = new Intl.DateTimeFormat(webLanguage).format(date);
     const formattedTime = new Intl.DateTimeFormat(webLanguage, timeOptions).format(date);
-    const formattedDateTime = `${formattedTime}`;
+    const formattedDateTime = formattedTime;
     return {
         date,
         formattedDate,
