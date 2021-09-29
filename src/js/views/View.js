@@ -43,7 +43,19 @@ class View {
             const sessionRows = sessionRounds.map((round, index) => {
                 // Adding sessions table row
                 const singleRow = Templates.scheduledSessionTableRowTemplate;
-                return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`).replace('{{sessionUTCDate}}', `${round.startDate}`);
+
+                // Find-Replace elements in template
+                const findReplace = {
+                    '{{sessionID}}': sessionID,
+                    '{{sessionDate}}': this.dateTimeFormater(round.startDate).formattedDate,
+                    '{{sessionTime}}': this.dateTimeFormater(round.startDate).formattedTime,
+                    '{{sessionUTCDate}}': round.startDate
+                };
+
+                // Return replaced singleRow template
+                return singleRow.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+                // return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`).replace('{{sessionUTCDate}}', `${round.startDate}`);
                 // return `
                 //     <tr data-id="${sessionID}">
                 //         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
@@ -57,7 +69,19 @@ class View {
             });
 
             // Adding sessions li
-            const singleLi = Templates.scheduledSessionLi.replaceAll('{{sessionID}}', `${sessionID}`).replaceAll('{{sessionName}}',`${sessionName}`).replaceAll('{{sessionShow}}', `${index === 0 ? "show" : ""}`).replaceAll('{{sessionFirst}}', `${index > 0 ? "collapsed" : ""}`).replaceAll('{{sessionTableRow}}', `${ sessionRows.join('') }`);
+            // Find-Replace elements in template
+            const findReplace = {
+                '{{sessionID}}': sessionID,
+                '{{sessionName}}': sessionName,
+                '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
+                '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
+                '{{sessionTableRow}}': `${ sessionRows.join('') }`
+            };
+
+            // Replaced singleRow template
+            const singleLi = Templates.scheduledSessionLi.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            // Inserted to html
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
             // this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
             //     <li class="list-group-item p-0" data-id="${sessionID}">
