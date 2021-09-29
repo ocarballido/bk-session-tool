@@ -173,8 +173,19 @@ class View {
 
     // Render alert messages
     renderAlertMessages(alertMassage, alertType) {
-        const alertDiv = Templates.alertTemplate.replace('{{alertType}}', `${alertType}`).replace('{{alertMassage}}', `${alertMassage}`);
+        // Find-Replace elements in alert
+        const findReplace = {
+            '{{alertType}}': alertType,
+            '{{alertMassage}}': alertMassage
+        };
+        
+        // Replaced elements
+        const alertDiv = Templates.alertTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+        // Insert to html
         this.scheduledSessionsList.insertAdjacentHTML('beforebegin', alertDiv);
+
+        // Set time out to remove alert message
         setTimeout(() => {
             document.querySelector('.alert').remove();
         }, 5000);
