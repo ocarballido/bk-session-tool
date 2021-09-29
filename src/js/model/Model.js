@@ -16,15 +16,15 @@ class Model {
                     apiServices.loadScheduledSessions()
                 ])
                     .then(([sessions, scheduledSessions]) => {
-
+                        // Filling our data model object
                         this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                            // Creating single session object
                             const singleSession = {
-                                sessionID: singleScheduledSession.id,
-                                sessionRounds: singleScheduledSession.roundsDefinition,
+                                ...singleScheduledSession,
                                 sessionName
                             };
                             
-                            // Traversing session API array
+                            // Traversing session API array to extract session name based on id
                             const sessionName = sessions.map(session => {
                                 if (session.id === singleScheduledSession.id) {
                                     singleSession.sessionName = session.name;
@@ -32,7 +32,7 @@ class Model {
                             });
     
                             // Creating more readeble rounds array
-                            // singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
+                            // singleSession.roundsDefinition = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
                             //     let startDate = this.dateTimeFormater(item.startDate).formattedDate;
                             //     let time = this.dateTimeFormater(item.startDate).formattedTime;
                             //     obj[startDate] = obj[startDate] || [];
@@ -57,10 +57,10 @@ class Model {
 
     deleteScheduledSession(sessionID, sessionDate) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.sessionID === sessionID );
+        const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
 
         // Get if this sessions have 1 or more rounds
-        const isSingleRound = sessionItem.sessionRounds.length > 1;
+        const isSingleRound = sessionItem.roundsDefinition.length > 1;
 
         // If have more than 1 session round we'll 'PUT'
         if (isSingleRound) {

@@ -38,15 +38,15 @@ class View {
         // console.log(dateTimeFormater());
         scheduledSessions.forEach((session, index) => {
             // Getting session values
-            const { sessionName, sessionID, sessionRounds } = session;
+            const { sessionName, id, roundsDefinition } = session;
 
-            const sessionRows = sessionRounds.map((round, index) => {
+            const sessionRows = roundsDefinition.map((round, index) => {
                 // Adding sessions table row
                 const singleRow = Templates.scheduledSessionTableRowTemplate;
 
                 // Find-Replace elements in template
                 const findReplace = {
-                    '{{sessionID}}': sessionID,
+                    '{{sessionID}}': id,
                     '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
                     '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
                     '{{sessionUTCDate}}': round.startDate
@@ -71,7 +71,7 @@ class View {
             // Adding sessions li
             // Find-Replace elements in template
             const findReplace = {
-                '{{sessionID}}': sessionID,
+                '{{sessionID}}': id,
                 '{{sessionName}}': sessionName,
                 '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
                 '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
