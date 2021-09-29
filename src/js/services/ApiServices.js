@@ -42,6 +42,7 @@ class ApiServices {
     }
     // Delete session
     deleteScheduledSession(sessionID) {
+        // console.log(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`);
         return fetchDb(`${SCHEDULED_SESSIONS_SERVER}/${sessionID}`, 'DELETE');
     }
     // Update scheduled sessions rounds definition

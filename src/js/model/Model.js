@@ -75,8 +75,9 @@ class Model {
             return apiServices
                 .deleteScheduledSession(sessionID)
                 .then((scheduledSessions) => {
-                    console.log(scheduledSessions);
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                    console.log(scheduledSessions);
+                    return true;
                 });
         }
         // console.log(sessionID, sessionDate, sessionItem, isSingleRound);
