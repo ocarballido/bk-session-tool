@@ -26,6 +26,9 @@ class View {
         // Action buttons
         this.btnDeleteSession = document.getElementById('btnDeleteSession');
         this.btnEditSession = document.querySelector('.btnEditSession');
+
+        // Modal delete
+        this.modelDelete = document.getElementById('deleteModal');
     }
 
     // First test
@@ -128,8 +131,13 @@ class View {
 
         // Call confirmation delete modal
         const confirmationModal = (sessionID, sessionDate, isSingleRound) => {
+            if (isSingleRound) {
+                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
+            } else {
+                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
+            }
             this.btnDeleteSession.addEventListener('click', () => {
-                console.log('Canceling');
+                const modalBodyText = '';
                 handler(sessionID, sessionDate, isSingleRound);
             });
         }
