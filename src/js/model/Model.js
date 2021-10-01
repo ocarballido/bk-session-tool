@@ -59,6 +59,9 @@ class Model {
         // Get session item
         const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
 
+        // Remove sessionName property. We dont need it to update db
+        delete sessionItem.sessionName;
+
         // Get if this sessions have 1 or more rounds
         const isSingleRound = sessionItem.roundsDefinition.length === 1;
 
@@ -72,7 +75,7 @@ class Model {
                     return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
-            // const data = sessionItem;
+            const data = sessionItem
             return apiServices
                 .updateScheduledSession(sessionID, sessionItem)
                 .then((scheduledSessions) => {
