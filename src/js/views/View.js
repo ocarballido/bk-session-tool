@@ -126,15 +126,10 @@ class View {
             }
         });
 
-        
-
         // Call confirmation delete modal
         const confirmationModal = (sessionID, sessionDate, isSingleRound) => {
             this.btnDeleteSession.addEventListener('click', () => {
                 console.log('Canceling');
-                // if (isSingleRound) {
-                //     //
-                // }
                 handler(sessionID, sessionDate, isSingleRound);
             });
         }
