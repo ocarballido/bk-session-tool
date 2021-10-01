@@ -60,18 +60,10 @@ class Model {
         const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
 
         // Get if this sessions have 1 or more rounds
-        const isSingleRound = sessionItem.roundsDefinition.length > 1;
+        const isSingleRound = sessionItem.roundsDefinition.length === 1;
 
-        // If have more than 1 session round we'll 'PUT'
+        // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
-            const roundsDefinition = [];
-            // return apiServices
-            //     .updateScheduledSession(sessionID, sessionDate)
-            //     .then(() => {
-            //         console.log(scheduledSessions);
-            //         this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
-            //     });
-        } else { // If have more than 1 session round we'll 'DELETE'
             return apiServices
                 .deleteScheduledSession(sessionID)
                 .then((scheduledSessions) => {
@@ -79,8 +71,15 @@ class Model {
                     console.log(scheduledSessions);
                     return true;
                 });
+        } else { // If have more than 1 session round we'll 'PUT'
+            // const data = sessionItem;
+            return apiServices
+                .updateScheduledSession(sessionID, sessionItem)
+                .then((scheduledSessions) => {
+                    console.log(scheduledSessions);
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                });
         }
-        // console.log(sessionID, sessionDate, sessionItem, isSingleRound);
     }
 };
 

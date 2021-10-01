@@ -71,15 +71,15 @@ class ApiServices {
     deleteScheduledSession(sessionID) {
         return fetchDb(
             `${SCHEDULED_SESSIONS_SERVER}/${sessionID}`,
-            METHODS.DELETE
+            METHODS.GET
         );
     }
     // Update scheduled sessions rounds definition
-    updateRoundsDefinition(sessionID) {
+    updateScheduledSession(sessionID, data) {
         return fetchDb(
             `${SCHEDULED_SESSIONS_SERVER}/${sessionID}`,
             METHODS.PUT,
-            {roundsDefinition}
+            { ...data }
         );
     }
 }

@@ -24,7 +24,7 @@ class View {
         this.scheduledSessionTableRow = document.getElementById('scheduledSessionTableRow');
 
         // Action buttons
-        this.btnDeleteSession = document.querySelector('.btnDeleteSession');
+        this.btnDeleteSession = document.getElementById('btnDeleteSession');
         this.btnEditSession = document.querySelector('.btnEditSession');
     }
 
@@ -110,27 +110,46 @@ class View {
 
     // Delete scheduled session
     deleteScheduledSessionAction(handler) {
-        // this.btnDeleteSession
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
             const elementClasses = element.classList;
             const isDeleteSessionButton = elementClasses.contains('btnDeleteSession');
             const isEditSessionButton = elementClasses.contains('btnEditSession');
-
+            
             if (isDeleteSessionButton) {
-                const sessionId = event.target.closest('tr').dataset.id;
+                // Know if the session have mora than one round
+                const isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
+                const sessionID = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
-                // console.log(sessionId, sessionDate);
-                handler(sessionId, sessionDate);
+                confirmationModal(sessionID, sessionDate, isSingleRound);
+                console.log(isSingleRound, sessionID, sessionDate);
             }
         });
+
+        
+
+        // Call confirmation delete modal
+        const confirmationModal = (sessionID, sessionDate, isSingleRound) => {
+            this.btnDeleteSession.addEventListener('click', () => {
+                console.log('Canceling');
+                // if (isSingleRound) {
+                //     //
+                // }
+                handler(sessionID, sessionDate, isSingleRound);
+            });
+        }
     }
 
     // Render items after delete session
-    renderDeleteItem(sessionID, sessionDate) {
+    renderDeletedSession(sessionID) {
         const sessionToDelete = document.querySelector(`.list-group-item[data-id="${sessionID}"]`);
         sessionToDelete.remove();
-        // console.log(sessionToDelete);
+    }
+
+    // Render items after delete round
+    renderDeletedRound(sessionID, sessionDate) {
+        const roundToDelete = document.querySelector(`.list-group-item[data-id="${sessionID}"] .collapse-body table tbody tr[data-date="${sessionDate}"]`);
+        roundToDelete.remove();
     }
 
     // First UI app render action

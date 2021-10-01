@@ -130,7 +130,7 @@
     </div>
     <!-- /Content -->
 
-    <!-- Modal -->
+    <!-- Modal New and Edit -->
     <div class="modal fade" id="editAddSessionModal" tabindex="-1" aria-labelledby="editAddSessionLabel" aria-hidden="true" data-type="add">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -185,7 +185,27 @@
             </div>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /Modal New and Edit -->
+
+    <!-- Modal delete confirmation -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true" data-type="add">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteLabel">Eliminar sesión programada</h5>
+                    <button type="button" class="close btn btn-secondary btn-icon btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"><span class="icon-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas ELIMINAR permanentemente esta sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btnDeleteSession" type="button" data-bs-dismiss="modal" class="btn btn-delete text-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal delete confirmation -->
 
     <!-- Template table alert -->
     <template id="alertTemplate">

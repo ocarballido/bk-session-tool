@@ -27,12 +27,20 @@ class Controller {
             });
     }
 
-    deleteScheduledSessionHandler(sessionID, sessionDate) {
-        this.model.deleteScheduledSession(sessionID, sessionDate)
-            .then(() => this.view.renderDeleteItem(sessionID, sessionDate))
-            .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
-            });
+    deleteScheduledSessionHandler(sessionID, sessionDate, isSingleRound) {
+        if (isSingleRound) {
+            this.model.deleteScheduledSession(sessionID, sessionDate)
+                .then(() => this.view.renderDeletedSession(sessionID))
+                .catch(() => {
+                    this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                });
+        } else {
+            this.model.deleteScheduledSession(sessionID, sessionDate)
+                .then(() => this.view.renderDeletedRound(sessionID, sessionDate))
+                .catch(() => {
+                    this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                });
+        }
     }
 }
 
