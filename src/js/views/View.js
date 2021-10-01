@@ -137,7 +137,6 @@ class View {
                 this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
             }
             this.btnDeleteSession.addEventListener('click', () => {
-                const modalBodyText = '';
                 handler(sessionID, sessionDate, isSingleRound);
             });
         }
