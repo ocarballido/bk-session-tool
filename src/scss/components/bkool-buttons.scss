@@ -153,7 +153,7 @@ $gray-50: 						#f5f5f5 !default;
 		}
 	}
 	&.btn-icon {
-		border-radius: 50%;
+		// border-radius: 50%;
 		padding-left: .5rem;
 		padding-right: .5rem;
 		&.btn-sm {
@@ -168,6 +168,15 @@ $gray-50: 						#f5f5f5 !default;
 	&.btn-facebook {
 		background-color: #3b5998;
 		color: white;
+	}
+	&.btn-delete {
+		&:hover {
+			background-color: $danger !important;
+			color: $white !important;
+		}
+		span {
+            pointer-events: none;
+        }
 	}
 }
 

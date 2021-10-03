@@ -13,7 +13,10 @@ class Controller {
         this.view.firstUiAppRender();
 
         // Binding view toggle saidebar action
-        this.view.bindSideBarEvents();        
+        this.view.bindSideBarEvents();
+
+        // Binding delete session action
+        this.view.deleteScheduledSessionAction(this.deleteScheduledSessionHandler.bind(this));
 
         // Load data action
         this.model.getScheduledSessions()
@@ -22,7 +25,22 @@ class Controller {
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.toggleSpinner();
             });
-            
+    }
+
+    deleteScheduledSessionHandler(sessionID, sessionDate, isSingleRound) {
+        if (isSingleRound) {
+            this.model.deleteScheduledSession(sessionID, sessionDate)
+                .then(() => this.view.renderDeletedSession(sessionID))
+                .catch(() => {
+                    this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                });
+        } else {
+            this.model.deleteScheduledSession(sessionID, sessionDate)
+                .then(() => this.view.renderDeletedRound(sessionID, sessionDate))
+                .catch(() => {
+                    this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                });
+        }
     }
 }
 

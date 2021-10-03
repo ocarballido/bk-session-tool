@@ -658,43 +658,43 @@
     "sessions": [
         {
             "id":"6148a255ea00dd038ed63c75",
-            "name":"Nombre de sesión 01"
+            "name":"Paris - Roubaix"
         },
         {
             "id":"614889b1ea00dd038ed63c74",
-            "name":"Nombre de sesión 02"
+            "name":"Amstel Gold Race"
         },
         {
             "id":"61486a81ea00dd038ed63c73",
-            "name":"Nombre de sesión 03"
+            "name":"La Flèche Wallonne"
         },
         {
             "id":"614866e2ea00dd038ed63c72",
-            "name":"Nombre de sesión 04"
+            "name":"Liège-Bastogne-Liège"
         },
         {
             "id":"6148653aea00dd038ed63c71",
-            "name":"Nombre de sesión 05"
+            "name":"GPC de Quebec"
         },
         {
             "id":"61486420ea00dd038ed63c70",
-            "name":"Nombre de sesión 06"
+            "name":"Milano - Torino"
         },
         {
             "id":"614862e4ea00dd038ed63c6f",
-            "name":"Nombre de sesión 07"
+            "name":"Aer cont. con expl."
         },
         {
             "id":"614861ecea00dd038ed63c6e",
-            "name":"Nombre de sesión 08"
+            "name":"Passo dello Stelvio"
         },
         {
             "id":"61486067ea00dd038ed63c6d",
-            "name":"Nombre de sesión 09"
+            "name":"L'Angliru"
         },
         {
             "id":"61485da8ea00dd038ed63c6c",
-            "name":"Nombre de sesión 10"
+            "name":"Col d'Aubisque"
         }
     ],
     "users": [

@@ -94,163 +94,17 @@
                 <!-- Sessions -->
                 <div id="sessionsContent">
                     <div class="container p-3">
-                        <div class="card bg-transparent rounded">
-                            <table class="table table-hover m-0">
-                                <thead>
-                                    <tr class="table-light">
-                                        <th class="sessionName" scope="col">Nombre</th>
-                                        <th class="sessionBegins" scope="col">Comienza</th>
-                                        <th class="sessionTimes" scope="col">Time</th>
-                                        <th class="sessionActions text-end" scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sessionsTableBody">
-                                    <!-- <tr class="sessionLeader" data-id="{{sessionID}}">
-                                        <td class="sessionName">Verbania - Alpe Motta</td>
-                                        <td class="sessionBegins">7/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                            <span class="badge bg-light text-dark">19:00</span>
-                                            <span class="badge bg-light text-dark">22:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Verbania - Alpe Motta</td>
-                                        <td class="sessionBegins">8/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Verbania - Alpe Motta</td>
-                                        <td class="sessionBegins">9/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="sessionLeader" data-id="{{sessionID}}">
-                                        <td class="sessionName">Perugia - Montalcino</td>
-                                        <td class="sessionBegins">10/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="sessionLeader" data-id="{{sessionID}}">
-                                        <td class="sessionName">Torino</td>
-                                        <td class="sessionBegins">11/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Torino</td>
-                                        <td class="sessionBegins">12/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                            <span class="badge bg-light text-dark">19:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Torino</td>
-                                        <td class="sessionBegins">13/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Torino</td>
-                                        <td class="sessionBegins">14/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="sessionLeader" data-id="{{sessionID}}">
-                                        <td class="sessionName">Milano</td>
-                                        <td class="sessionBegins">15/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                            <span class="badge bg-light text-dark">19:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <tr data-id="{{sessionID}}">
-                                        <td class="sessionName">Milano</td>
-                                        <td class="sessionBegins">16/5/17</td>
-                                        <td class="sessionTimes" scope="col">
-                                            <span class="badge bg-light text-dark">09:00</span>
-                                            <span class="badge bg-light text-dark">10:00</span>
-                                            <span class="badge bg-light text-dark">11:00</span>
-                                            <span class="badge bg-light text-dark">12:00</span>
-                                            <span class="badge bg-light text-dark">13:00</span>
-                                            <span class="badge bg-light text-dark">14:00</span>
-                                            <span class="badge bg-light text-dark">15:00</span>
-                                            <span class="badge bg-light text-dark">16:00</span>
-                                            <span class="badge bg-light text-dark">17:00</span>
-                                            <span class="badge bg-light text-dark">18:00</span>
-                                        </td>
-                                        <td class="sessionActions text-end">
-                                            <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                                            <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr> -->
-                                </tbody>
-                            </table>
+                        <div class="card bg-transparent rounded overflow-hidden">
+                            <ul id="scheduledSessionsList" class="list-group list-group-flush">
+                                
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <!-- /Sessions -->
 
                 <!-- Pagination -->
-                <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-center">
+                <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-center shadow-lg">
                     <nav aria-label="Pagination">
                         <ul class="pagination m-0">
                             <li class="page-item disabled">
@@ -276,7 +130,7 @@
     </div>
     <!-- /Content -->
 
-    <!-- Modal -->
+    <!-- Modal New and Edit -->
     <div class="modal fade" id="editAddSessionModal" tabindex="-1" aria-labelledby="editAddSessionLabel" aria-hidden="true" data-type="add">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -285,7 +139,7 @@
                     <button type="button" class="close btn btn-secondary btn-icon btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"><span class="icon-close"></span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="sessionFilters">
+                    <form id="sessionFilters" data-id="">
                         <!-- Session name -->
                         <div class="form-group floating-label mb-2">
                             <input type="text" class="form-control" id="addSessionName" name="addSessionName" placeholder="Nomnbre de sesion">
@@ -308,19 +162,19 @@
                         <!-- /Date end -->
     
                         <!-- Event -->
-                        <div class="form-group floating-label mb-2">
+                        <!-- <div class="form-group floating-label mb-2">
                             <select id="addSessionEvent" class="custom-select" >
                                 <option selected value="1">GIV</option>
                             </select>
                             <label for="addSessionEvent">Evento</label>
-                        </div>
+                        </div> -->
                         <!-- /Event -->
     
                         <!-- Session user -->
-                        <div class="form-group floating-label mb-2">
+                        <!-- <div class="form-group floating-label mb-2">
                             <input type="text" class="form-control" id="addSessionUser" name="addSessionUser" placeholder="Nombre de usuario">
                             <label for="addSessionUser">Nombre de usuario</label>
-                        </div>
+                        </div> -->
                         <!-- /Session user -->
                     </form>
                 </div>
@@ -331,23 +185,27 @@
             </div>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /Modal New and Edit -->
 
-    <!-- Template scheduled session -->
-    <template id="scheduledSessionTemplate">
-        <tr data-id="{{sessionID}}">
-            <td class="sessionName">{{sessionName}}</td>
-            <td class="sessionBegins">{{sessionDate}}</td>
-            <td class="sessionTimes" scope="col">
-                
-            </td>
-            <td class="sessionActions text-end">
-                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
-            </td>
-        </tr>
-    </template>
-    <!-- /Template scheduled session -->
+    <!-- Modal delete confirmation -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true" data-type="add">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteLabel">Eliminar sesión programada</h5>
+                    <button type="button" class="close btn btn-secondary btn-icon btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"><span class="icon-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas ELIMINAR permanentemente esta sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btnDeleteSession" type="button" data-bs-dismiss="modal" class="btn btn-delete text-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Modal delete confirmation -->
 
     <!-- Template table alert -->
     <template id="alertTemplate">
@@ -358,5 +216,44 @@
         </tr>
     </template>
     <!-- /Template table alert -->
+
+    <!-- Template scheduled session li -->
+    <template id="scheduledSessionLi">
+        <li class="list-group-item p-0" data-id="{{sessionID}}">
+            <div class="p-2" data-bs-toggle="collapse" href="#target-{{sessionID}}">
+                {{sessionName}}
+            </div>
+            <div class="collapse" id="target-{{sessionID}}">
+                <table class="table table-hover m-0">
+                    <thead>
+                        <tr class="table-light">
+                            <th class="sessionBegins" scope="col">Comienza</th>
+                            <th class="sessionTimes" scope="col">Time</th>
+                            <th class="sessionActions text-end" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </template>
+    <!-- Template scheduled session li -->
+
+    <!-- Template scheduled session table row -->
+    <template id="scheduledSessionTableRow">
+        <tr data-id="{{sessionID}}">
+            <td class="sessionBegins">{{sessionDate}}</td>
+            <td class="sessionTimes" scope="col">
+                <span class="badge bg-light text-dark">{{sessionTime}}</span>
+            </td>
+            <td class="sessionActions text-end">
+                <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
+                <button id="btnDeleteSession" type="button" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+    </template>
+    <!-- /Template scheduled session table row -->
 </body>
 </html>

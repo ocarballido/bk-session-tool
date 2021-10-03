@@ -3,9 +3,6 @@ import { apiServices } from '../services/ApiServices';
 class Model {
     constructor() {
         this._scheduledSessions = [];
-        // this._sessions = [];
-        // this._users = [];
-        this._filterObject = {};
     }
 
     // Return promise with data
@@ -19,15 +16,15 @@ class Model {
                     apiServices.loadScheduledSessions()
                 ])
                     .then(([sessions, scheduledSessions]) => {
-
+                        // Filling our data model object
                         this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                            // Creating single session object
                             const singleSession = {
-                                sessionID: singleScheduledSession.id,
-                                sessionRounds: [],
+                                ...singleScheduledSession,
                                 sessionName
                             };
                             
-                            // Traversing session API array
+                            // Traversing session API array to extract session name based on id
                             const sessionName = sessions.map(session => {
                                 if (session.id === singleScheduledSession.id) {
                                     singleSession.sessionName = session.name;
@@ -35,21 +32,21 @@ class Model {
                             });
     
                             // Creating more readeble rounds array
-                            singleSession.sessionRounds = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
-                                let startDate = this.dateTimeFormater(item.startDate).formattedDate;
-                                let time = this.dateTimeFormater(item.startDate).formattedTime;
-                                obj[startDate] = obj[startDate] || [];
-                                obj[startDate].push(time);
-                                return obj;
-                            }, {})).map((item) => ({
-                                startDate: item[0],
-                                times: item[1]
-                            }));
+                            // singleSession.roundsDefinition = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
+                            //     let startDate = this.dateTimeFormater(item.startDate).formattedDate;
+                            //     let time = this.dateTimeFormater(item.startDate).formattedTime;
+                            //     obj[startDate] = obj[startDate] || [];
+                            //     obj[startDate].push([time, item.featuredUserIds]);
+                            //     return obj;
+                            // }, {})).map((item) => ({
+                            //     startDate: item[0],
+                            //     times: item[1]
+                            // }));
                             return singleSession;
                         });
                         resolve(this._scheduledSessions);                   
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         reject(error);
                         console.log(error);
                     });
@@ -58,24 +55,35 @@ class Model {
         });
     }
 
-    // API date and time formatter
-    dateTimeFormater(APIDate) {
-        const timeOptions = {
-            hour: 'numeric', minute: 'numeric',
-            hour12: true
-        };
-        const date = new Date(APIDate);
-        const webLanguage = navigator.language;
-        const formattedDate = new Intl.DateTimeFormat(webLanguage).format(date);
-        const formattedTime = new Intl.DateTimeFormat(webLanguage, timeOptions).format(date);
-        const formattedDateTime = `${formattedTime}`;
-        return {
-            date,
-            formattedDate,
-            webLanguage,
-            formattedTime,
-            formattedDateTime
-        };
+    deleteScheduledSession(sessionID, sessionDate) {
+        // Get session item
+        const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
+
+        // Remove sessionName property. We dont need it to update db
+        delete sessionItem.sessionName;
+
+        // Get if this sessions have 1 or more rounds
+        const isSingleRound = sessionItem.roundsDefinition.length === 1;
+
+        // If have just 1 session round we'll 'DELETE'
+        if (isSingleRound) {
+            return apiServices
+                .deleteScheduledSession(sessionID)
+                .then((scheduledSessions) => {
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                    console.log(scheduledSessions);
+                    return true;
+                });
+        } else { // If have more than 1 session round we'll 'PUT'
+            // Filtering roundsDefinition to remove deleted round
+            sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate )
+            return apiServices
+                .updateScheduledSession(sessionID, sessionItem)
+                .then((scheduledSessions) => {
+                    console.log(scheduledSessions);
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                });
+        }
     }
 };
 
