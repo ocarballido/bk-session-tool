@@ -86,7 +86,6 @@ class View {
                 const sessionID = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
                 confirmationModal(sessionID, sessionDate, isSingleRound);
-                console.log(isSingleRound, sessionID, sessionDate);
             }
         });
 
