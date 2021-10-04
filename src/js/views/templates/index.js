@@ -25,7 +25,7 @@ export const scheduledSessionTableRowTemplate = `
         <td class="sessionBegins">{{sessionDate}}</td>
         <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">{{sessionTime}}</span></td>
         <td class="sessionActions text-end">
-            <button type="button" class="btnEditSession btn btn-sm btn-light me-1">Editar</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#editAddSessionModal" class="btnEditSession btn btn-sm btn-light me-1">Editar</button>
             <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btnDeleteSession btn-delete btn bg-transparent text-danger btn-icon btn-sm"><span class="icon-delete"></span></button>
         </td>
     </tr>

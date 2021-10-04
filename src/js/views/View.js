@@ -29,6 +29,20 @@ class View {
 
         // Modal delete
         this.modelDelete = document.getElementById('deleteModal');
+
+        // Modal Edit / Add
+        this.modelEditAdd = document.getElementById('editAddSessionModal');
+        this.sessionName = document.getElementById('sessionName');
+        this.addEditUserID = document.getElementById('addEditUserID');
+        this.addEditProfileID = document.getElementById('addEditProfileID');
+        this.addEditSessionID = document.getElementById('addEditSessionID');
+        this.addEditEventID = document.getElementById('addEditEventID');
+        this.addEditSessionDateStart = document.getElementById('addEditSessionDateStart');
+        this.addEditProUsers = document.getElementById('addEditProUsers');
+        this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
+        this.addEditrealWeather = document.getElementById('addEditrealWeather');
+        this.addEditWarmUpTime = document.getElementById('addEditWarmUpTime');
+        this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
     }
 
     // First scheduled sessions render
@@ -78,10 +92,9 @@ class View {
             const element = event.target;
             const elementClasses = element.classList;
             const isDeleteSessionButton = elementClasses.contains('btnDeleteSession');
-            const isEditSessionButton = elementClasses.contains('btnEditSession');
             
             if (isDeleteSessionButton) {
-                // Know if the session have mora than one round
+                // Know if the session have more than one round
                 const isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
                 const sessionID = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
@@ -100,6 +113,20 @@ class View {
                 handler(sessionID, sessionDate, isSingleRound);
             });
         }
+    }
+
+    // Edit scheduled session
+    editScheduledSession(handler) {
+        this.scheduledSessionsList.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementClasses = element.classList;
+            const isEditSessionButton = elementClasses.contains('btnEditSession');
+
+            if (isEditSessionButton) {
+                const sessionID = event.target.closest('tr').dataset.id;
+                const sessionDate = event.target.closest('tr').dataset.date;
+            }
+        });
     }
 
     // Render items after delete session
