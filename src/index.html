@@ -142,10 +142,38 @@
                     <form id="sessionFilters" data-id="">
                         <!-- Session name -->
                         <div class="form-group floating-label mb-2">
-                            <input type="text" class="form-control" id="addSessionName" name="addSessionName" placeholder="Nomnbre de sesion">
-                            <label for="addSessionName">Nomnbre de sesión</label>
+                            <input type="text" class="form-control" id="sessionName" name="sessionName" placeholder="Nomnbre de sesion">
+                            <label for="sessionName">Nomnbre de sesión</label>
                         </div>
                         <!-- /Session name -->
+
+                        <!-- User ID -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addEditUserID" name="addEditUserID" placeholder="ID de usuario">
+                            <label for="addEditUserID">ID de usuario</label>
+                        </div>
+                        <!-- /User ID -->
+
+                        <!-- Profile ID -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addEditProfileID" name="addEditProfileID" placeholder="ID del perfil">
+                            <label for="addEditProfileID">ID del perfil</label>
+                        </div>
+                        <!-- /Profile ID -->
+
+                        <!-- Session ID -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addEditSessionID" name="addEditSessionID" placeholder="ID de sesión">
+                            <label for="addEditSessionID">ID de sesión</label>
+                        </div>
+                        <!-- /Session ID -->
+
+                        <!-- Event ID -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="text" class="form-control" id="addEditEventID" name="addEditEventID" placeholder="ID de evento">
+                            <label for="addEditEventID">ID de evento</label>
+                        </div>
+                        <!-- /Event ID -->
     
                         <!-- Date start -->
                         <div class="form-group floating-label mb-2">
@@ -153,29 +181,55 @@
                             <label for="addSessionDateStart">Desde</label>
                         </div>
                         <!-- /Date start -->
-    
-                        <!-- Date end -->
-                        <div class="form-group floating-label mb-2">
-                            <input type="date" class="form-control" id="addSessionDateEnd" placeholder="Hasta" tabindex="2" name="addSessionDateEnd" value="" min="2018-07-22" >
-                            <label for="addSessionDateEnd">Hasta</label>
-                        </div>
-                        <!-- /Date end -->
-    
-                        <!-- Event -->
-                        <!-- <div class="form-group floating-label mb-2">
-                            <select id="addSessionEvent" class="custom-select" >
-                                <option selected value="1">GIV</option>
-                            </select>
-                            <label for="addSessionEvent">Evento</label>
-                        </div> -->
-                        <!-- /Event -->
-    
+
                         <!-- Session user -->
-                        <!-- <div class="form-group floating-label mb-2">
-                            <input type="text" class="form-control" id="addSessionUser" name="addSessionUser" placeholder="Nombre de usuario">
-                            <label for="addSessionUser">Nombre de usuario</label>
-                        </div> -->
+                        <div id="proUsers" class="form-group mb-2">
+                            <p class="mb-0">Usuarios Pro</p>
+                            <div id="users">
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Juan de la Pin García <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Mariana Grajales <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Sabino Pupo <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Vilma Espín <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Ernesto Nieblas <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Efreen Dubois <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Elpidio Valdés <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">María Silvia <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Solomón Montoya <span class="icon-add"></span></button>
+                                <button type="button" data-bs-toggle="button" class="btn btn-outline-success btn-sm mb-1 btn-text-icon">Esteban Lazo <span class="icon-add"></span></button>
+                            </div>
+                        </div>
                         <!-- /Session user -->
+    
+                        <!-- Max Users -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="number" class="form-control" id="addEditMaxUsers" name="addEditMaxUsers" placeholder="Máximo de usuarios" value="1" min="1">
+                            <label for="addEditMaxUsers">Máximo de usuarios</label>
+                        </div>
+                        <!-- /Max Users -->
+    
+                        <!-- Real weather -->
+                        <div class="form-group floating-label mb-2">
+                            <select name="realWeather" id="realWeather" class="custom-select" >
+                                <option selected value="0">Si</option>
+                                <option value="1">No</option>
+                            </select>
+                            <label for="realWeather">Real Weather</label>
+                        </div>
+                        <!-- /Real weather -->
+
+                        <!-- Warm up time -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="number" class="form-control" id="addEditWarmUpTime" name="addEditWarmUpTime" placeholder="Tiempo de calentamiento" value="600" min="300">
+                            <label for="addEditWarmUpTime">Tiempo de calentamiento</label>
+                        </div>
+                        <!-- /Warm up time -->
+
+                        <!-- Main part min secconds -->
+                        <div class="form-group floating-label mb-2">
+                            <input type="number" class="form-control" id="addEditMainPartMinSecconds" name="addEditMainPartMinSecconds" placeholder="Main part min secconds" value="600" min="300">
+                            <label for="addEditMainPartMinSecconds">Main part min secconds</label>
+                        </div>
+                        <!-- /Main part min secconds -->
                     </form>
                 </div>
                 <div class="modal-footer">

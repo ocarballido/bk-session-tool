@@ -178,6 +178,18 @@ $gray-50: 						#f5f5f5 !default;
             pointer-events: none;
         }
 	}
+	&[data-bs-toggle="button"] {
+		.icon-add {
+			display: inline-block;
+			transform: rotate(0);
+			transition: all .2s;
+		}
+		&.active {
+			.icon-add {
+				transform: rotate(45deg);
+			}
+		}
+	}
 }
 
 .accordion {
