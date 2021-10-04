@@ -31,11 +31,6 @@ class View {
         this.modelDelete = document.getElementById('deleteModal');
     }
 
-    // First test
-    // testView() {
-    //     console.log('Oscar', this.btnSidebarSpans[0]);
-    // }
-
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
         // console.log(dateTimeFormater());
@@ -57,18 +52,6 @@ class View {
 
                 // Return replaced singleRow template
                 return singleRow.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
-
-                // return singleRow.replace('{{sessionID}}', `${sessionID}`).replace('{{sessionDate}}', `${this.dateTimeFormater(round.startDate).formattedDate}`).replace('{{sessionTime}}', `${this.dateTimeFormater(round.startDate).formattedTime}`).replace('{{sessionUTCDate}}', `${round.startDate}`);
-                // return `
-                //     <tr data-id="${sessionID}">
-                //         <td class="sessionBegins">${this.dateTimeFormater(round.startDate).formattedDate}</td>
-                //         <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">${this.dateTimeFormater(round.startDate).formattedTime}</span></td>
-                //         <td class="sessionActions text-end">
-                //             <button id="btnEditSession" type="button" class="btn btn-sm btn-light">Editar</button>
-                //             <button id="btnDeleteSession" type="button" class="btn bg-transparent text-danger btn-icon btn-sm"><span class="icon-delete"></span></button>
-                //         </td>
-                //     </tr>
-                // `
             });
 
             // Adding sessions li
@@ -86,28 +69,6 @@ class View {
 
             // Inserted to html
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
-            // this.scheduledSessionsList.insertAdjacentHTML('beforeend', `
-            //     <li class="list-group-item p-0" data-id="${sessionID}">
-            //         <div class="${index > 0 ? "collapsed" : ""} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-${sessionID}">
-            //             ${sessionName}
-            //             <span class="icon-expand-more text-dark"></span>
-            //         </div>
-            //         <div class="collapse collapse-body ${index === 0 ? "show" : ""}" id="target-${sessionID}">
-            //             <table class="table table-hover m-0">
-            //                 <thead>
-            //                     <tr class="table-light">
-            //                         <th class="sessionBegins" scope="col">Comienza</th>
-            //                         <th class="sessionTimes" scope="col">Hora</th>
-            //                         <th class="sessionActions text-end" scope="col">Acciones</th>
-            //                     </tr>
-            //                 </thead>
-            //                 <tbody>
-            //                 ${ sessionRows.join('') }
-            //                 </tbody>
-            //             </table>
-            //         </div>
-            //     </li>
-            // `);
         });
     }
 
