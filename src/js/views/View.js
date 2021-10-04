@@ -32,6 +32,7 @@ class View {
 
         // Modal Edit / Add
         this.modelEditAdd = document.getElementById('editAddSessionModal');
+        this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.sessionName = document.getElementById('sessionName');
         this.addEditUserID = document.getElementById('addEditUserID');
         this.addEditProfileID = document.getElementById('addEditProfileID');
@@ -50,7 +51,7 @@ class View {
         // console.log(dateTimeFormater());
         scheduledSessions.forEach((session, index) => {
             // Getting session values
-            const { sessionName, id, roundsDefinition } = session;
+            const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = session;
 
             const sessionRows = roundsDefinition.map((round, index) => {
                 // Adding sessions table row
@@ -58,7 +59,7 @@ class View {
 
                 // Find-Replace elements in template
                 const findReplace = {
-                    '{{sessionID}}': id,
+                    '{{id}}': id,
                     '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
                     '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
                     '{{sessionUTCDate}}': round.startDate
@@ -71,11 +72,20 @@ class View {
             // Adding sessions li
             // Find-Replace elements in template
             const findReplace = {
-                '{{sessionID}}': id,
+                '{{id}}': id,
                 '{{sessionName}}': sessionName,
                 '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
                 '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
-                '{{sessionTableRow}}': `${ sessionRows.join('') }`
+                '{{sessionTableRow}}': `${ sessionRows.join('') }`,
+                '{{userId}}': userId,
+                '{{profileId}}': profileId,
+                '{{sessionId}}': sessionId,
+                '{{eventId}}': eventId,
+                '{{maxUsers}}': maxUsers,
+                '{{rules}}': rules,
+                '{{isRealWeather}}': isRealWeather,
+                '{{warmupSeconds}}': warmupSeconds,
+                '{{mainPartMinSeconds}}': mainPartMinSeconds
             };
 
             // Replaced singleRow template
@@ -96,48 +106,55 @@ class View {
             if (isDeleteSessionButton) {
                 // Know if the session have more than one round
                 const isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
-                const sessionID = event.target.closest('tr').dataset.id;
+                const id = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
-                confirmationModal(sessionID, sessionDate, isSingleRound);
+                confirmationModal(id, sessionDate, isSingleRound);
             }
         });
 
         // Call confirmation delete modal
-        const confirmationModal = (sessionID, sessionDate, isSingleRound) => {
+        const confirmationModal = (id, sessionDate, isSingleRound) => {
             if (isSingleRound) {
                 this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
             } else {
                 this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
             }
             this.btnDeleteSession.addEventListener('click', () => {
-                handler(sessionID, sessionDate, isSingleRound);
+                handler(id, sessionDate, isSingleRound);
             });
         }
     }
 
     // Edit scheduled session
-    editScheduledSession(handler) {
+    editScheduledSessionAction(handler) {
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
             const elementClasses = element.classList;
             const isEditSessionButton = elementClasses.contains('btnEditSession');
 
             if (isEditSessionButton) {
-                const sessionID = event.target.closest('tr').dataset.id;
+                const id = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
+                this.editAddModalTitle.innerHTML = "Editar sesión";
+                handler(id, sessionDate, sessionData);
             }
         });
     }
 
+    // Render edit form
+    // renderEditForm(sessionData) {
+    //     //
+    // }
+
     // Render items after delete session
-    renderDeletedSession(sessionID) {
-        const sessionToDelete = document.querySelector(`.list-group-item[data-id="${sessionID}"]`);
+    renderDeletedSession(id) {
+        const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
         sessionToDelete.remove();
     }
 
     // Render items after delete round
-    renderDeletedRound(sessionID, sessionDate) {
-        const roundToDelete = document.querySelector(`.list-group-item[data-id="${sessionID}"] .collapse-body table tbody tr[data-date="${sessionDate}"]`);
+    renderDeletedRound(id, sessionDate) {
+        const roundToDelete = document.querySelector(`.list-group-item[data-id="${id}"] .collapse-body table tbody tr[data-date="${sessionDate}"]`);
         roundToDelete.remove();
     }
 

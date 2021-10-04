@@ -85,6 +85,11 @@ class Model {
                 });
         }
     }
+
+    editScheduledSession() {
+        // Get session item
+        const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
+    }
 };
 
 export { Model };

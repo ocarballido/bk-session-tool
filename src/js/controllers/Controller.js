@@ -18,6 +18,9 @@ class Controller {
         // Binding delete session action
         this.view.deleteScheduledSessionAction(this.deleteScheduledSessionHandler.bind(this));
 
+        // Binding edit session action
+        this.view.editScheduledSessionAction(this.editScheduledSessionHandler.bind(this));
+
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
@@ -59,6 +62,11 @@ class Controller {
     //             });
     //     }
     // }
+
+    editScheduledSessionHandler(sessionID, sessionDate, sessionData) {
+        sessionData = this.model
+        console.log('ii');
+    }
 }
 
 const app = new Controller(new Model(), new View())
