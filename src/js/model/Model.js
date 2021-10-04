@@ -26,7 +26,7 @@ class Model {
                             
                             // Traversing session API array to extract session name based on id
                             const sessionName = sessions.map(session => {
-                                if (session.id === singleScheduledSession.id) {
+                                if (session.id === singleScheduledSession.profileId) {
                                     singleSession.sessionName = session.name;
                                 }
                             });
