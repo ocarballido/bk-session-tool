@@ -2,15 +2,17 @@ export const scheduledSessionLi = `
     <li 
         class="list-group-item p-0" 
         data-id="{{id}}"
-        data-userId="{{userId}}"
-        data-profileId="{{profileId}}"
-        data-sessionId="{{sessionId}}"
-        data-eventId="{{eventId}}"
-        data-maxUsers="{{maxUsers}}"
+        data-user-id="{{userId}}"
+        data-profile-id="{{profileId}}"
+        data-session-id="{{sessionId}}"
+        data-event-id="{{eventId}}"
+        data-max-users="{{maxUsers}}"
         data-rules="{{rules}}"
-        data-isRealWeather="{{isRealWeather}}"
-        data-warmupSeconds="{{warmupSeconds}}"
-        data-mainPartMinSeconds="{{mainPartMinSeconds}}"
+        data-is-real-weather="{{isRealWeather}}"
+        data-warmup-seconds="{{warmupSeconds}}"
+        data-main-part-min-seconds="{{mainPartMinSeconds}}"
+        data-session-name="{{sessionName}}"
+        data-featured-users-id="{{featuredUserIds}}"
     >
         <div class="{{sessionFirst}} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-{{id}}">
             {{sessionName}}
@@ -33,7 +35,11 @@ export const scheduledSessionLi = `
     </li>
 `;
 export const scheduledSessionTableRowTemplate = `
-    <tr data-id="{{id}}" data-date="{{sessionUTCDate}}">
+    <tr 
+        data-id="{{id}}" 
+        data-date="{{sessionUTCDate}}"
+        data-featured-user-ids="{{featuredUserIds}}"
+    >
         <td class="sessionBegins">{{sessionDate}}</td>
         <td class="sessionTimes" scope="col"><span class="badge bg-white border border-light text-dark">{{sessionTime}}</span></td>
         <td class="sessionActions text-end">

@@ -18,6 +18,9 @@ class Controller {
         // Binding delete session action
         this.view.deleteScheduledSessionAction(this.deleteScheduledSessionHandler.bind(this));
 
+        // Binding edit session modal action
+        this.view.editScheduledSessionModalAction(this.editScheduledSessionModalHandler.bind(this));
+
         // Binding edit session action
         this.view.editScheduledSessionAction(this.editScheduledSessionHandler.bind(this));
 
@@ -47,25 +50,16 @@ class Controller {
             })
             .finally(() => this.view.toggleSpinner());
     }
-    // deleteScheduledSessionHandler(sessionID, sessionDate, isSingleRound) {
-    //     if (isSingleRound) {
-    //         this.model.deleteScheduledSession(sessionID, sessionDate)
-    //             .then(() => this.view.renderDeletedSession(sessionID))
-    //             .catch(() => {
-    //                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
-    //             });
-    //     } else {
-    //         this.model.deleteScheduledSession(sessionID, sessionDate)
-    //             .then(() => this.view.renderDeletedRound(sessionID, sessionDate))
-    //             .catch(() => {
-    //                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
-    //             });
-    //     }
-    // }
 
-    editScheduledSessionHandler(sessionID, sessionDate, sessionData) {
-        sessionData = this.model
-        console.log('ii');
+    editScheduledSessionModalHandler(id, sessionDate) {
+        const sessionData = this.model.editScheduledSessionFormData(id);
+        this.view.renderEditForm(sessionData, sessionDate);
+    }
+
+    editScheduledSessionHandler(id, updatedData) {
+        // sessionData = this.model
+        // this.view.
+        console.log(id, updatedData);
     }
 }
 

@@ -33,6 +33,7 @@ class View {
         // Modal Edit / Add
         this.modelEditAdd = document.getElementById('editAddSessionModal');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
+        this.editAddForm = document.getElementById('editAddForm');
         this.sessionName = document.getElementById('sessionName');
         this.addEditUserID = document.getElementById('addEditUserID');
         this.addEditProfileID = document.getElementById('addEditProfileID');
@@ -44,6 +45,9 @@ class View {
         this.addEditrealWeather = document.getElementById('addEditrealWeather');
         this.addEditWarmUpTime = document.getElementById('addEditWarmUpTime');
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
+        this.buttonAddNew = document.getElementById('buttonAddNew');
+        this.buttonUpdate = document.getElementById('buttonUpdate');
+        this.featuredUserIds = [];
     }
 
     // First scheduled sessions render
@@ -62,7 +66,8 @@ class View {
                     '{{id}}': id,
                     '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
                     '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
-                    '{{sessionUTCDate}}': round.startDate
+                    '{{sessionUTCDate}}': round.startDate,
+                    '{{featuredUserIds}}': round.featuredUserIds.join('-')
                 };
 
                 // Return replaced singleRow template
@@ -126,25 +131,155 @@ class View {
     }
 
     // Edit scheduled session
-    editScheduledSessionAction(handler) {
+    // editScheduledSessionAction(handler) {
+    //     this.scheduledSessionsList.addEventListener('click', (event) => {
+    //         const element = event.target;
+    //         const elementClasses = element.classList;
+    //         const isEditSessionButton = elementClasses.contains('btnEditSession');
+
+    //         if (isEditSessionButton) {
+    //             const id = event.target.closest('tr').dataset.id;
+    //             const sessionDate = new Date(event.target.closest('tr').dataset.date.split(".")[0]);
+    //             const featuredUserIds = event.target.closest('tr').dataset.featuredUserIds.split('-');
+    //             const sessionItem = {
+    //                 id: event.target.closest('li').dataset.id,
+    //                 userId: event.target.closest('li').dataset.userId,
+    //                 profileId: event.target.closest('li').dataset.profileId,
+    //                 sessionId: event.target.closest('li').dataset.sessionId,
+    //                 eventId: event.target.closest('li').dataset.eventId,
+    //                 maxUsers: event.target.closest('li').dataset.maxUsers,
+    //                 rules: event.target.closest('li').dataset.rules,
+    //                 isRealWeather: event.target.closest('li').dataset.isRealWeather,
+    //                 warmupSeconds: event.target.closest('li').dataset.warmupSeconds,
+    //                 mainPartMinSeconds: event.target.closest('li').dataset.mainPartMinSeconds,
+    //                 sessionName: event.target.closest('li').dataset.sessionName,
+    //             }
+
+    //             // Hiding some form fields
+    //             this.addEditUserID.closest('.form-group').classList.add('d-none');
+    //             this.addEditProfileID.closest('.form-group').classList.add('d-none');
+    //             this.addEditSessionID.closest('.form-group').classList.add('d-none');
+    //             this.addEditEventID.closest('.form-group').classList.add('d-none');
+    //             // this.addEditProUsers.closest('.form-group').classList.add('d-none');
+    //             this.buttonAddNew.classList.add('d-none');
+
+    //             // Setting form fields value
+    //             this.editAddModalTitle.innerHTML = "Editar sesión";
+    //             this.sessionName.value = sessionItem.sessionName;
+    //             this.sessionName.disabled = true;
+    //             //this.addEditSessionDateStart.value = sessionDate.split(".")[0];
+    //             this.addEditSessionDateStart.value = sessionDate.toISOString().slice(0, -5);
+    //             this.addEditMaxUsers.value = sessionItem.maxUsers;
+    //             this.addEditrealWeather.value = sessionItem.isRealWeather ? 'yes' : 'no';
+    //             this.addEditWarmUpTime.value = sessionItem.warmupSeconds;
+    //             this.addEditMainPartMinSecconds.value = sessionItem.mainPartMinSeconds;
+    //             const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+    //             // Styling featured users toggle buttons
+    //             featuredUserIds.forEach( (user, index) => {
+    //                 featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
+    //             } );
+
+    //             console.log(sessionItem, sessionDate);
+    //             handler(id, sessionDate, sessionItem);
+    //         }
+    //     });
+    // }
+
+    // Edit modal action
+    editScheduledSessionModalAction(handler) {
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
             const elementClasses = element.classList;
             const isEditSessionButton = elementClasses.contains('btnEditSession');
 
+            // If the button pressed if edit, get session ID and startDtae
             if (isEditSessionButton) {
                 const id = event.target.closest('tr').dataset.id;
                 const sessionDate = event.target.closest('tr').dataset.date;
-                this.editAddModalTitle.innerHTML = "Editar sesión";
-                handler(id, sessionDate, sessionData);
+                handler(id, sessionDate);
             }
         });
     }
 
     // Render edit form
-    // renderEditForm(sessionData) {
-    //     //
-    // }
+    renderEditForm(sessionData, sessionDate) {
+        // Form fields values
+        const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+        this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+
+        // Hiding some form fields
+        this.addEditUserID.closest('.form-group').classList.add('d-none');
+        this.addEditProfileID.closest('.form-group').classList.add('d-none');
+        this.addEditSessionID.closest('.form-group').classList.add('d-none');
+        this.addEditEventID.closest('.form-group').classList.add('d-none');
+        this.buttonAddNew.classList.add('d-none');
+
+        // Setting form fields value
+        this.editAddForm.dataset.id = id;
+        this.editAddModalTitle.innerHTML = "Editar sesión";
+        this.sessionName.value = sessionName;
+        this.sessionName.disabled = true;
+        const date = sessionDate.split('T')[0];
+        const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
+        // this.addEditSessionDateStart.value = new Date(sessionDate).toISOString().slice(0, -8);
+        this.addEditSessionDateStart.value = `${date}T${time}`;
+        this.addEditMaxUsers.value = maxUsers;
+        this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
+        this.addEditWarmUpTime.value = warmupSeconds;
+        this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
+        const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+        // Styling featured users toggle buttons
+        document.querySelectorAll(".btn-proUser").forEach(function(element) {
+            element.classList.remove("active");
+        });
+        this.featuredUserIds.forEach( (user, index) => {
+            featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
+        } );
+
+        // this.editAddForm.addEventListener('submit', (event) => {
+        //     event.preventDefault();
+        //     const updatedData = {
+        //         maxUsers: this.addEditMaxUsers.value,
+        //         isRealWeather: this.addEditrealWeather.value,
+        //         warmupSeconds: this.addEditWarmUpTime.value,
+        //         mainPartMinSeconds: this.addEditMainPartMinSecconds.value,
+        //         featuredUserIds: featuredUserIds,
+        //         startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString()
+        //     }
+
+        //     // this.editScheduledSessionAction([sessionData.id, updatedData]);
+        // });
+        
+        console.log(date, time);
+    }
+
+    // Edit scheduled session Action
+    editScheduledSessionAction(handler) {
+        this.addEditProUsers.querySelector('#users').addEventListener('click', (event) => {
+            const element = event.target;
+            const isActive = element.classList.contains('active');
+            const userId = element.getAttribute('data-user-id');
+            if (isActive) {
+                this.featuredUserIds.push(userId);
+            } else {
+                this.featuredUserIds = this.featuredUserIds.filter( user => user !== userId);
+            }
+        });
+        
+        this.editAddForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const id = this.editAddForm.getAttribute('data-id');
+            const updatedData = {
+                maxUsers: this.addEditMaxUsers.value,
+                isRealWeather: this.addEditrealWeather.value,
+                warmupSeconds: this.addEditWarmUpTime.value,
+                mainPartMinSeconds: this.addEditMainPartMinSecconds.value,
+                featuredUserIds: this.featuredUserIds,
+                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString()
+            }
+            handler(id, updatedData);
+        });
+    }
 
     // Render items after delete session
     renderDeletedSession(id) {

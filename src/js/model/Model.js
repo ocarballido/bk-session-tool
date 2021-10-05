@@ -86,9 +86,10 @@ class Model {
         }
     }
 
-    editScheduledSession() {
+    // Get editable session data to fill the form
+    editScheduledSessionFormData(id) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
+        return this._scheduledSessions.find( session => session.id === id );
     }
 };
 
