@@ -55,9 +55,9 @@ class Model {
         });
     }
 
-    deleteScheduledSession(sessionID, sessionDate) {
+    deleteScheduledSession(id, sessionDate) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === sessionID );
+        const sessionItem = this._scheduledSessions.find( session => session.id === id );
 
         // Remove sessionName property. We dont need it to update db
         delete sessionItem.sessionName;
@@ -68,9 +68,9 @@ class Model {
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
             return apiServices
-                .deleteScheduledSession(sessionID)
+                .deleteScheduledSession(id)
                 .then((scheduledSessions) => {
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
                     console.log(scheduledSessions);
                     return true;
                 });
@@ -78,10 +78,10 @@ class Model {
             // Filtering roundsDefinition to remove deleted round
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate )
             return apiServices
-                .updateScheduledSession(sessionID, sessionItem)
+                .updateScheduledSession(id, sessionItem)
                 .then((scheduledSessions) => {
                     console.log(scheduledSessions);
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.sessionID !== sessionID );
+                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
                 });
         }
     }
@@ -90,6 +90,35 @@ class Model {
     editScheduledSessionFormData(id) {
         // Get session item
         return this._scheduledSessions.find( session => session.id === id );
+    }
+
+    // Edit session
+    editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound) {
+        // Get session item
+        const sessionItem = this._scheduledSessions.find( session => session.id === id );
+
+        // Remove sessionName property. We dont need it to update db
+        delete sessionItem.sessionName;
+
+        // Get index of edited round
+        const edittedRoundIndex = sessionItem.roundsDefinition.findIndex( round => round.startDate === sessionDate );
+        sessionItem.roundsDefinition.splice(edittedRoundIndex, 1, updatedRound);
+
+        // Update session item
+        const sessionItemUpdates = {
+            ...sessionItem,
+            ...updatedGlobalData,
+            roundsDefinition: sessionItem.roundsDefinition
+        }
+
+        console.log(sessionItem, sessionItemUpdates, sessionDate, updatedGlobalData, updatedRound, edittedRoundIndex);
+
+        // return apiServices
+        //     .updateScheduledSession(id, sessionItem)
+        //     .then((scheduledSessions) => {
+        //         console.log(scheduledSessions);
+        //         this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
+        //     });
     }
 };
 

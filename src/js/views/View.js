@@ -1,5 +1,5 @@
 import * as Templates from './templates';
-import { dateTimeFormater } from '../helpers/date-formatter';
+import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 
 class View {
     constructor() {
@@ -216,13 +216,14 @@ class View {
 
         // Setting form fields value
         this.editAddForm.dataset.id = id;
+        this.editAddForm.dataset.date = sessionDate;
         this.editAddModalTitle.innerHTML = "Editar sesión";
         this.sessionName.value = sessionName;
         this.sessionName.disabled = true;
         const date = sessionDate.split('T')[0];
         const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-        // this.addEditSessionDateStart.value = new Date(sessionDate).toISOString().slice(0, -8);
         this.addEditSessionDateStart.value = `${date}T${time}`;
+        this.addEditSessionDateStart.setAttribute('min', todayDateTime());
         this.addEditMaxUsers.value = maxUsers;
         this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
         this.addEditWarmUpTime.value = warmupSeconds;
@@ -235,20 +236,6 @@ class View {
         this.featuredUserIds.forEach( (user, index) => {
             featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
         } );
-
-        // this.editAddForm.addEventListener('submit', (event) => {
-        //     event.preventDefault();
-        //     const updatedData = {
-        //         maxUsers: this.addEditMaxUsers.value,
-        //         isRealWeather: this.addEditrealWeather.value,
-        //         warmupSeconds: this.addEditWarmUpTime.value,
-        //         mainPartMinSeconds: this.addEditMainPartMinSecconds.value,
-        //         featuredUserIds: featuredUserIds,
-        //         startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString()
-        //     }
-
-        //     // this.editScheduledSessionAction([sessionData.id, updatedData]);
-        // });
         
         console.log(date, time);
     }
@@ -269,15 +256,18 @@ class View {
         this.editAddForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const id = this.editAddForm.getAttribute('data-id');
-            const updatedData = {
-                maxUsers: this.addEditMaxUsers.value,
-                isRealWeather: this.addEditrealWeather.value,
-                warmupSeconds: this.addEditWarmUpTime.value,
-                mainPartMinSeconds: this.addEditMainPartMinSecconds.value,
-                featuredUserIds: this.featuredUserIds,
-                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString()
+            const sessionDate = this.editAddForm.getAttribute('data-date');
+            const updatedGlobalData = {
+                maxUsers: parseInt(this.addEditMaxUsers.value),
+                isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
+                warmupSeconds: parseInt(this.addEditWarmUpTime.value),
+                mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
-            handler(id, updatedData);
+            const updatedRound = {
+                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
+                featuredUserIds: this.featuredUserIds,
+            };
+            handler(id, sessionDate, updatedGlobalData, updatedRound);
         });
     }
 
@@ -349,7 +339,6 @@ class View {
         setTimeout(() => {
             document.querySelector('.alert').remove();
         }, 5000);
-        console.log(alertMassage, alertType, alertDiv);
     }
 };
 

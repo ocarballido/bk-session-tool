@@ -68,16 +68,16 @@ class ApiServices {
         );
     }
     // Delete session
-    deleteScheduledSession(sessionID) {
+    deleteScheduledSession(id) {
         return fetchDb(
-            `${SCHEDULED_SESSIONS_SERVER}/${sessionID}`,
+            `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.GET
         );
     }
     // Update scheduled sessions rounds definition
-    updateScheduledSession(sessionID, data) {
+    updateScheduledSession(id, data) {
         return fetchDb(
-            `${SCHEDULED_SESSIONS_SERVER}/${sessionID}`,
+            `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.PUT,
             { ...data }
         );
