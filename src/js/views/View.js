@@ -215,8 +215,6 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.sessionName.value = '';
             this.sessionName.disabled = true;
-            // const date = sessionDate.split('T')[0];
-            // const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             this.addEditSessionDateStart.value = todayDateTime();
             this.addEditSessionDateStart.setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = 10;
@@ -224,7 +222,7 @@ class View {
             this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
             this.featuredUserIds = [];
-            // const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+            
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
