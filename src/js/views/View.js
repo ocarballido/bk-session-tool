@@ -47,8 +47,6 @@ class View {
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
         this.buttonAddNew = document.getElementById('buttonAddNew');
         this.buttonUpdate = document.getElementById('buttonUpdate');
-        this.addRound = document.getElementById('addRound');
-        this.buttonAddRound = document.getElementById('buttonAddRound');
         this.featuredUserIds = [];
     }
 
@@ -154,7 +152,7 @@ class View {
     }
 
     // Render edit form
-    renderForm(sessionData, sessionDate, type) {
+    renderEditForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
             // Form fields values
             const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
@@ -165,7 +163,6 @@ class View {
             this.addEditProfileID.closest('.form-group').classList.add('d-none');
             this.addEditSessionID.closest('.form-group').classList.add('d-none');
             this.addEditEventID.closest('.form-group').classList.add('d-none');
-            this.addRound.classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.buttonUpdate.classList.remove('d-none');
 
@@ -209,9 +206,8 @@ class View {
             this.addEditProfileID.closest('.form-group').classList.remove('d-none');
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
-            this.addRound.classList.remove('d-none');
-            this.buttonAddNew.classList.remove('d-none');
-            this.buttonUpdate.classList.add('d-none');
+            this.buttonAddNew.classList.add('d-none');
+            this.buttonUpdate.classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -219,6 +215,8 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.sessionName.value = '';
             this.sessionName.disabled = true;
+            // const date = sessionDate.split('T')[0];
+            // const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             this.addEditSessionDateStart.value = todayDateTime();
             this.addEditSessionDateStart.setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = 10;
@@ -226,7 +224,7 @@ class View {
             this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
             this.featuredUserIds = [];
-            
+            // const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
@@ -318,7 +316,7 @@ class View {
             // If element is the "Add new session" button
             if (isBtnNewSession) {
                 console.log(isBtnNewSession);
-                this.renderForm(null, null, 'add')
+                this.renderEditForm(null, null, 'add')
             }
         });
     }
