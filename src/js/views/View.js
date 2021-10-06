@@ -47,6 +47,8 @@ class View {
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
         this.buttonAddNew = document.getElementById('buttonAddNew');
         this.buttonUpdate = document.getElementById('buttonUpdate');
+        this.addRound = document.getElementById('addRound');
+        this.buttonAddRound = document.getElementById('buttonAddRound');
         this.featuredUserIds = [];
     }
 
@@ -152,7 +154,7 @@ class View {
     }
 
     // Render edit form
-    renderEditForm(sessionData, sessionDate, type) {
+    renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
             // Form fields values
             const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
@@ -163,6 +165,7 @@ class View {
             this.addEditProfileID.closest('.form-group').classList.add('d-none');
             this.addEditSessionID.closest('.form-group').classList.add('d-none');
             this.addEditEventID.closest('.form-group').classList.add('d-none');
+            this.addRound.classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.buttonUpdate.classList.remove('d-none');
 
@@ -206,6 +209,7 @@ class View {
             this.addEditProfileID.closest('.form-group').classList.remove('d-none');
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
+            this.addRound.classList.remove('d-none');
             this.buttonAddNew.classList.remove('d-none');
             this.buttonUpdate.classList.add('d-none');
 
@@ -314,7 +318,7 @@ class View {
             // If element is the "Add new session" button
             if (isBtnNewSession) {
                 console.log(isBtnNewSession);
-                this.renderEditForm(null, null, 'add')
+                this.renderForm(null, null, 'add')
             }
         });
     }
