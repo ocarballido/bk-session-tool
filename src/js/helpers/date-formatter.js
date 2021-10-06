@@ -20,6 +20,6 @@ export const dateTimeFormater = (APIDate) => {
 export const todayDateTime = () => {
     const dateTime = new Date();
     const date = dateTime.toISOString().split('T')[0];
-    const time = dateTime.toLocaleString().slice(11, -3);
+    const time = dateTime.toLocaleString().slice(dateTime.toLocaleString().indexOf(' ') + 1, -3);
     return `${date}T${time}`
 };

@@ -146,43 +146,92 @@ class View {
         });
     }
 
-    // Render edit form
-    renderEditForm(sessionData, sessionDate) {
-        // Form fields values
-        const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-        this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
-
-        // Hiding some form fields
-        this.addEditUserID.closest('.form-group').classList.add('d-none');
-        this.addEditProfileID.closest('.form-group').classList.add('d-none');
-        this.addEditSessionID.closest('.form-group').classList.add('d-none');
-        this.addEditEventID.closest('.form-group').classList.add('d-none');
-        this.buttonAddNew.classList.add('d-none');
-
-        // Setting form fields value
-        this.editAddForm.dataset.id = id;
-        this.editAddForm.dataset.date = sessionDate;
-        this.editAddModalTitle.innerHTML = "Editar sesión";
-        this.sessionName.value = sessionName;
-        this.sessionName.disabled = true;
-        const date = sessionDate.split('T')[0];
-        const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-        this.addEditSessionDateStart.value = `${date}T${time}`;
-        this.addEditSessionDateStart.setAttribute('min', todayDateTime());
-        this.addEditMaxUsers.value = maxUsers;
-        this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
-        this.addEditWarmUpTime.value = warmupSeconds;
-        this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
-        const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
-        // Styling featured users toggle buttons
-        document.querySelectorAll(".btn-proUser").forEach(function(element) {
-            element.classList.remove("active");
-        });
-        this.featuredUserIds.forEach( (user, index) => {
-            featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
-        } );
+    // Add new session
+    addScheduledSessionModalAction(handler) {
         
-        console.log(date, time);
+    }
+
+    // Render edit form
+    renderEditForm(sessionData, sessionDate, type) {
+        if (type === 'edit') {
+            // Form fields values
+            const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+
+            // Hiding some form fields
+            this.addEditUserID.closest('.form-group').classList.add('d-none');
+            this.addEditProfileID.closest('.form-group').classList.add('d-none');
+            this.addEditSessionID.closest('.form-group').classList.add('d-none');
+            this.addEditEventID.closest('.form-group').classList.add('d-none');
+            this.buttonAddNew.classList.add('d-none');
+            this.buttonUpdate.classList.remove('d-none');
+
+            // Showing some form fields
+            this.sessionName.closest('.form-group').classList.remove('d-none');
+
+            // Setting form fields value
+            this.editAddForm.dataset.id = id;
+            this.editAddForm.dataset.date = sessionDate;
+            this.editAddModalTitle.innerHTML = "Editar sesión";
+            this.sessionName.value = sessionName;
+            this.sessionName.disabled = true;
+            const date = sessionDate.split('T')[0];
+            const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
+            this.addEditSessionDateStart.value = `${date}T${time}`;
+            this.addEditSessionDateStart.setAttribute('min', todayDateTime());
+            this.addEditMaxUsers.value = maxUsers;
+            this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
+            this.addEditWarmUpTime.value = warmupSeconds;
+            this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
+            const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+            // Styling featured users toggle buttons
+            document.querySelectorAll(".btn-proUser").forEach(function(element) {
+                element.classList.remove("active");
+            });
+            this.featuredUserIds.forEach( (user, index) => {
+                featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
+            } );
+            
+            console.log(date, time);
+        } else if (type === 'add') {
+            // Form fields values
+            // const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            // this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+
+            // Hiding some form fields
+            this.sessionName.closest('.form-group').classList.add('d-none');
+
+            // Showing form fields
+            this.addEditUserID.closest('.form-group').classList.remove('d-none');
+            this.addEditProfileID.closest('.form-group').classList.remove('d-none');
+            this.addEditSessionID.closest('.form-group').classList.remove('d-none');
+            this.addEditEventID.closest('.form-group').classList.remove('d-none');
+            this.buttonAddNew.classList.remove('d-none');
+            this.buttonUpdate.classList.add('d-none');
+
+            // Setting form fields value
+            this.editAddForm.dataset.id = '';
+            this.editAddForm.dataset.date = '';
+            this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
+            this.sessionName.value = '';
+            this.sessionName.disabled = true;
+            // const date = sessionDate.split('T')[0];
+            // const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
+            this.addEditSessionDateStart.value = todayDateTime();
+            this.addEditSessionDateStart.setAttribute('min', todayDateTime());
+            this.addEditMaxUsers.value = 10;
+            this.addEditrealWeather.value = 'yes';
+            this.addEditWarmUpTime.value = 600;
+            this.addEditMainPartMinSecconds.value = 300;
+            this.featuredUserIds = [];
+            // const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+            // Styling featured users toggle buttons
+            document.querySelectorAll(".btn-proUser").forEach(function(element) {
+                element.classList.remove("active");
+            });
+
+            console.log('Va a añadir', this.featuredUserIds);
+        }
     }
 
     // Edit scheduled session Action
@@ -267,6 +316,7 @@ class View {
             // If element is the "Add new session" button
             if (isBtnNewSession) {
                 console.log(isBtnNewSession);
+                this.renderEditForm(null, null, 'add')
             }
         });
     }
