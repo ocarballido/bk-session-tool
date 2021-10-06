@@ -43,10 +43,10 @@
             <div id="filterSidebar" class="col-md bg-white border-end border-light p-3">
                 <form id="sessionFilters">
                     <!-- Session name -->
-                    <div class="form-group floating-label mb-2">
+                    <!-- <div class="form-group floating-label mb-2">
                         <input type="text" class="form-control" id="filterSessionName" name="filterSessionName" placeholder="Nomnbre de sesion">
                         <label for="filterSessionName">Nomnbre de sesión</label>
-                    </div>
+                    </div> -->
                     <!-- /Session name -->
 
                     <!-- Date start -->
@@ -66,7 +66,8 @@
                     <!-- Event -->
                     <div class="form-group floating-label mb-2">
                         <select id="filterSessionEvent" class="custom-select" >
-                            <option selected value="1">GIV</option>
+                            <option selected value="all">Todos</option>
+                            <option value="GIV2021">GIV</option>
                         </select>
                         <label for="filterSessionEvent">Evento</label>
                     </div>
@@ -74,8 +75,20 @@
 
                     <!-- Session user -->
                     <div class="form-group floating-label mb-2">
-                        <input type="text" class="form-control" id="filterSessionUser" name="filterSessionUser" placeholder="Nombre de usuario">
-                        <label for="filterSessionUser">Nombre de usuario</label>
+                        <select id="filterSessionUser" class="custom-select" >
+                            <option selected value="all">Todos</option>
+                            <option value="133479">Juan de la Pin García</option>
+                            <option value="2">Mariana Grajales</option>
+                            <option value="3">Sabino Pupo</option>
+                            <option value="4">Vilma Espín</option>
+                            <option value="5">Ernesto Nieblas</option>
+                            <option value="6">Efreen Dubois</option>
+                            <option value="7">Elpidio Valdés</option>
+                            <option value="8">María Silvia</option>
+                            <option value="9">Solomón Montoya</option>
+                            <option value="10">Esteban Lazo </option>
+                        </select>
+                        <label for="filterSessionUser">Usuario PRO</label>
                     </div>
                     <!-- /Session user -->
 
