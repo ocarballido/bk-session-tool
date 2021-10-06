@@ -90,7 +90,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            title: 'Bootstrap 5 & WebPack 5 Boilerplate',
+            title: 'BKOOL session manager',
             template: 'src/index.html'
         }),
     ],

@@ -15,4 +15,11 @@ export const dateTimeFormater = (APIDate) => {
         formattedTime,
         formattedDateTime
     };
-}
+};
+
+export const todayDateTime = () => {
+    const dateTime = new Date();
+    const date = dateTime.toISOString().split('T')[0];
+    const time = dateTime.toLocaleString().slice(11, -3);
+    return `${date}T${time}`
+};

@@ -178,6 +178,30 @@ $gray-50: 						#f5f5f5 !default;
             pointer-events: none;
         }
 	}
+	&.btn-proUser {
+		.icon-add {
+			display: inline-block;
+			transform: rotate(0);
+			transition: all .2s;
+		}
+		&.active {
+			.icon-add {
+				transform: rotate(45deg);
+			}
+		}
+		span {
+            pointer-events: none;
+        }
+		&.active {
+			&:hover {
+				background-color: $success;
+			}
+		}
+		&:hover {
+			background-color: $white;
+			border-color: $success;
+		}
+	}
 }
 
 .accordion {

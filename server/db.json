@@ -10,7 +10,9 @@
                 {
                     "startDate":"2021-11-20T15:06:39.902Z",
                     "featuredUserIds":[
-                        "133479"
+                        "133479",
+                        "2",
+                        "3"
                     ]
                 },
                 {
@@ -165,7 +167,7 @@
         {
             "id":"614889b1ea00dd038ed63c74",
             "userId":"85250",
-            "profileId":"12067924",
+            "profileId":"22067924",
             "sessionId":"22",
             "eventId":"GIV2021",
             "roundsDefinition":[
@@ -327,7 +329,7 @@
         {
             "id":"61486a81ea00dd038ed63c73",
             "userId":"85250",
-            "profileId":"12067924",
+            "profileId":"32067924",
             "sessionId":"22",
             "eventId":"GIV2021",
             "roundsDefinition":[
@@ -351,7 +353,7 @@
         {
             "id":"614866e2ea00dd038ed63c72",
             "userId":"85250",
-            "profileId":"12067924",
+            "profileId":"42067924",
             "sessionId":"22",
             "eventId":"GIV2021",
             "roundsDefinition":[
@@ -375,7 +377,7 @@
         {
             "id":"6148653aea00dd038ed63c71",
             "userId":"85250",
-            "profileId":"12067924",
+            "profileId":"52067924",
             "sessionId":"22",
             "eventId":"GIV2021",
             "roundsDefinition":[
@@ -399,7 +401,7 @@
         {
             "id":"61486420ea00dd038ed63c70",
             "userId":"85250",
-            "profileId":"12067924",
+            "profileId":"62067924",
             "sessionId":"22",
             "eventId":"GIV2021",
             "roundsDefinition":[
@@ -657,44 +659,28 @@
     ],
     "sessions": [
         {
-            "id":"6148a255ea00dd038ed63c75",
+            "id":"12067924",
             "name":"Paris - Roubaix"
         },
         {
-            "id":"614889b1ea00dd038ed63c74",
+            "id":"22067924",
             "name":"Amstel Gold Race"
         },
         {
-            "id":"61486a81ea00dd038ed63c73",
+            "id":"32067924",
             "name":"La Flèche Wallonne"
         },
         {
-            "id":"614866e2ea00dd038ed63c72",
+            "id":"42067924",
             "name":"Liège-Bastogne-Liège"
         },
         {
-            "id":"6148653aea00dd038ed63c71",
+            "id":"52067924",
             "name":"GPC de Quebec"
         },
         {
-            "id":"61486420ea00dd038ed63c70",
+            "id":"62067924",
             "name":"Milano - Torino"
-        },
-        {
-            "id":"614862e4ea00dd038ed63c6f",
-            "name":"Aer cont. con expl."
-        },
-        {
-            "id":"614861ecea00dd038ed63c6e",
-            "name":"Passo dello Stelvio"
-        },
-        {
-            "id":"61486067ea00dd038ed63c6d",
-            "name":"L'Angliru"
-        },
-        {
-            "id":"61485da8ea00dd038ed63c6c",
-            "name":"Col d'Aubisque"
         }
     ],
     "users": [

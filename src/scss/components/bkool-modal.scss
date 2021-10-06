@@ -16,6 +16,11 @@
 	}
 }
 
+.modal-footer {
+	border-top: none;
+	padding-top: 0;
+}
+
 .modal-content {
 	box-shadow: $modal-content-box-shadow-xs;
 }
