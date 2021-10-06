@@ -70,6 +70,7 @@ class Model {
             return apiServices
                 .deleteScheduledSession(id)
                 .then((scheduledSessions) => {
+                    // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
                     console.log(scheduledSessions);
                     return true;
@@ -81,6 +82,7 @@ class Model {
                 .updateScheduledSession(id, sessionItem)
                 .then((scheduledSessions) => {
                     console.log(scheduledSessions);
+                    // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
                 });
         }
@@ -97,7 +99,8 @@ class Model {
         // Get session item
         const sessionItem = this._scheduledSessions.find( session => session.id === id );
 
-        // Remove sessionName property. We dont need it to update db
+        // Get session name and removed. We dont need it to update db but needed to update local data
+        const sessionName = sessionItem.sessionName;
         delete sessionItem.sessionName;
 
         // Get index of edited round
@@ -105,20 +108,22 @@ class Model {
         sessionItem.roundsDefinition.splice(edittedRoundIndex, 1, updatedRound);
 
         // Update session item
-        const sessionItemUpdates = {
+        const sessionItemUpdated = {
             ...sessionItem,
             ...updatedGlobalData,
             roundsDefinition: sessionItem.roundsDefinition
         }
 
-        console.log(sessionItem, sessionItemUpdates, sessionDate, updatedGlobalData, updatedRound, edittedRoundIndex);
+        console.log(sessionItem, sessionItemUpdated, sessionDate, updatedGlobalData, updatedRound, edittedRoundIndex, this._scheduledSessions);
 
-        // return apiServices
-        //     .updateScheduledSession(id, sessionItem)
-        //     .then((scheduledSessions) => {
-        //         console.log(scheduledSessions);
-        //         this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-        //     });
+        return apiServices
+            .updateScheduledSession(id, sessionItemUpdated)
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                const updatedLocalData = {...sessionItemUpdated, sessionName: sessionName}
+                const edittedSessionIndex = this._scheduledSessions.findIndex( session => session.id === id );
+                this._scheduledSessions.splice(edittedSessionIndex, 1, updatedLocalData);
+            });
     }
 };
 

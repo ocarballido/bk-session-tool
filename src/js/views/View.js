@@ -130,61 +130,6 @@ class View {
         }
     }
 
-    // Edit scheduled session
-    // editScheduledSessionAction(handler) {
-    //     this.scheduledSessionsList.addEventListener('click', (event) => {
-    //         const element = event.target;
-    //         const elementClasses = element.classList;
-    //         const isEditSessionButton = elementClasses.contains('btnEditSession');
-
-    //         if (isEditSessionButton) {
-    //             const id = event.target.closest('tr').dataset.id;
-    //             const sessionDate = new Date(event.target.closest('tr').dataset.date.split(".")[0]);
-    //             const featuredUserIds = event.target.closest('tr').dataset.featuredUserIds.split('-');
-    //             const sessionItem = {
-    //                 id: event.target.closest('li').dataset.id,
-    //                 userId: event.target.closest('li').dataset.userId,
-    //                 profileId: event.target.closest('li').dataset.profileId,
-    //                 sessionId: event.target.closest('li').dataset.sessionId,
-    //                 eventId: event.target.closest('li').dataset.eventId,
-    //                 maxUsers: event.target.closest('li').dataset.maxUsers,
-    //                 rules: event.target.closest('li').dataset.rules,
-    //                 isRealWeather: event.target.closest('li').dataset.isRealWeather,
-    //                 warmupSeconds: event.target.closest('li').dataset.warmupSeconds,
-    //                 mainPartMinSeconds: event.target.closest('li').dataset.mainPartMinSeconds,
-    //                 sessionName: event.target.closest('li').dataset.sessionName,
-    //             }
-
-    //             // Hiding some form fields
-    //             this.addEditUserID.closest('.form-group').classList.add('d-none');
-    //             this.addEditProfileID.closest('.form-group').classList.add('d-none');
-    //             this.addEditSessionID.closest('.form-group').classList.add('d-none');
-    //             this.addEditEventID.closest('.form-group').classList.add('d-none');
-    //             // this.addEditProUsers.closest('.form-group').classList.add('d-none');
-    //             this.buttonAddNew.classList.add('d-none');
-
-    //             // Setting form fields value
-    //             this.editAddModalTitle.innerHTML = "Editar sesión";
-    //             this.sessionName.value = sessionItem.sessionName;
-    //             this.sessionName.disabled = true;
-    //             //this.addEditSessionDateStart.value = sessionDate.split(".")[0];
-    //             this.addEditSessionDateStart.value = sessionDate.toISOString().slice(0, -5);
-    //             this.addEditMaxUsers.value = sessionItem.maxUsers;
-    //             this.addEditrealWeather.value = sessionItem.isRealWeather ? 'yes' : 'no';
-    //             this.addEditWarmUpTime.value = sessionItem.warmupSeconds;
-    //             this.addEditMainPartMinSecconds.value = sessionItem.mainPartMinSeconds;
-    //             const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
-    //             // Styling featured users toggle buttons
-    //             featuredUserIds.forEach( (user, index) => {
-    //                 featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
-    //             } );
-
-    //             console.log(sessionItem, sessionDate);
-    //             handler(id, sessionDate, sessionItem);
-    //         }
-    //     });
-    // }
-
     // Edit modal action
     editScheduledSessionModalAction(handler) {
         this.scheduledSessionsList.addEventListener('click', (event) => {
@@ -281,6 +226,16 @@ class View {
     renderDeletedRound(id, sessionDate) {
         const roundToDelete = document.querySelector(`.list-group-item[data-id="${id}"] .collapse-body table tbody tr[data-date="${sessionDate}"]`);
         roundToDelete.remove();
+    }
+
+    // Render items after updated session
+    renderUpdatedSession(id, sessionDate, updatedRound) {
+        const roundToUpdate = document.querySelector(`.list-group-item[data-id="${id}"] .collapse-body table tbody tr[data-date="${sessionDate}"]`);
+        roundToUpdate.dataset.date = updatedRound.startDate;
+        const dateTd = roundToUpdate.querySelector('.sessionBegins');
+        const timeTd = roundToUpdate.querySelector('.sessionTimes .badge');
+        dateTd.innerHTML = dateTimeFormater(updatedRound.startDate).formattedDate;
+        timeTd.innerHTML = dateTimeFormater(updatedRound.startDate).formattedTime;
     }
 
     // First UI app render action

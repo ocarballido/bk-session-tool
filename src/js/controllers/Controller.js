@@ -57,9 +57,16 @@ class Controller {
     }
 
     editScheduledSessionHandler(id, sessionDate, updatedGlobalData, updatedRound) {
-        this.model.editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound);
-        // this.view.
-        // console.log(id, updatedData);
+        this.view.toggleSpinner();
+        this.model.editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound)
+            .then(() => {
+                this.view.renderUpdatedSession(id, sessionDate, updatedRound);
+                this.view.renderAlertMessages('La sesión se ha actualizado con éxito', 'success');
+            })
+            .catch(() => {
+                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());;
     }
 }
 
