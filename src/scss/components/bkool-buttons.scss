@@ -192,6 +192,15 @@ $gray-50: 						#f5f5f5 !default;
 		span {
             pointer-events: none;
         }
+		&.active {
+			&:hover {
+				background-color: $success;
+			}
+		}
+		&:hover {
+			background-color: $white;
+			border-color: $success;
+		}
 	}
 }
 
