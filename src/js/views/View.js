@@ -169,9 +169,11 @@ class View {
             this.addEditEventID.closest('.form-group').classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.buttonUpdate.classList.remove('d-none');
+            document.querySelector('.singleRound.add').classList.add('d-none');
 
             // Showing some form fields
             this.sessionName.closest('.form-group').classList.remove('d-none');
+            document.querySelector('.singleRound.edit').classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
@@ -198,16 +200,18 @@ class View {
             
             console.log(date, time);
         } else if (type === 'add') {
-            // Hiding some form fields
-            this.sessionName.closest('.form-group').classList.add('d-none');
-
             // Showing form fields
+            this.sessionName.closest('.form-group').classList.add('d-none');
+            this.buttonUpdate.classList.add('d-none');
+            document.querySelector('.singleRound.edit').classList.add('d-none');
+
+            // Hiding some form fields
             this.addEditUserID.closest('.form-group').classList.remove('d-none');
             this.addEditProfileID.closest('.form-group').classList.remove('d-none');
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
             this.buttonAddNew.classList.remove('d-none');
-            this.buttonUpdate.classList.add('d-none');
+            document.querySelector('.singleRound.add').classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -232,21 +236,23 @@ class View {
     // Edit scheduled session Action
     editScheduledSessionAction(handler) {
         // Getting ids of pro users
-        const proUsersNode = document.querySelectorAll('.btn-proUser');
         let proUsersArr = [];
-        this.addEditProUsers.querySelector('.users').addEventListener('click', (event) => {
+        this.addEditProUsers.querySelector('.singleRound.edit .users').addEventListener('click', (event) => {
             const element = event.target;
-            proUsersArr = [];
-            [...proUsersNode].forEach(button => {
-                const userId = button.getAttribute('data-user-id');
-                if (button.classList.contains('active')) {
-                    proUsersArr.push(userId);
-                    console.log('tiene');
-                } else {
-                    proUsersArr = proUsersArr.filter( user => user !== userId);
-                    console.log('no tiene');
-                }
-            });
+            if (element.classList.contains('btn-proUser')) {
+                const proUsersNode = document.querySelectorAll('.singleRound.edit .users .btn-proUser');
+                proUsersArr = [];
+                [...proUsersNode].forEach(button => {
+                    const userId = button.getAttribute('data-user-id');
+                    if (button.classList.contains('active')) {
+                        proUsersArr.push(userId);
+                        console.log('tiene');
+                    } else {
+                        proUsersArr = proUsersArr.filter( user => user !== userId);
+                        console.log('no tiene');
+                    }
+                });
+            }
         });
         
         // Submmiting data
@@ -291,6 +297,8 @@ class View {
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
             event.preventDefault();
+
+            // Creating data
             const updatedGlobalData = {
                 userId: this.userId,
                 profileId: parseInt(this.addEditProfileID.value),
