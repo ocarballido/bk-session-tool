@@ -52,6 +52,7 @@ class View {
         this.buttonUpdate = document.getElementById('buttonUpdate');
         this.addRound = document.getElementById('addRound');
         this.buttonAddRound = document.getElementById('buttonAddRound');
+        this.rounds = document.getElementById('rounds');
     }
 
     // First scheduled sessions render
@@ -280,26 +281,78 @@ class View {
 
     // Add scheduled session Action
     addScheduledSessionAction(handler) {
-        // Getting ids of pro users
-        let proUsersArr = [];
-        let roundsDefinition = [];
-        document.querySelector('.singleRound.add .users').addEventListener('click', (event) => {
+        let numberOfRounds = 1;
+        this.rounds.addEventListener('click', (event) => {
             const element = event.target;
-            const roundElementNumber = element.closest('.singleRound.add').getAttribute('data-round');
-            console.log(roundElementNumber);
-            if (element.classList.contains('btn-proUser')) {
-                const proUsersNode = document.querySelectorAll(`.singleRound.add[data-round="${roundElementNumber}"] .users .btn-proUser`);
-                proUsersArr = [];
-                [...proUsersNode].forEach(button => {
-                    const userId = button.getAttribute('data-user-id');
-                    if (button.classList.contains('active')) {
-                        proUsersArr.push(userId);
-                        console.log(proUsersArr);
-                    } else {
-                        proUsersArr = proUsersArr.filter( user => user !== userId);
-                        console.log(proUsersArr);
+            const isProUserButton = element.classList.contains('btn-proUser');
+            const isRemoveRoundButton = element.classList.contains('btn-danger');
+            const isButtonAddRound = element.id;
+            // Check if element is pro user button
+            if (isProUserButton) {
+                // Getting ids of pro users
+                let proUsersArr = [];
+                let roundsDefinition = [];
+                document.querySelector('.singleRound.add .users').addEventListener('click', (event) => {
+                    const element = event.target;
+                    const roundElementNumber = element.closest('.singleRound.add').getAttribute('data-round');
+                    console.log(roundElementNumber);
+                    if (element.classList.contains('btn-proUser')) {
+                        const proUsersNode = document.querySelectorAll(`.singleRound.add[data-round="${roundElementNumber}"] .users .btn-proUser`);
+                        proUsersArr = [];
+                        [...proUsersNode].forEach(button => {
+                            const userId = button.getAttribute('data-user-id');
+                            if (button.classList.contains('active')) {
+                                proUsersArr.push(userId);
+                                console.log(proUsersArr);
+                            } else {
+                                proUsersArr = proUsersArr.filter( user => user !== userId);
+                                console.log(proUsersArr);
+                            }
+                        });
                     }
                 });
+            } else if (isButtonAddRound === 'buttonAddRound') { // Check if element is add round button
+                // Add 1 to numerOfRound
+                numberOfRounds ++;
+
+                // Get first element round
+                const roundElement = document.querySelector(`.singleRound.add[data-round="1"]`);
+
+                // Clone element round
+                const clonedRoundElement = roundElement.cloneNode(true);
+
+                // Change data-round value
+                clonedRoundElement.dataset.round = numberOfRounds;
+
+                // Change id value
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').id = `addSessionDateStart-${numberOfRounds}`;
+
+                // Change name attr
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').name = `addSessionDateStart-${numberOfRounds}`;
+
+                // Change input value
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').value = todayDateTime();
+
+                // Change input min attr
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').setAttribute('min', todayDateTime());
+
+                // Change label for attr
+                clonedRoundElement.querySelector('.floating-label label').setAttribute('for', `addSessionDateStart-${numberOfRounds}`);
+
+                // Create remove button
+                const roundRemoveButton = document.createElement('button');
+                roundRemoveButton.classList.add('btn', 'btn-sm', 'btn-danger', 'mb-1', 'text-white');
+                roundRemoveButton.innerHTML = 'Eliminar ronda';
+                clonedRoundElement.querySelector('.addEditProUsers .users').appendChild(roundRemoveButton);
+
+                // Add round to DOM
+                this.rounds.prepend(clonedRoundElement);
+
+                // document.querySelector(`.singleRound.add[data-round="${numberOfRounds - 1}"]`).insertAdjacentHTML('afterend', clonedRoundElement.innerHTML);
+            } else if (isRemoveRoundButton) {
+                event.preventDefault();
+                const roundToRemove = element.closest('.singleRound');
+                roundToRemove.remove();
             }
         });
         

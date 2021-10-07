@@ -51,3 +51,30 @@ export const scheduledSessionTableRowTemplate = `
 export const alertTemplate = `
     <div class="alert alert-{{alertType}} mx-0 mb-3 border-0" role="alert">{{alertMassage}}</div>
 `;
+export const roundTemplate = `
+    <div class="singleRound add" data-round="{{roundNumber}}">
+        <!-- Date start -->
+        <div class="form-group floating-label mb-2">
+            <input type="datetime-local" class="form-control" id="addSessionDateStart-{{roundNumber}}" placeholder="Dede" tabindex="2" name="addSessionDateStart-{{roundNumber}}" valiue="" >
+            <label for="addSessionDateStart-{{roundNumber}}">Desde</label>
+        </div>
+        <!-- /Date start -->
+
+        <!-- Session user -->
+        <div class="addEditProUsers form-group">
+            <div class="users">
+                <button data-user-id="133479" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Juan de la Pin García <span class="icon-add"></span></button>
+                <button data-user-id="2" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Mariana Grajales <span class="icon-add"></span></button>
+                <button data-user-id="3" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Sabino Pupo <span class="icon-add"></span></button>
+                <button data-user-id="4" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Vilma Espín <span class="icon-add"></span></button>
+                <button data-user-id="5" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Ernesto Nieblas <span class="icon-add"></span></button>
+                <button data-user-id="6" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Efreen Dubois <span class="icon-add"></span></button>
+                <button data-user-id="7" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Elpidio Valdés <span class="icon-add"></span></button>
+                <button data-user-id="8" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">María Silvia <span class="icon-add"></span></button>
+                <button data-user-id="9" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Solomón Montoya <span class="icon-add"></span></button>
+                <button data-user-id="10" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">Esteban Lazo <span class="icon-add"></span></button>
+            </div>
+        </div>
+        <!-- /Session user -->
+    </div>
+`;
