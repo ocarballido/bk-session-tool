@@ -21,8 +21,11 @@ class Controller {
         // Binding edit session modal action
         this.view.editScheduledSessionModalAction(this.editScheduledSessionModalHandler.bind(this));
 
-        // Binding edit session action
+        // Binding add session action
         this.view.editScheduledSessionAction(this.editScheduledSessionHandler.bind(this));
+
+        // Binding edit session action
+        this.view.addScheduledSessionAction(this.addScheduledSessionHandler.bind(this));
 
         // Load data action
         this.model.getScheduledSessions()
@@ -53,7 +56,7 @@ class Controller {
 
     editScheduledSessionModalHandler(id, sessionDate) {
         const sessionData = this.model.editScheduledSessionFormData(id);
-        this.view.renderEditForm(sessionData, sessionDate, 'edit');
+        this.view.renderForm(sessionData, sessionDate, 'edit');
     }
 
     editScheduledSessionHandler(id, sessionDate, updatedGlobalData, updatedRound) {
@@ -67,6 +70,10 @@ class Controller {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
             })
             .finally(() => this.view.toggleSpinner());;
+    }
+
+    addScheduledSessionHandler(data) {
+        console.log(data);
     }
 }
 

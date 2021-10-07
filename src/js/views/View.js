@@ -146,12 +146,14 @@ class View {
     }
 
     // Add new session
-    addScheduledSessionModalAction(handler) {
-        
-    }
+    // addScheduledSessionModalAction(handler) {
+    //     this.btnNewSession.addEventListener('click', (event) => {
+            
+    //     });
+    // }
 
     // Render edit form
-    renderEditForm(sessionData, sessionDate, type) {
+    renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
             // Form fields values
             const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
@@ -201,8 +203,8 @@ class View {
             this.addEditProfileID.closest('.form-group').classList.remove('d-none');
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
-            this.buttonAddNew.classList.add('d-none');
-            this.buttonUpdate.classList.remove('d-none');
+            this.buttonAddNew.classList.remove('d-none');
+            this.buttonUpdate.classList.add('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -216,7 +218,6 @@ class View {
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
-            proUsers = [];
             
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
@@ -261,6 +262,43 @@ class View {
                 featuredUserIds: proUsersArr,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
+        });
+    }
+
+    // Add scheduled session Action
+    addScheduledSessionAction(handler) {
+        // Getting ids of pro users
+        // const proUsersNode = document.querySelectorAll('.btn-proUser');
+        // let proUsersArr = [];
+        // this.addEditProUsers.querySelector('.users').addEventListener('click', (event) => {
+        //     const element = event.target;
+        //     proUsersArr = [];
+        //     [...proUsersNode].forEach(button => {
+        //         const userId = button.getAttribute('data-user-id');
+        //         if (button.classList.contains('active')) {
+        //             proUsersArr.push(userId);
+        //             console.log('tiene');
+        //         } else {
+        //             proUsersArr = proUsersArr.filter( user => user !== userId);
+        //             console.log('no tiene');
+        //         }
+        //     });
+        // });
+        
+        // Submmiting data
+        this.buttonAddNew.addEventListener('click', (event) => {
+            event.preventDefault();
+            const updatedGlobalData = {
+                maxUsers: parseInt(this.addEditMaxUsers.value),
+                isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
+                warmupSeconds: parseInt(this.addEditWarmUpTime.value),
+                mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
+            };
+            const updatedRound = {
+                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
+                featuredUserIds: proUsersArr,
+            };
+            handler('Oscar');
         });
     }
 
@@ -315,7 +353,7 @@ class View {
             // If element is the "Add new session" button
             if (isBtnNewSession) {
                 console.log(isBtnNewSession);
-                this.renderEditForm(null, null, 'add')
+                this.renderForm(null, null, 'add')
             }
         });
     }
