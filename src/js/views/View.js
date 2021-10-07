@@ -3,6 +3,9 @@ import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 
 class View {
     constructor() {
+        // Global variables
+        this.userId = 636823468237648327642837;
+
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
         this.btnSidebar = document.getElementById('btnSidebar');
@@ -289,16 +292,28 @@ class View {
         this.buttonAddNew.addEventListener('click', (event) => {
             event.preventDefault();
             const updatedGlobalData = {
+                userId: this.userId,
+                profileId: parseInt(this.addEditProfileID.value),
+                sessionId: parseInt(this.addEditSessionID.value),
+                eventId: this.addEditEventID.value,
+                // roundsDefinition: [
+
+                // ],
                 maxUsers: parseInt(this.addEditMaxUsers.value),
+                rules: 'COMPETITIVE',
                 isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
+                launchOptions: {
+                    maxInstances: 3,
+                    maxSeconds: 300
+                },
                 warmupSeconds: parseInt(this.addEditWarmUpTime.value),
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             };
             const updatedRound = {
                 startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
-                featuredUserIds: proUsersArr,
+                // featuredUserIds: proUsersArr,
             };
-            handler('Oscar');
+            handler(updatedGlobalData);
         });
     }
 
@@ -352,7 +367,6 @@ class View {
 
             // If element is the "Add new session" button
             if (isBtnNewSession) {
-                console.log(isBtnNewSession);
                 this.renderForm(null, null, 'add')
             }
         });
