@@ -57,7 +57,7 @@ class Model {
 
     deleteScheduledSession(id, sessionDate) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === id );
+        const sessionItem = {...this._scheduledSessions.find( session => session.id === id )};
 
         // Remove sessionName property. We dont need it to update db
         delete sessionItem.sessionName;
@@ -97,7 +97,7 @@ class Model {
     // Edit session
     editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === id );
+        const sessionItem = {...this._scheduledSessions.find( session => session.id === id )};
 
         // Get session name and removed. We dont need it to update db but needed to update local data
         const sessionName = sessionItem.sessionName;
@@ -123,6 +123,7 @@ class Model {
                 const updatedLocalData = {...sessionItemUpdated, sessionName: sessionName}
                 const edittedSessionIndex = this._scheduledSessions.findIndex( session => session.id === id );
                 this._scheduledSessions.splice(edittedSessionIndex, 1, updatedLocalData);
+                console.log(this._scheduledSessions);
             });
     }
 };

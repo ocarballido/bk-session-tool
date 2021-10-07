@@ -47,7 +47,6 @@ class View {
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
         this.buttonAddNew = document.getElementById('buttonAddNew');
         this.buttonUpdate = document.getElementById('buttonUpdate');
-        this.featuredUserIds = [];
     }
 
     // First scheduled sessions render
@@ -156,7 +155,7 @@ class View {
         if (type === 'edit') {
             // Form fields values
             const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-            this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+            const proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
             this.addEditUserID.closest('.form-group').classList.add('d-none');
@@ -188,7 +187,7 @@ class View {
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
-            this.featuredUserIds.forEach( (user, index) => {
+            proUsers.forEach( (user, index) => {
                 featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
             } );
             
@@ -196,7 +195,7 @@ class View {
         } else if (type === 'add') {
             // Form fields values
             // const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-            // this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+            // proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
             this.sessionName.closest('.form-group').classList.add('d-none');
@@ -223,31 +222,41 @@ class View {
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
-            this.featuredUserIds = [];
+            proUsers = [];
             // const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
 
-            console.log('Va a añadir', this.featuredUserIds);
+            console.log('Va a añadir', proUsers);
         }
     }
 
     // Edit scheduled session Action
     editScheduledSessionAction(handler) {
+        // Fetting ids of pro users
+        const proUsersNode = document.querySelectorAll('.btn-proUser');
+        let proUsersArr = [];
         this.addEditProUsers.querySelector('#users').addEventListener('click', (event) => {
             const element = event.target;
             const isActive = element.classList.contains('active');
             const userId = element.getAttribute('data-user-id');
-            if (isActive) {
-                this.featuredUserIds.push(userId);
-            } else {
-                this.featuredUserIds = this.featuredUserIds.filter( user => user !== userId);
-            }
+            proUsersArr = [];
+            [...proUsersNode].forEach(button => {
+                const userId = button.getAttribute('data-user-id');
+                if (button.classList.contains('active')) {
+                    proUsersArr.push(userId);
+                    console.log('tiene');
+                } else {
+                    proUsersArr = proUsersArr.filter( user => user !== userId);
+                    console.log('no tiene');
+                }
+            });
         });
         
-        this.editAddForm.addEventListener('submit', (event) => {
+        // Submmiting data
+        this.buttonUpdate.addEventListener('click', (event) => {
             event.preventDefault();
             const id = this.editAddForm.getAttribute('data-id');
             const sessionDate = this.editAddForm.getAttribute('data-date');
@@ -259,7 +268,7 @@ class View {
             }
             const updatedRound = {
                 startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
-                featuredUserIds: this.featuredUserIds,
+                featuredUserIds: proUsersArr,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
         });
