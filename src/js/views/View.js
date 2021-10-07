@@ -155,7 +155,7 @@ class View {
         if (type === 'edit') {
             // Form fields values
             const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-            const proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+            let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
             this.addEditUserID.closest('.form-group').classList.add('d-none');
@@ -182,7 +182,7 @@ class View {
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
             this.addEditWarmUpTime.value = warmupSeconds;
             this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
-            const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+            const featuredUsersCollection = this.addEditProUsers.querySelector('.users');
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
@@ -193,10 +193,6 @@ class View {
             
             console.log(date, time);
         } else if (type === 'add') {
-            // Form fields values
-            // const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-            // proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
-
             // Hiding some form fields
             this.sessionName.closest('.form-group').classList.add('d-none');
 
@@ -214,8 +210,6 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.sessionName.value = '';
             this.sessionName.disabled = true;
-            // const date = sessionDate.split('T')[0];
-            // const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             this.addEditSessionDateStart.value = todayDateTime();
             this.addEditSessionDateStart.setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = 10;
@@ -223,25 +217,21 @@ class View {
             this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
             proUsers = [];
-            // const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
+            
             // Styling featured users toggle buttons
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
-
-            console.log('Va a añadir', proUsers);
         }
     }
 
     // Edit scheduled session Action
     editScheduledSessionAction(handler) {
-        // Fetting ids of pro users
+        // Getting ids of pro users
         const proUsersNode = document.querySelectorAll('.btn-proUser');
         let proUsersArr = [];
-        this.addEditProUsers.querySelector('#users').addEventListener('click', (event) => {
+        this.addEditProUsers.querySelector('.users').addEventListener('click', (event) => {
             const element = event.target;
-            const isActive = element.classList.contains('active');
-            const userId = element.getAttribute('data-user-id');
             proUsersArr = [];
             [...proUsersNode].forEach(button => {
                 const userId = button.getAttribute('data-user-id');
