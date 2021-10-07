@@ -43,7 +43,7 @@ class View {
         this.addEditSessionID = document.getElementById('addEditSessionID');
         this.addEditEventID = document.getElementById('addEditEventID');
         this.addEditSessionDateStart = document.getElementById('addEditSessionDateStart');
-        this.addEditProUsers = document.getElementById('addEditProUsers');
+        // this.addEditProUsers = document.getElementById('addEditProUsers');
         this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
         this.addEditrealWeather = document.getElementById('addEditrealWeather');
         this.addEditWarmUpTime = document.getElementById('addEditWarmUpTime');
@@ -169,7 +169,7 @@ class View {
             this.addEditEventID.closest('.form-group').classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.buttonUpdate.classList.remove('d-none');
-            document.querySelector('.singleRound.add').classList.add('d-none');
+            document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.add('d-none'));
 
             // Showing some form fields
             this.sessionName.closest('.form-group').classList.remove('d-none');
@@ -189,9 +189,9 @@ class View {
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
             this.addEditWarmUpTime.value = warmupSeconds;
             this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
-            const featuredUsersCollection = this.addEditProUsers.querySelector('.users');
+            const featuredUsersCollection = document.querySelector('.singleRound.edit .addEditProUsers .users');
             // Styling featured users toggle buttons
-            document.querySelectorAll(".btn-proUser").forEach(function(element) {
+            document.querySelectorAll(".singleRound.edit .addEditProUsers .users .btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
             proUsers.forEach( (user, index) => {
@@ -211,7 +211,7 @@ class View {
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
             this.buttonAddNew.classList.remove('d-none');
-            document.querySelector('.singleRound.add').classList.remove('d-none');
+            document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.remove('d-none'));
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -237,10 +237,10 @@ class View {
     editScheduledSessionAction(handler) {
         // Getting ids of pro users
         let proUsersArr = [];
-        this.addEditProUsers.querySelector('.singleRound.edit .users').addEventListener('click', (event) => {
+        document.querySelector('.singleRound.edit .users').addEventListener('click', (event) => {
             const element = event.target;
             if (element.classList.contains('btn-proUser')) {
-                const proUsersNode = document.querySelectorAll('.singleRound.edit .users .btn-proUser');
+                const proUsersNode = document.querySelectorAll('.singleRound.edit[data-round="0"] .users .btn-proUser');
                 proUsersArr = [];
                 [...proUsersNode].forEach(button => {
                     const userId = button.getAttribute('data-user-id');
@@ -277,22 +277,27 @@ class View {
     // Add scheduled session Action
     addScheduledSessionAction(handler) {
         // Getting ids of pro users
-        // const proUsersNode = document.querySelectorAll('.btn-proUser');
-        // let proUsersArr = [];
-        // this.addEditProUsers.querySelector('.users').addEventListener('click', (event) => {
-        //     const element = event.target;
-        //     proUsersArr = [];
-        //     [...proUsersNode].forEach(button => {
-        //         const userId = button.getAttribute('data-user-id');
-        //         if (button.classList.contains('active')) {
-        //             proUsersArr.push(userId);
-        //             console.log('tiene');
-        //         } else {
-        //             proUsersArr = proUsersArr.filter( user => user !== userId);
-        //             console.log('no tiene');
-        //         }
-        //     });
-        // });
+        let proUsersArr = [];
+        let roundsDefinition = [];
+        document.querySelector('.singleRound.add .users').addEventListener('click', (event) => {
+            const element = event.target;
+            const roundElementNumber = element.closest('.singleRound.add').getAttribute('data-round');
+            console.log(roundElementNumber);
+            if (element.classList.contains('btn-proUser')) {
+                const proUsersNode = document.querySelectorAll(`.singleRound.add[data-round="${roundElementNumber}"] .users .btn-proUser`);
+                proUsersArr = [];
+                [...proUsersNode].forEach(button => {
+                    const userId = button.getAttribute('data-user-id');
+                    if (button.classList.contains('active')) {
+                        proUsersArr.push(userId);
+                        console.log(proUsersArr);
+                    } else {
+                        proUsersArr = proUsersArr.filter( user => user !== userId);
+                        console.log(proUsersArr);
+                    }
+                });
+            }
+        });
         
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
