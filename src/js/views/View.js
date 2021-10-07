@@ -42,7 +42,7 @@ class View {
         this.addEditProfileID = document.getElementById('addEditProfileID');
         this.addEditSessionID = document.getElementById('addEditSessionID');
         this.addEditEventID = document.getElementById('addEditEventID');
-        this.addEditSessionDateStart = document.getElementById('addEditSessionDateStart');
+        this.editSessionDateStart = document.getElementById('editSessionDateStart');
         // this.addEditProUsers = document.getElementById('addEditProUsers');
         this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
         this.addEditrealWeather = document.getElementById('addEditrealWeather');
@@ -50,6 +50,8 @@ class View {
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
         this.buttonAddNew = document.getElementById('buttonAddNew');
         this.buttonUpdate = document.getElementById('buttonUpdate');
+        this.addRound = document.getElementById('addRound');
+        this.buttonAddRound = document.getElementById('buttonAddRound');
     }
 
     // First scheduled sessions render
@@ -168,11 +170,12 @@ class View {
             this.addEditSessionID.closest('.form-group').classList.add('d-none');
             this.addEditEventID.closest('.form-group').classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
-            this.buttonUpdate.classList.remove('d-none');
+            this.addRound.classList.add('d-none');
             document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.add('d-none'));
 
             // Showing some form fields
             this.sessionName.closest('.form-group').classList.remove('d-none');
+            this.buttonUpdate.classList.remove('d-none');
             document.querySelector('.singleRound.edit').classList.remove('d-none');
 
             // Setting form fields value
@@ -183,8 +186,8 @@ class View {
             this.sessionName.disabled = true;
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-            this.addEditSessionDateStart.value = `${date}T${time}`;
-            this.addEditSessionDateStart.setAttribute('min', todayDateTime());
+            this.editSessionDateStart.value = `${date}T${time}`;
+            this.editSessionDateStart.setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = maxUsers;
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
             this.addEditWarmUpTime.value = warmupSeconds;
@@ -203,6 +206,7 @@ class View {
             // Showing form fields
             this.sessionName.closest('.form-group').classList.add('d-none');
             this.buttonUpdate.classList.add('d-none');
+            this.addRound.classList.remove('d-none');
             document.querySelector('.singleRound.edit').classList.add('d-none');
 
             // Hiding some form fields
@@ -219,8 +223,8 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.sessionName.value = '';
             this.sessionName.disabled = true;
-            this.addEditSessionDateStart.value = todayDateTime();
-            this.addEditSessionDateStart.setAttribute('min', todayDateTime());
+            document.getElementById('addSessionDateStart-1').value = todayDateTime();
+            document.getElementById('addSessionDateStart-1').setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -267,7 +271,7 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
             const updatedRound = {
-                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
+                startDate: dateTimeFormater(this.editSessionDateStart.value).date.toISOString(),
                 featuredUserIds: proUsersArr,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
@@ -323,7 +327,7 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             };
             const updatedRound = {
-                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
+                startDate: dateTimeFormater(this.editSessionDateStart.value).date.toISOString(),
                 // featuredUserIds: proUsersArr,
             };
             handler(updatedGlobalData);
