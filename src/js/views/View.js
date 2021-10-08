@@ -240,17 +240,17 @@ class View {
     // Edit scheduled session Action
     editScheduledSessionAction(handler) {
         // Getting ids of pro users
-        let proUsersArr = [];
+        let proUsersArrEdited = [];
         const proUsersNode = document.querySelectorAll('.singleRound.edit[data-round="0"] .users .btn-proUser');
 
         this.modelEditAdd.addEventListener('shown.bs.modal', (event) => {
             [...proUsersNode].forEach(button => {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
-                    proUsersArr.push(userId);
+                    proUsersArrEdited.push(userId);
                     console.log('tiene');
                 } else {
-                    proUsersArr = proUsersArr.filter( user => user !== userId);
+                    proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
                     console.log('no tiene');
                 }
             });
@@ -266,12 +266,13 @@ class View {
                 const userId = element.getAttribute('data-user-id');
                 if (isEdit) {
                     if (isActive) {
-                        proUsersArr.push(userId);
+                        proUsersArrEdited.push(userId);
                     } else {
-                        proUsersArr = proUsersArr.filter( user => user !== userId);
+                        proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
                     }
                 }
             }
+            console.log(proUsersArrEdited);
         });
         
         // Submmiting data
@@ -287,7 +288,7 @@ class View {
             }
             const updatedRound = {
                 startDate: dateTimeFormater(this.editSessionDateStart.value).date.toISOString(),
-                featuredUserIds: proUsersArr,
+                featuredUserIds: proUsersArrEdited,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
         });
