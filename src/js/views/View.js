@@ -222,8 +222,8 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.sessionName.value = '';
             this.sessionName.disabled = true;
-            document.getElementById('addSessionDateStart-1').value = todayDateTime();
-            document.getElementById('addSessionDateStart-1').setAttribute('min', todayDateTime());
+            document.getElementById('addSessionDateStart-0').value = todayDateTime();
+            document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -296,8 +296,9 @@ class View {
 
     // Add scheduled session Action
     addScheduledSessionAction(handler) {
-        let proUsersArr = [];
-        let numberOfRounds = 1;
+        let roundsDefinition = [];
+        let proUsersArr = [[]];
+        let numberOfRounds = 0;
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
             const isBtnProUser = element.classList.contains('btn-proUser');
@@ -309,21 +310,29 @@ class View {
                 const isActive = element.classList.contains('active');
                 const userId = element.getAttribute('data-user-id');
                 if (isAdd) {
+                    const roundNumber = element.closest('.singleRound').getAttribute('data-round');
                     if (isActive) {
-                        proUsersArr.push(userId);
+                        proUsersArr[roundNumber].push(userId);
                     } else {
-                        proUsersArr = proUsersArr.filter( user => user !== userId);
+                        proUsersArr[roundNumber] = proUsersArr[roundNumber].filter( user => user !== userId);
                     }
                 }
             } else if (isButtonAddRound === 'buttonAddRound') { // Check if element is add round button
                 // Add 1 to numerOfRound
                 numberOfRounds ++;
 
-                // Get first element round
-                const roundElement = document.querySelector(`.singleRound.add[data-round="1"]`);
+                // Get round number and add array item to proUsersArr
+                proUsersArr.push([]);
+                console.log(proUsersArr);
+
+                // Get first element round and remove active class from btn pro user 
+                const roundElement = document.querySelector(`.singleRound.add[data-round="0"]`);
 
                 // Clone element round
                 const clonedRoundElement = roundElement.cloneNode(true);
+                clonedRoundElement.querySelectorAll(".btn-proUser").forEach(function(element) {
+                    element.classList.remove("active");
+                });
 
                 // Change data-round value
                 clonedRoundElement.dataset.round = numberOfRounds;
@@ -357,6 +366,9 @@ class View {
                 event.preventDefault();
                 const roundToRemove = element.closest('.singleRound');
                 roundToRemove.remove();
+                proUsersArr.splice(numberOfRounds, 1);
+                console.log(proUsersArr);
+                numberOfRounds --;
             }
             console.log(proUsersArr);
         });
@@ -394,7 +406,7 @@ class View {
         //         numberOfRounds ++;
 
         //         // Get first element round
-        //         const roundElement = document.querySelector(`.singleRound.add[data-round="1"]`);
+        //         const roundElement = document.querySelector(`.singleRound.add[data-round="0"]`);
 
         //         // Clone element round
         //         const clonedRoundElement = roundElement.cloneNode(true);
