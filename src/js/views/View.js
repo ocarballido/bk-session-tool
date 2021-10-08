@@ -304,6 +304,7 @@ class View {
             const isRemoveRoundButton = element.classList.contains('btn-danger');
             const isButtonAddRound = element.id;
 
+            // Check if button clicked was btn pro users
             if (isBtnProUser) {
                 const isAdd = element.closest('.singleRound').classList.contains('add');
                 const isActive = element.classList.contains('active');
@@ -322,7 +323,6 @@ class View {
 
                 // Get round number and add array item to proUsersArr
                 proUsersArr.push([]);
-                console.log(proUsersArr);
 
                 // Get first element round and remove active class from btn pro user 
                 const roundElement = document.querySelector(`.singleRound.add[data-round="0"]`);
@@ -359,7 +359,7 @@ class View {
 
                 // Add round to DOM
                 this.rounds.appendChild(clonedRoundElement);
-            } else if (isRemoveRoundButton) {
+            } else if (isRemoveRoundButton) { // Check if element is remove round button
                 event.preventDefault();
                 const roundToRemove = element.closest('.singleRound');
                 roundToRemove.remove();
@@ -367,7 +367,6 @@ class View {
                 console.log(proUsersArr);
                 numberOfRounds --;
             }
-            console.log(proUsersArr);
         });
 
         // Remove extra rounds when modal exit
@@ -386,6 +385,17 @@ class View {
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
             event.preventDefault();
+            const roundsDefinition = () => {
+                const rounds = this.editAddForm.querySelectorAll('.singleRound.add');
+                const roundsDefinition = [];
+                rounds.forEach(( round, index ) => {
+                    roundsDefinition.push({
+                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString(),
+                        featuredUserIds: proUsersArr[index]
+                    });
+                });
+                return roundsDefinition;
+            }
 
             // Creating data
             const updatedGlobalData = {
@@ -393,9 +403,7 @@ class View {
                 profileId: parseInt(this.addEditProfileID.value),
                 sessionId: parseInt(this.addEditSessionID.value),
                 eventId: this.addEditEventID.value,
-                // roundsDefinition: [
-
-                // ],
+                roundsDefinition: roundsDefinition(),
                 maxUsers: parseInt(this.addEditMaxUsers.value),
                 rules: 'COMPETITIVE',
                 isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
@@ -406,10 +414,7 @@ class View {
                 warmupSeconds: parseInt(this.addEditWarmUpTime.value),
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             };
-            const updatedRound = {
-                startDate: dateTimeFormater(this.editSessionDateStart.value).date.toISOString(),
-                // featuredUserIds: proUsersArr,
-            };
+            
             handler(updatedGlobalData);
         });
     }
