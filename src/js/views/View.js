@@ -1,5 +1,6 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
+import { Modal } from 'bootstrap';
 
 class View {
     constructor() {
@@ -34,7 +35,7 @@ class View {
         this.modelDelete = document.getElementById('deleteModal');
 
         // Modal Edit / Add
-        this.modelEditAdd = document.getElementById('editAddSessionModal');
+        this.modalEditAdd = document.getElementById('editAddSessionModal');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.editAddForm = document.getElementById('editAddForm');
         this.sessionName = document.getElementById('sessionName');
@@ -243,7 +244,7 @@ class View {
         let proUsersArrEdited = [];
         const proUsersNode = document.querySelectorAll('.singleRound.edit[data-round="0"] .users .btn-proUser');
 
-        this.modelEditAdd.addEventListener('shown.bs.modal', (event) => {
+        this.modalEditAdd.addEventListener('shown.bs.modal', (event) => {
             [...proUsersNode].forEach(button => {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
@@ -370,7 +371,7 @@ class View {
         });
 
         // Remove extra rounds when modal exit
-        this.modelEditAdd.addEventListener('hidden.bs.modal', (event) => {
+        this.modalEditAdd.addEventListener('hidden.bs.modal', (event) => {
             document.querySelectorAll(".singleRound.add").forEach(function(round) {
                 const roundNumber = round.getAttribute('data-round');
                 if (roundNumber !== "0") {
@@ -381,6 +382,11 @@ class View {
             numberOfRounds = 0;
             console.log(proUsersArr);
         });
+
+        // Form validation
+        const formValidation = (obj) => {
+            return !Object.values(obj).every( input => input !== '' )
+        };
         
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
@@ -400,8 +406,8 @@ class View {
             // Creating data
             const updatedGlobalData = {
                 userId: this.userId,
-                profileId: parseInt(this.addEditProfileID.value),
-                sessionId: parseInt(this.addEditSessionID.value),
+                profileId: this.addEditProfileID.value,
+                sessionId: this.addEditSessionID.value,
                 eventId: this.addEditEventID.value,
                 roundsDefinition: roundsDefinition(),
                 maxUsers: parseInt(this.addEditMaxUsers.value),
@@ -414,8 +420,14 @@ class View {
                 warmupSeconds: parseInt(this.addEditWarmUpTime.value),
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             };
-            
-            handler(updatedGlobalData);
+
+            // Form validation
+            if (formValidation(updatedGlobalData)) {
+                console.log('Todos los campos son obligatorios');
+            } else {
+                handler(updatedGlobalData);
+                this.modalEditAdd.hide();
+            }
         });
     }
 
