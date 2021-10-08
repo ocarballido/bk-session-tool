@@ -359,8 +359,6 @@ class View {
 
                 // Add round to DOM
                 this.rounds.appendChild(clonedRoundElement);
-
-                // document.querySelector(`.singleRound.add[data-round="${numberOfRounds - 1}"]`).insertAdjacentHTML('afterend', clonedRoundElement.innerHTML);
             } else if (isRemoveRoundButton) {
                 event.preventDefault();
                 const roundToRemove = element.closest('.singleRound');
