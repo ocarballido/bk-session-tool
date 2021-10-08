@@ -21,5 +21,6 @@ export const todayDateTime = () => {
     const dateTime = new Date();
     const date = dateTime.toISOString().split('T')[0];
     const time = dateTime.toLocaleString().slice(dateTime.toLocaleString().indexOf(' ') + 1, -3);
-    return `${date}T${time}`
+    const timeFormat = time.length < 5 ? `0${time}` : time;
+    return `${date}T${timeFormat}`
 };
