@@ -67,6 +67,13 @@ class ApiServices {
             METHODS.GET
         );
     }
+    // Load sigle session
+    loadSingleSession(id) {
+        return fetchDb(
+            `${SESSIONS_SERVER}/${id}`,
+            METHODS.GET
+        );
+    }
     // Delete session
     deleteScheduledSession(id) {
         return fetchDb(
@@ -79,6 +86,14 @@ class ApiServices {
         return fetchDb(
             `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.PUT,
+            { ...data }
+        );
+    }
+    // Add new scheduled session
+    addScheduledSession(data) {
+        return fetchDb(
+            `${SCHEDULED_SESSIONS_SERVER}`,
+            METHODS.POST,
             { ...data }
         );
     }

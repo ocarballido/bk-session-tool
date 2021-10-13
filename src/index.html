@@ -27,7 +27,8 @@
 
             <div id="headerActions" class="col">
                 <div class="container px-3 d-flex justify-content-between">
-                    <button id="btnNewSession" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAddSessionModal">Nueva sesión</button>
+                    <!-- <button id="btnNewSession" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAddSessionModal">Nueva sesión</button> -->
+                    <button id="btnNewSession" type="button" class="btn btn-primary">Nueva sesión</button>
                     <button id="btnSidebar" type="button" class="btn btn-white btn-icon d-inline-block d-md-none"><span class="icon-filter"></span><span class="icon-close d-none"></span></button>
                 </div>
             </div>
@@ -152,7 +153,8 @@
                     <button type="button" class="close btn btn-secondary btn-icon btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"><span class="icon-close"></span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editAddForm" data-id="">
+                    <div id="allRequired" class="alert alert-danger d-none" role="alert">Todos los campos son obligatorios</div>
+                    <form id="editAddForm" data-id="" novalidate>
                         <!-- Session name -->
                         <div class="form-group floating-label mb-2">
                             <input type="text" class="form-control" id="sessionName" name="sessionName" placeholder="Nomnbre de sesion">
@@ -224,7 +226,7 @@
                             <div class="singleRound edit mb-0" data-round="0">
                                 <!-- Date start -->
                                 <div class="form-group floating-label mb-2">
-                                    <input type="datetime-local" class="form-control" id="editSessionDateStart" placeholder="Dede" tabindex="2" name="editSessionDateStart" value="" >
+                                    <input type="datetime-local" class="form-control" id="editSessionDateStart" placeholder="Dede" tabindex="2" name="editSessionDateStart">
                                     <label for="editSessionDateStart">Desde</label>
                                 </div>
                                 <!-- /Date start -->

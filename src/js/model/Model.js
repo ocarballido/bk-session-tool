@@ -31,17 +31,6 @@ class Model {
                                 }
                             });
     
-                            // Creating more readeble rounds array
-                            // singleSession.roundsDefinition = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
-                            //     let startDate = this.dateTimeFormater(item.startDate).formattedDate;
-                            //     let time = this.dateTimeFormater(item.startDate).formattedTime;
-                            //     obj[startDate] = obj[startDate] || [];
-                            //     obj[startDate].push([time, item.featuredUserIds]);
-                            //     return obj;
-                            // }, {})).map((item) => ({
-                            //     startDate: item[0],
-                            //     times: item[1]
-                            // }));
                             return singleSession;
                         });
                         resolve(this._scheduledSessions);                   
@@ -126,6 +115,38 @@ class Model {
                 console.log(this._scheduledSessions);
             });
     }
+
+    // async addScheduledSession(postData) {
+    //     // Get session
+    //     const session = await apiServices.loadSingleSession(postData.profileId);
+
+    //     // Check if profileId existe in sessions
+    //     if (session) {
+    //         return apiServices
+    //             //.addScheduledSession(postData)
+    //             .addScheduledSession(postData)
+    //             .then((data) => {
+    //                 // Return session name
+    //                 console.log(data);
+    //                 //return data
+    //             });
+    //     }
+    // }
+
+    // addScheduledSession(data) {
+    //     // Get session
+    //     // const session = await apiServices.loadSingleSession(data.profileId);
+
+    //     return apiServices
+    //         .loadSingleSession(data.profileId)
+    //         .then((data) => {
+    //             // Check for valid session profileId
+    //             return data
+    //         })
+    //         // .then(() => {
+
+    //         // });
+    // }
 };
 
 export { Model };

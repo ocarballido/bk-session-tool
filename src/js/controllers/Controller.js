@@ -62,19 +62,81 @@ class Controller {
     editScheduledSessionHandler(id, sessionDate, updatedGlobalData, updatedRound) {
         this.view.toggleSpinner();
         this.model.editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound)
-            .then(() => {
+            .then((data) => {
                 this.view.renderUpdatedSession(id, sessionDate, updatedRound);
                 this.view.renderAlertMessages('La sesión se ha actualizado con éxito', 'success');
+                console.log(data);
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
             })
-            .finally(() => this.view.toggleSpinner());;
+            .finally(() => this.view.toggleSpinner());
     }
 
-    addScheduledSessionHandler(data) {
-        console.log(data);
+    async addScheduledSessionHandler(postData) {
+        // this.view.toggleSpinner();
+        // this.model.addScheduledSession(data)
+        //     .then((sessionName) => {
+        //         // this.view.renderUpdatedSession(id, sessionDate, updatedRound);
+        //         // this.view.renderAlertMessages('La sesión se ha actualizado con éxito', 'success');
+        //         console.log(sessionName);
+        //     })
+        //     .catch(() => {
+        //         this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+        //     })
+        //     .finally(() => this.view.toggleSpinner());
+        // // this.view.renderSingleScheduledSessions(sessionName, data);
+
+        // this.model.addScheduledSession(postData)
+        //     .then(() => {
+        //         return this.model.addScheduledSession(postData);
+        //     })
+        //     .then(() => {
+        //         return this.model.getScheduledSessions();
+        //     })
+        //     .then((scheduledSessions) => {
+        //         console.log(scheduledSessions);
+        //         this.view.renderScheduledSessions(scheduledSessions);
+        //     })
+        //     .catch(() => {
+        //         this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+        //     })
+        //     .finally(() => this.view.toggleSpinner());
+
+        console.log(postData);
     }
+    // addScheduledSessionHandler(postData) {
+    //     this.view.toggleSpinner();
+    //     // this.model.addScheduledSession(data)
+    //     //     .then((sessionName) => {
+    //     //         // this.view.renderUpdatedSession(id, sessionDate, updatedRound);
+    //     //         // this.view.renderAlertMessages('La sesión se ha actualizado con éxito', 'success');
+    //     //         console.log(sessionName);
+    //     //     })
+    //     //     .catch(() => {
+    //     //         this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+    //     //     })
+    //     //     .finally(() => this.view.toggleSpinner());
+    //     // // this.view.renderSingleScheduledSessions(sessionName, data);
+
+    //     this.model.addScheduledSession(postData)
+    //         .then(() => {
+    //             return this.model.addScheduledSession(postData);
+    //         })
+    //         .then(() => {
+    //             return this.model.getScheduledSessions();
+    //         })
+    //         .then((scheduledSessions) => {
+    //             console.log(scheduledSessions);
+    //             this.view.renderScheduledSessions(scheduledSessions);
+    //         })
+    //         .catch(() => {
+    //             this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+    //         })
+    //         .finally(() => this.view.toggleSpinner());
+
+    //     console.log(postData);
+    // }
 }
 
 const app = new Controller(new Model(), new View())

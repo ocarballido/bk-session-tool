@@ -5,7 +5,7 @@ import { Modal } from 'bootstrap';
 class View {
     constructor() {
         // Global variables
-        this.userId = 636823468237648327642837;
+        this.userId = 133479;
 
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
@@ -35,7 +35,9 @@ class View {
         this.modelDelete = document.getElementById('deleteModal');
 
         // Modal Edit / Add
+        this.myModal = new Modal(document.getElementById('editAddSessionModal'), {})
         this.modalEditAdd = document.getElementById('editAddSessionModal');
+        this.allRequired = document.getElementById('allRequired');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.editAddForm = document.getElementById('editAddForm');
         this.sessionName = document.getElementById('sessionName');
@@ -152,13 +154,6 @@ class View {
         });
     }
 
-    // Add new session
-    // addScheduledSessionModalAction(handler) {
-    //     this.btnNewSession.addEventListener('click', (event) => {
-            
-    //     });
-    // }
-
     // Render edit form
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
@@ -225,6 +220,10 @@ class View {
             this.sessionName.disabled = true;
             document.getElementById('addSessionDateStart-0').value = todayDateTime();
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
+            this.addEditUserID.value = this.userId;
+            this.addEditProfileID.value = '';
+            this.addEditSessionID.value = '';
+            this.addEditEventID.value = '';
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -235,6 +234,9 @@ class View {
                 element.classList.remove("active");
             });
             console.log(todayDateTime())
+
+            // Showing add new session modal
+            this.myModal.show();
         }
     }
 
@@ -370,7 +372,7 @@ class View {
             }
         });
 
-        // Remove extra rounds when modal exit
+        // Remove extra rounds and classes when modal exit
         this.modalEditAdd.addEventListener('hidden.bs.modal', (event) => {
             document.querySelectorAll(".singleRound.add").forEach(function(round) {
                 const roundNumber = round.getAttribute('data-round');
@@ -380,6 +382,15 @@ class View {
             });
             proUsersArr = [[]];
             numberOfRounds = 0;
+
+            // Remove validation class from inputs
+            const isInvalid = document.getElementsByClassName('is-invalid');
+            while (isInvalid.length) {
+                isInvalid[0].classList.remove('is-invalid');
+            }
+
+            // Hide danger alert in form
+            this.allRequired.classList.add('d-none');
             console.log(proUsersArr);
         });
 
@@ -423,10 +434,22 @@ class View {
 
             // Form validation
             if (formValidation(updatedGlobalData)) {
-                console.log('Todos los campos son obligatorios');
+                // Show danger alert
+                this.allRequired.classList.remove('d-none');
+
+                // Add validation class to inputs
+                const formFields = this.editAddForm.querySelectorAll('input');
+                formFields.forEach(field => {
+                    if (field.value === '') {
+                        field.classList.add('is-invalid');
+                    }
+                });
+                
             } else {
                 handler(updatedGlobalData);
-                this.modalEditAdd.hide();
+
+                // Hide modal
+                this.myModal.hide();
             }
         });
     }
@@ -451,6 +474,54 @@ class View {
         const timeTd = roundToUpdate.querySelector('.sessionTimes .badge');
         dateTd.innerHTML = dateTimeFormater(updatedRound.startDate).formattedDate;
         timeTd.innerHTML = dateTimeFormater(updatedRound.startDate).formattedTime;
+    }
+
+    // First scheduled sessions render
+    renderSingleScheduledSessions(scheduledSessions) {
+        // Getting session values
+        const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = scheduledSessions;
+
+        // const sessionRows = roundsDefinition.map((round, index) => {
+        //     // Adding sessions table row
+        //     const singleRow = Templates.scheduledSessionTableRowTemplate;
+
+        //     // Find-Replace elements in template
+        //     const findReplace = {
+        //         '{{id}}': id,
+        //         '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
+        //         '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
+        //         '{{sessionUTCDate}}': round.startDate,
+        //         '{{featuredUserIds}}': round.featuredUserIds.join('-')
+        //     };
+
+        //     // Return replaced singleRow template
+        //     return singleRow.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+        // });
+
+        // // Adding sessions li
+        // // Find-Replace elements in template
+        // const findReplace = {
+        //     '{{id}}': id,
+        //     '{{sessionName}}': sessionName,
+        //     '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
+        //     '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
+        //     '{{sessionTableRow}}': `${ sessionRows.join('') }`,
+        //     '{{userId}}': userId,
+        //     '{{profileId}}': profileId,
+        //     '{{sessionId}}': sessionId,
+        //     '{{eventId}}': eventId,
+        //     '{{maxUsers}}': maxUsers,
+        //     '{{rules}}': rules,
+        //     '{{isRealWeather}}': isRealWeather,
+        //     '{{warmupSeconds}}': warmupSeconds,
+        //     '{{mainPartMinSeconds}}': mainPartMinSeconds
+        // };
+
+        // // Replaced singleRow template
+        // const singleLi = Templates.scheduledSessionLi.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+        // // Inserted to html
+        // this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
     }
 
     // First UI app render action
