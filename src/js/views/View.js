@@ -60,7 +60,10 @@ class View {
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        // console.log(dateTimeFormater());
+        // Clear ul 
+        this.scheduledSessionsList.innerHTML = '';
+
+        // Populate ul
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = session;

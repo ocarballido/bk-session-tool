@@ -133,20 +133,18 @@ class Model {
     //     }
     // }
 
-    // addScheduledSession(data) {
-    //     // Get session
-    //     // const session = await apiServices.loadSingleSession(data.profileId);
+    async addScheduledSession(data) {
+        // Get session
+        const session = await apiServices.loadSingleSession(data.profileId);
 
-    //     return apiServices
-    //         .loadSingleSession(data.profileId)
-    //         .then((data) => {
-    //             // Check for valid session profileId
-    //             return data
-    //         })
-    //         // .then(() => {
-
-    //         // });
-    // }
+        // If this session exist
+        if (session) {
+            return apiServices.addScheduledSession(data)
+                .then(() => {
+                    this._scheduledSessions = [];
+                });
+        }
+    }
 };
 
 export { Model };
