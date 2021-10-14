@@ -54,7 +54,7 @@ class Model {
         });
     }
 
-    deleteScheduledSession(id, sessionDate) {
+    deleteScheduledSession(id, sessionDate, isSingleRound) {
         // Get session item
         const sessionItem = {...this._scheduledSessions.find( session => session.id === id )};
 
@@ -62,7 +62,7 @@ class Model {
         delete sessionItem.sessionName;
 
         // Get if this sessions have 1 or more rounds
-        const isSingleRound = sessionItem.roundsDefinition.length === 1;
+        // const isSingleRound = sessionItem.roundsDefinition.length === 1;
 
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
@@ -76,7 +76,8 @@ class Model {
                 });
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
-            sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate )
+            sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
+            console.log(sessionItem);
             return apiServices
                 .updateScheduledSession(id, sessionItem)
                 .then((scheduledSessions) => {

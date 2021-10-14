@@ -10,7 +10,7 @@ class Controller {
         // this.view.testView(this.testViewHandler.bind(this));
 
         // Binding view first UI render action
-        this.view.firstUiAppRender();
+        // this.view.firstUiAppRender();
 
         // Binding view toggle saidebar action
         this.view.bindSideBarEvents();
@@ -42,13 +42,14 @@ class Controller {
         this.model.loadFeaturedUsers()
             .then((loadedUsers) => {
                 console.log(loadedUsers);
+                this.view.firstUiAppRender(loadedUsers);
             });
     }
 
     // Delete scheduled session handler
     deleteScheduledSessionHandler(id, sessionDate, isSingleRound) {
         this.view.toggleSpinner();
-        this.model.deleteScheduledSession(id, sessionDate)
+        this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
             .then(() => {
                 if (isSingleRound) {
                     this.view.renderDeletedSession(id);

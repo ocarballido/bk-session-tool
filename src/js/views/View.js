@@ -171,12 +171,12 @@ class View {
             this.addEditEventID.closest('.form-group').classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.addRound.classList.add('d-none');
-            document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.add('d-none'));
+            // document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.add('d-none'));
 
             // Showing some form fields
             this.sessionName.closest('.form-group').classList.remove('d-none');
             this.buttonUpdate.classList.remove('d-none');
-            document.querySelector('.singleRound.edit').classList.remove('d-none');
+            // document.querySelector('.singleRound.edit').classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
@@ -186,15 +186,15 @@ class View {
             this.sessionName.disabled = true;
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-            this.editSessionDateStart.value = `${date}T${time}`;
-            this.editSessionDateStart.setAttribute('min', todayDateTime());
+            document.getElementById('addSessionDateStart-0').value = `${date}T${time}`;
+            document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = maxUsers;
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
             this.addEditWarmUpTime.value = warmupSeconds;
             this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
-            const featuredUsersCollection = document.querySelector('.singleRound.edit .addEditProUsers .users');
+            const featuredUsersCollection = document.querySelector('.singleRound .addEditProUsers .users');
             // Styling featured users toggle buttons
-            document.querySelectorAll(".singleRound.edit .addEditProUsers .users .btn-proUser").forEach(function(element) {
+            document.querySelectorAll(".singleRound .addEditProUsers .users .btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
             proUsers.forEach( (user, index) => {
@@ -205,7 +205,7 @@ class View {
             this.sessionName.closest('.form-group').classList.add('d-none');
             this.buttonUpdate.classList.add('d-none');
             this.addRound.classList.remove('d-none');
-            document.querySelector('.singleRound.edit').classList.add('d-none');
+            // document.querySelector('.singleRound.edit').classList.add('d-none');
 
             // Showing some form fields
             this.addEditUserID.closest('.form-group').classList.remove('d-none');
@@ -213,7 +213,7 @@ class View {
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
             this.buttonAddNew.classList.remove('d-none');
-            document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.remove('d-none'));
+            // document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.remove('d-none'));
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -247,9 +247,14 @@ class View {
     editScheduledSessionAction(handler) {
         // Getting ids of pro users
         let proUsersArrEdited = [];
-        const proUsersNode = document.querySelectorAll('.singleRound.edit[data-round="0"] .users .btn-proUser');
+        const proUsersNode = document.querySelectorAll('.singleRound[data-round="0"] .users .btn-proUser');
 
-        this.modalEditAdd.addEventListener('shown.bs.modal', (event) => {
+        // Remove extra rounds and classes when modal exit
+        this.modalEditAdd.addEventListener('hidden.bs.modal', () => {
+            proUsersArrEdited = [];
+        });
+
+        this.modalEditAdd.addEventListener('shown.bs.modal', () => {
             [...proUsersNode].forEach(button => {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
@@ -267,15 +272,13 @@ class View {
             const isBtnProUser = element.classList.contains('btn-proUser');
 
             if (isBtnProUser) {
-                const isEdit = element.closest('.singleRound').classList.contains('edit');
+                // const isEdit = element.closest('.singleRound').classList.contains('edit');
                 const isActive = element.classList.contains('active');
                 const userId = element.getAttribute('data-user-id');
-                if (isEdit) {
-                    if (isActive) {
-                        proUsersArrEdited.push(userId);
-                    } else {
-                        proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
-                    }
+                if (isActive) {
+                    proUsersArrEdited.push(userId);
+                } else {
+                    proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
                 }
             }
             console.log(proUsersArrEdited);
@@ -293,7 +296,7 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
             const updatedRound = {
-                startDate: dateTimeFormater(this.editSessionDateStart.value).date.toISOString(),
+                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString(),
                 featuredUserIds: proUsersArrEdited,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
@@ -315,13 +318,11 @@ class View {
                 const isAdd = element.closest('.singleRound').classList.contains('add');
                 const isActive = element.classList.contains('active');
                 const userId = element.getAttribute('data-user-id');
-                if (isAdd) {
-                    const roundNumber = element.closest('.singleRound').getAttribute('data-round');
-                    if (isActive) {
-                        proUsersArr[roundNumber].push(userId);
-                    } else {
-                        proUsersArr[roundNumber] = proUsersArr[roundNumber].filter( user => user !== userId);
-                    }
+                const roundNumber = element.closest('.singleRound').getAttribute('data-round');
+                if (isActive) {
+                    proUsersArr[roundNumber].push(userId);
+                } else {
+                    proUsersArr[roundNumber] = proUsersArr[roundNumber].filter( user => user !== userId);
                 }
             } else if (isButtonAddRound === 'buttonAddRound') { // Check if element is add round button
                 // Add 1 to numerOfRound
@@ -479,60 +480,16 @@ class View {
         timeTd.innerHTML = dateTimeFormater(updatedRound.startDate).formattedTime;
     }
 
-    // First scheduled sessions render
-    renderSingleScheduledSessions(scheduledSessions) {
-        // Getting session values
-        const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = scheduledSessions;
-
-        // const sessionRows = roundsDefinition.map((round, index) => {
-        //     // Adding sessions table row
-        //     const singleRow = Templates.scheduledSessionTableRowTemplate;
-
-        //     // Find-Replace elements in template
-        //     const findReplace = {
-        //         '{{id}}': id,
-        //         '{{sessionDate}}': dateTimeFormater(round.startDate).formattedDate,
-        //         '{{sessionTime}}': dateTimeFormater(round.startDate).formattedTime,
-        //         '{{sessionUTCDate}}': round.startDate,
-        //         '{{featuredUserIds}}': round.featuredUserIds.join('-')
-        //     };
-
-        //     // Return replaced singleRow template
-        //     return singleRow.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
-        // });
-
-        // // Adding sessions li
-        // // Find-Replace elements in template
-        // const findReplace = {
-        //     '{{id}}': id,
-        //     '{{sessionName}}': sessionName,
-        //     '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
-        //     '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
-        //     '{{sessionTableRow}}': `${ sessionRows.join('') }`,
-        //     '{{userId}}': userId,
-        //     '{{profileId}}': profileId,
-        //     '{{sessionId}}': sessionId,
-        //     '{{eventId}}': eventId,
-        //     '{{maxUsers}}': maxUsers,
-        //     '{{rules}}': rules,
-        //     '{{isRealWeather}}': isRealWeather,
-        //     '{{warmupSeconds}}': warmupSeconds,
-        //     '{{mainPartMinSeconds}}': mainPartMinSeconds
-        // };
-
-        // // Replaced singleRow template
-        // const singleLi = Templates.scheduledSessionLi.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
-
-        // // Inserted to html
-        // this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
-    }
-
     // First UI app render action
     firstUiAppRender() {
         document.addEventListener('DOMContentLoaded', event => {
+            // Date on sidebar
             const currentDate = new Date();
             const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
             this.dateStart.value = currentDateToLocaleDateString;
+
+            // Featured users buttons
+
         });
     }
 
