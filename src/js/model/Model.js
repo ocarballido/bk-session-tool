@@ -71,7 +71,7 @@ class Model {
                 .then((scheduledSessions) => {
                     // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-                    console.log(scheduledSessions);
+                    // console.log(scheduledSessions);
                     return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
@@ -79,10 +79,12 @@ class Model {
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
             return apiServices
                 .updateScheduledSession(id, sessionItem)
-                .then((scheduledSessions) => {
-                    console.log(scheduledSessions);
+                .then(() => {
+                    // Get index of session editted
+                    const sessionRoundDeletedIndex = this._scheduledSessions.findIndex( session => session.id === id );
+                    
                     // Update local data
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
+                    this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition = this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition.filter( round => round.startDate !== sessionDate );
                 });
         }
     }

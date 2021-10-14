@@ -33,7 +33,7 @@ class View {
         this.btnEditSession = document.querySelector('.btnEditSession');
 
         // Modal delete
-        this.modelDelete = document.getElementById('deleteModal');
+        this.modalDelete = document.getElementById('deleteModal');
 
         // Modal Edit / Add
         this.myModal = new Modal(document.getElementById('editAddSessionModal'), {})
@@ -115,6 +115,10 @@ class View {
 
     // Delete scheduled session
     deleteScheduledSessionAction(handler) {
+        let id;
+        let sessionDate;
+        let isSingleRound;
+        
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
             const elementClasses = element.classList;
@@ -122,24 +126,22 @@ class View {
             
             if (isDeleteSessionButton) {
                 // Know if the session have more than one round
-                const isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
-                const id = event.target.closest('tr').dataset.id;
-                const sessionDate = event.target.closest('tr').dataset.date;
-                confirmationModal(id, sessionDate, isSingleRound);
+                isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
+                id = event.target.closest('tr').dataset.id;
+                sessionDate = event.target.closest('tr').dataset.date;
+
+                if (isSingleRound) {
+                    this.modalDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
+                } else {
+                    this.modalDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
+                }
+                
             }
         });
 
-        // Call confirmation delete modal
-        const confirmationModal = (id, sessionDate, isSingleRound) => {
-            if (isSingleRound) {
-                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
-            } else {
-                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
-            }
-            this.btnDeleteSession.addEventListener('click', () => {
-                handler(id, sessionDate, isSingleRound);
-            });
-        }
+        this.btnDeleteSession.addEventListener('click', () => {
+            handler(id, sessionDate, isSingleRound);
+        });
     }
 
     // Edit modal action
