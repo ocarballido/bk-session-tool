@@ -179,17 +179,20 @@ $gray-50: 						#f5f5f5 !default;
         }
 	}
 	&.btn-proUser {
-		// border-radius: 18px;
+		background-color: #daf1e6;
+		border-color: #daf1e6;
+		border-radius: 18px;
+		color: $success;
 		height: 34px;
 		padding-left: 34px;
 		position: relative;
 		img {
 			border-radius: 50%;
-			height: 26px;
-			left: 2px;
+			height: 28px;
+			left: 1px;
 			position: absolute;
-			top: 2px;
-			width: 26px;
+			top: 1px;
+			width: 28px;
 		}
 		.icon-add {
 			display: inline-block;
