@@ -179,14 +179,32 @@ $gray-50: 						#f5f5f5 !default;
         }
 	}
 	&.btn-proUser {
+		// border-radius: 18px;
+		height: 34px;
+		padding-left: 34px;
+		position: relative;
+		img {
+			border-radius: 50%;
+			height: 26px;
+			left: 2px;
+			position: absolute;
+			top: 2px;
+			width: 26px;
+		}
 		.icon-add {
 			display: inline-block;
 			transform: rotate(0);
 			transition: all .2s;
 		}
 		&.active {
+			background-color: $success !important;
+			color: white;
 			.icon-add {
 				transform: rotate(45deg);
+			}
+			&:hover {
+				background-color: $success !important;
+				border-color: $success;
 			}
 		}
 		span {
@@ -198,8 +216,8 @@ $gray-50: 						#f5f5f5 !default;
 			}
 		}
 		&:hover {
-			background-color: $white;
-			border-color: $success;
+			background-color: #bae6d0 !important;
+			border-color: #bae6d0;
 		}
 	}
 }

@@ -492,11 +492,12 @@ class View {
         // Populate featured users buttons
         loadedUsers.forEach((user, index) => {
             // Getting user values
-            const { surname, name, id } = user;
+            const { avatarUrl, surname, name, id } = user;
 
             // Adding user buttons
             // Find-Replace elements in template
             const findReplace = {
+                '{{avatarUrl}}': avatarUrl,
                 '{{userId}}': id,
                 '{{userName}}': name,
                 '{{userSurname}}': surname
@@ -521,7 +522,7 @@ class View {
             const elementId = element.id;
             const isBtnSidebar = elementId === 'btnSidebar';
             const isBtnNewSession = elementId === 'btnNewSession';
-            
+
             // If element is the "sidebar toggle" button
             if (isBtnSidebar) {
                 this.sidebar.classList.toggle('expand');

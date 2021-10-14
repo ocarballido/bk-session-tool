@@ -52,7 +52,7 @@ export const alertTemplate = `
     <div class="alert alert-{{alertType}} mx-0 mb-3 border-0" role="alert">{{alertMassage}}</div>
 `;
 export const featuredUserBtnTemplate = `
-    <button data-user-id="{{userId}}" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">{{userName}} {{userSurname}} <span class="icon-add"></span></button>
+    <button data-user-id="{{userId}}" type="button" data-bs-toggle="button" class="btn btn-lighter btn-proUser btn-sm mb-1 btn-text-icon"><img src="{{avatarUrl}}" />{{userName}} {{userSurname}} <span class="icon-add"></span></button>
 `;
 export const featuredUserSelectOptionTemplate = `
     <option value="{{userId}}">{{userName}} {{userSurname}}</option>
