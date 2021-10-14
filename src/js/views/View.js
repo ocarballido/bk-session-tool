@@ -481,7 +481,6 @@ class View {
 
     // First UI app render action
     firstUiAppRender(loadedUsers) {
-        console.log(loadedUsers);
         document.addEventListener('DOMContentLoaded', () => {
             // Date on sidebar
             const currentDate = new Date();
