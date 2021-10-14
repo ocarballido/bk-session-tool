@@ -53,6 +53,13 @@ const fetchDb = (endpoint, method, data) => {
 };
 
 class ApiServices {
+    // Load featured users
+    loadFeaturedUsers() {
+        return fetchDb(
+            USERS_SERVER,
+            METHODS.GET
+        );
+    }
     // Load scheduled sessions
     loadScheduledSessions() {
         return fetchDb(
@@ -64,6 +71,13 @@ class ApiServices {
     loadSessions() {
         return fetchDb(
             SESSIONS_SERVER,
+            METHODS.GET
+        );
+    }
+    // Load sigle session
+    loadSingleSession(id) {
+        return fetchDb(
+            `${SESSIONS_SERVER}/${id}`,
             METHODS.GET
         );
     }
@@ -79,6 +93,14 @@ class ApiServices {
         return fetchDb(
             `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.PUT,
+            { ...data }
+        );
+    }
+    // Add new scheduled session
+    addScheduledSession(data) {
+        return fetchDb(
+            `${SCHEDULED_SESSIONS_SERVER}`,
+            METHODS.POST,
             { ...data }
         );
     }

@@ -5,6 +5,15 @@ class Model {
         this._scheduledSessions = [];
     }
 
+    // Get users
+    loadFeaturedUsers() {
+        return apiServices
+            .loadFeaturedUsers()
+            .then((featuredUsers) => {
+                return featuredUsers;
+            });
+    }
+
     // Return promise with data
     getScheduledSessions() {
         return new Promise((resolve, reject) => {
@@ -18,30 +27,19 @@ class Model {
                     .then(([sessions, scheduledSessions]) => {
                         // Filling our data model object
                         this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                            
                             // Creating single session object
                             const singleSession = {
                                 ...singleScheduledSession,
                                 sessionName
                             };
-                            
+
                             // Traversing session API array to extract session name based on id
                             const sessionName = sessions.map(session => {
                                 if (session.id === singleScheduledSession.profileId) {
                                     singleSession.sessionName = session.name;
                                 }
                             });
-    
-                            // Creating more readeble rounds array
-                            // singleSession.roundsDefinition = Object.entries(singleScheduledSession.roundsDefinition.reduce((obj, item) => {
-                            //     let startDate = this.dateTimeFormater(item.startDate).formattedDate;
-                            //     let time = this.dateTimeFormater(item.startDate).formattedTime;
-                            //     obj[startDate] = obj[startDate] || [];
-                            //     obj[startDate].push([time, item.featuredUserIds]);
-                            //     return obj;
-                            // }, {})).map((item) => ({
-                            //     startDate: item[0],
-                            //     times: item[1]
-                            // }));
                             return singleSession;
                         });
                         resolve(this._scheduledSessions);                   
@@ -55,15 +53,12 @@ class Model {
         });
     }
 
-    deleteScheduledSession(id, sessionDate) {
+    deleteScheduledSession(id, sessionDate, isSingleRound) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === id );
+        const sessionItem = {...this._scheduledSessions.find( session => session.id === id )};
 
         // Remove sessionName property. We dont need it to update db
         delete sessionItem.sessionName;
-
-        // Get if this sessions have 1 or more rounds
-        const isSingleRound = sessionItem.roundsDefinition.length === 1;
 
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
@@ -72,18 +67,19 @@ class Model {
                 .then((scheduledSessions) => {
                     // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-                    console.log(scheduledSessions);
                     return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
-            sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate )
+            sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
             return apiServices
                 .updateScheduledSession(id, sessionItem)
-                .then((scheduledSessions) => {
-                    console.log(scheduledSessions);
+                .then(() => {
+                    // Get index of session editted
+                    const sessionRoundDeletedIndex = this._scheduledSessions.findIndex( session => session.id === id );
+
                     // Update local data
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
+                    this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition = this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition.filter( round => round.startDate !== sessionDate );
                 });
         }
     }
@@ -97,7 +93,7 @@ class Model {
     // Edit session
     editScheduledSession(id, sessionDate, updatedGlobalData, updatedRound) {
         // Get session item
-        const sessionItem = this._scheduledSessions.find( session => session.id === id );
+        const sessionItem = {...this._scheduledSessions.find( session => session.id === id )};
 
         // Get session name and removed. We dont need it to update db but needed to update local data
         const sessionName = sessionItem.sessionName;
@@ -123,7 +119,21 @@ class Model {
                 const updatedLocalData = {...sessionItemUpdated, sessionName: sessionName}
                 const edittedSessionIndex = this._scheduledSessions.findIndex( session => session.id === id );
                 this._scheduledSessions.splice(edittedSessionIndex, 1, updatedLocalData);
+                console.log(this._scheduledSessions);
             });
+    }
+
+    async addScheduledSession(data) {
+        // Get session
+        const session = await apiServices.loadSingleSession(data.profileId);
+
+        // If this session exist
+        if (session) {
+            return apiServices.addScheduledSession(data)
+                .then(() => {
+                    this._scheduledSessions = [];
+                });
+        }
     }
 };
 

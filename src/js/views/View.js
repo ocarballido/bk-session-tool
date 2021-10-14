@@ -1,8 +1,12 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
+import { Modal } from 'bootstrap';
 
 class View {
     constructor() {
+        // Global variables
+        this.userId = 133479;
+
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
         this.btnSidebar = document.getElementById('btnSidebar');
@@ -16,6 +20,7 @@ class View {
         this.sidebar = document.getElementById('filterSidebar');
         this.dateStart = document.getElementById('filterSessionDateStart');
         this.dateEnd = document.getElementById('filterSessionDateEnd');
+        this.filterSessionUser = document.getElementById('filterSessionUser');
 
         // List
         this.scheduledSessionsList = document.getElementById('scheduledSessionsList');
@@ -28,10 +33,12 @@ class View {
         this.btnEditSession = document.querySelector('.btnEditSession');
 
         // Modal delete
-        this.modelDelete = document.getElementById('deleteModal');
+        this.modalDelete = document.getElementById('deleteModal');
 
         // Modal Edit / Add
-        this.modelEditAdd = document.getElementById('editAddSessionModal');
+        this.myModal = new Modal(document.getElementById('editAddSessionModal'), {})
+        this.modalEditAdd = document.getElementById('editAddSessionModal');
+        this.allRequired = document.getElementById('allRequired');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.editAddForm = document.getElementById('editAddForm');
         this.sessionName = document.getElementById('sessionName');
@@ -39,20 +46,25 @@ class View {
         this.addEditProfileID = document.getElementById('addEditProfileID');
         this.addEditSessionID = document.getElementById('addEditSessionID');
         this.addEditEventID = document.getElementById('addEditEventID');
-        this.addEditSessionDateStart = document.getElementById('addEditSessionDateStart');
-        this.addEditProUsers = document.getElementById('addEditProUsers');
+        this.editSessionDateStart = document.getElementById('editSessionDateStart');
+        // this.addEditProUsers = document.getElementById('addEditProUsers');
         this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
         this.addEditrealWeather = document.getElementById('addEditrealWeather');
         this.addEditWarmUpTime = document.getElementById('addEditWarmUpTime');
         this.addEditMainPartMinSecconds = document.getElementById('addEditMainPartMinSecconds');
         this.buttonAddNew = document.getElementById('buttonAddNew');
         this.buttonUpdate = document.getElementById('buttonUpdate');
-        this.featuredUserIds = [];
+        this.addRound = document.getElementById('addRound');
+        this.buttonAddRound = document.getElementById('buttonAddRound');
+        this.rounds = document.getElementById('rounds');
     }
 
     // First scheduled sessions render
     renderScheduledSessions(scheduledSessions) {
-        // console.log(dateTimeFormater());
+        // Clear ul 
+        this.scheduledSessionsList.innerHTML = '';
+
+        // Populate ul
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = session;
@@ -103,6 +115,10 @@ class View {
 
     // Delete scheduled session
     deleteScheduledSessionAction(handler) {
+        let id;
+        let sessionDate;
+        let isSingleRound;
+        
         this.scheduledSessionsList.addEventListener('click', (event) => {
             const element = event.target;
             const elementClasses = element.classList;
@@ -110,24 +126,22 @@ class View {
             
             if (isDeleteSessionButton) {
                 // Know if the session have more than one round
-                const isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
-                const id = event.target.closest('tr').dataset.id;
-                const sessionDate = event.target.closest('tr').dataset.date;
-                confirmationModal(id, sessionDate, isSingleRound);
+                isSingleRound = element.closest('table').getElementsByClassName("btnDeleteSession").length === 1;
+                id = event.target.closest('tr').dataset.id;
+                sessionDate = event.target.closest('tr').dataset.date;
+
+                if (isSingleRound) {
+                    this.modalDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
+                } else {
+                    this.modalDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
+                }
+                
             }
         });
 
-        // Call confirmation delete modal
-        const confirmationModal = (id, sessionDate, isSingleRound) => {
-            if (isSingleRound) {
-                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una sesión programada. ¿Estás seguro?';
-            } else {
-                this.modelDelete.querySelector('.modal-body').innerHTML = 'Vas a ELIMINAR una ronda en una sesión programada ¿Estás seguro?';
-            }
-            this.btnDeleteSession.addEventListener('click', () => {
-                handler(id, sessionDate, isSingleRound);
-            });
-        }
+        this.btnDeleteSession.addEventListener('click', () => {
+            handler(id, sessionDate, isSingleRound);
+        });
     }
 
     // Edit modal action
@@ -147,58 +161,130 @@ class View {
     }
 
     // Render edit form
-    renderEditForm(sessionData, sessionDate) {
-        // Form fields values
-        const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
-        this.featuredUserIds = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
+    renderForm(sessionData, sessionDate, type) {
+        if (type === 'edit') {
+            // Form fields values
+            const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
-        // Hiding some form fields
-        this.addEditUserID.closest('.form-group').classList.add('d-none');
-        this.addEditProfileID.closest('.form-group').classList.add('d-none');
-        this.addEditSessionID.closest('.form-group').classList.add('d-none');
-        this.addEditEventID.closest('.form-group').classList.add('d-none');
-        this.buttonAddNew.classList.add('d-none');
+            // Hiding some form fields
+            this.addEditUserID.closest('.form-group').classList.add('d-none');
+            this.addEditProfileID.closest('.form-group').classList.add('d-none');
+            this.addEditSessionID.closest('.form-group').classList.add('d-none');
+            this.addEditEventID.closest('.form-group').classList.add('d-none');
+            this.buttonAddNew.classList.add('d-none');
+            this.addRound.classList.add('d-none');
 
-        // Setting form fields value
-        this.editAddForm.dataset.id = id;
-        this.editAddForm.dataset.date = sessionDate;
-        this.editAddModalTitle.innerHTML = "Editar sesión";
-        this.sessionName.value = sessionName;
-        this.sessionName.disabled = true;
-        const date = sessionDate.split('T')[0];
-        const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-        this.addEditSessionDateStart.value = `${date}T${time}`;
-        this.addEditSessionDateStart.setAttribute('min', todayDateTime());
-        this.addEditMaxUsers.value = maxUsers;
-        this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
-        this.addEditWarmUpTime.value = warmupSeconds;
-        this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
-        const featuredUsersCollection = this.addEditProUsers.querySelector('#users');
-        // Styling featured users toggle buttons
-        document.querySelectorAll(".btn-proUser").forEach(function(element) {
-            element.classList.remove("active");
-        });
-        this.featuredUserIds.forEach( (user, index) => {
-            featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
-        } );
-        
-        console.log(date, time);
+            // Showing some form fields
+            this.sessionName.closest('.form-group').classList.remove('d-none');
+            this.buttonUpdate.classList.remove('d-none');
+
+            // Setting form fields value
+            this.editAddForm.dataset.id = id;
+            this.editAddForm.dataset.date = sessionDate;
+            this.editAddModalTitle.innerHTML = "Editar sesión";
+            this.sessionName.value = sessionName;
+            this.sessionName.disabled = true;
+            const date = sessionDate.split('T')[0];
+            const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
+            document.getElementById('addSessionDateStart-0').value = `${date}T${time}`;
+            document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
+            this.addEditMaxUsers.value = maxUsers;
+            this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
+            this.addEditWarmUpTime.value = warmupSeconds;
+            this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
+            const featuredUsersCollection = document.querySelector('.singleRound .addEditProUsers .users');
+
+            // Styling featured users toggle buttons
+            document.querySelectorAll(".singleRound .addEditProUsers .users .btn-proUser").forEach(function(element) {
+                element.classList.remove("active");
+            });
+            proUsers.forEach( (user, index) => {
+                featuredUsersCollection.querySelector(`[data-user-id="${user}"]`).classList.add('active');
+            } );
+        } else if (type === 'add') {
+            // Hiding form fields
+            this.sessionName.closest('.form-group').classList.add('d-none');
+            this.buttonUpdate.classList.add('d-none');
+            this.addRound.classList.remove('d-none');
+
+            // Showing some form fields
+            this.addEditUserID.closest('.form-group').classList.remove('d-none');
+            this.addEditProfileID.closest('.form-group').classList.remove('d-none');
+            this.addEditSessionID.closest('.form-group').classList.remove('d-none');
+            this.addEditEventID.closest('.form-group').classList.remove('d-none');
+            this.buttonAddNew.classList.remove('d-none');
+
+            // Setting form fields value
+            this.editAddForm.dataset.id = '';
+            this.editAddForm.dataset.date = '';
+            this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
+            this.sessionName.value = '';
+            this.sessionName.disabled = true;
+            document.getElementById('addSessionDateStart-0').value = todayDateTime();
+            document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
+            this.addEditUserID.value = this.userId;
+            this.addEditProfileID.value = '';
+            this.addEditSessionID.value = '';
+            this.addEditEventID.value = '';
+            this.addEditMaxUsers.value = 10;
+            this.addEditrealWeather.value = 'yes';
+            this.addEditWarmUpTime.value = 600;
+            this.addEditMainPartMinSecconds.value = 300;
+            
+            // Styling featured users toggle buttons
+            document.querySelectorAll(".btn-proUser").forEach(function(element) {
+                element.classList.remove("active");
+            });
+            console.log(todayDateTime())
+
+            // Showing add new session modal
+            this.myModal.show();
+        }
     }
 
     // Edit scheduled session Action
     editScheduledSessionAction(handler) {
-        this.addEditProUsers.querySelector('#users').addEventListener('click', (event) => {
+        // Getting ids of pro users
+        let proUsersArrEdited = [];
+
+        // Remove extra rounds and classes when modal exit
+        this.modalEditAdd.addEventListener('hidden.bs.modal', () => {
+            proUsersArrEdited = [];
+        });
+
+        this.modalEditAdd.addEventListener('shown.bs.modal', () => {
+            const proUsersNode = document.querySelectorAll('.singleRound[data-round="0"] .users .btn-proUser');
+            [...proUsersNode].forEach(button => {
+                const userId = button.getAttribute('data-user-id');
+                if (button.classList.contains('active')) {
+                    proUsersArrEdited.push(userId);
+                    console.log('tiene');
+                } else {
+                    proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
+                    console.log('no tiene');
+                }
+            });
+        });
+
+        this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
-            const isActive = element.classList.contains('active');
-            const userId = element.getAttribute('data-user-id');
-            if (isActive) {
-                this.featuredUserIds.push(userId);
-            } else {
-                this.featuredUserIds = this.featuredUserIds.filter( user => user !== userId);
+            const isBtnProUser = element.classList.contains('btn-proUser');
+
+            if (isBtnProUser) {
+                const isActive = element.classList.contains('active');
+                const userId = element.getAttribute('data-user-id');
+                if (isActive) {
+                    proUsersArrEdited.push(userId);
+                } else {
+                    proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
+                }
             }
+            console.log(proUsersArrEdited);
         });
         
-        this.editAddForm.addEventListener('submit', (event) => {
+        // Submmiting data
+        this.buttonUpdate.addEventListener('click', (event) => {
             event.preventDefault();
             const id = this.editAddForm.getAttribute('data-id');
             const sessionDate = this.editAddForm.getAttribute('data-date');
@@ -209,10 +295,165 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
             const updatedRound = {
-                startDate: dateTimeFormater(this.addEditSessionDateStart.value).date.toISOString(),
-                featuredUserIds: this.featuredUserIds,
+                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString(),
+                featuredUserIds: proUsersArrEdited,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
+        });
+    }
+
+    // Add scheduled session Action
+    addScheduledSessionAction(handler) {
+        let proUsersArr = [[]];
+        let numberOfRounds = 0;
+        this.editAddForm.addEventListener('click', (event) => {
+            const element = event.target;
+            const isBtnProUser = element.classList.contains('btn-proUser');
+            const isRemoveRoundButton = element.classList.contains('btn-danger');
+            const isButtonAddRound = element.id;
+
+            // Check if button clicked was btn pro users
+            if (isBtnProUser) {
+                const isAdd = element.closest('.singleRound').classList.contains('add');
+                const isActive = element.classList.contains('active');
+                const userId = element.getAttribute('data-user-id');
+                const roundNumber = element.closest('.singleRound').getAttribute('data-round');
+                if (isActive) {
+                    proUsersArr[roundNumber].push(userId);
+                } else {
+                    proUsersArr[roundNumber] = proUsersArr[roundNumber].filter( user => user !== userId);
+                }
+            } else if (isButtonAddRound === 'buttonAddRound') { // Check if element is add round button
+                // Add 1 to numerOfRound
+                numberOfRounds ++;
+
+                // Get round number and add array item to proUsersArr
+                proUsersArr.push([]);
+
+                // Get first element round and remove active class from btn pro user 
+                const roundElement = document.querySelector(`.singleRound.add[data-round="0"]`);
+
+                // Clone element round
+                const clonedRoundElement = roundElement.cloneNode(true);
+                clonedRoundElement.querySelectorAll(".btn-proUser").forEach(function(element) {
+                    element.classList.remove("active");
+                });
+
+                // Change data-round value
+                clonedRoundElement.dataset.round = numberOfRounds;
+
+                // Change id value
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').id = `addSessionDateStart-${numberOfRounds}`;
+
+                // Change name attr
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').name = `addSessionDateStart-${numberOfRounds}`;
+
+                // Change input value
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').value = todayDateTime();
+
+                // Change input min attr
+                clonedRoundElement.querySelector('.floating-label input[type=datetime-local]').setAttribute('min', todayDateTime());
+
+                // Change label for attr
+                clonedRoundElement.querySelector('.floating-label label').setAttribute('for', `addSessionDateStart-${numberOfRounds}`);
+
+                // Create remove button
+                const roundRemoveButton = document.createElement('button');
+                roundRemoveButton.classList.add('btn', 'btn-sm', 'btn-danger', 'mb-1', 'text-white');
+                roundRemoveButton.innerHTML = 'Eliminar ronda';
+                clonedRoundElement.querySelector('.addEditProUsers .users').appendChild(roundRemoveButton);
+
+                // Add round to DOM
+                this.rounds.appendChild(clonedRoundElement);
+            } else if (isRemoveRoundButton) { // Check if element is remove round button
+                event.preventDefault();
+                const roundToRemove = element.closest('.singleRound');
+                roundToRemove.remove();
+                proUsersArr.splice(numberOfRounds, 1);
+                console.log(proUsersArr);
+                numberOfRounds --;
+            }
+        });
+
+        // Remove extra rounds and classes when modal exit
+        this.modalEditAdd.addEventListener('hidden.bs.modal', (event) => {
+            document.querySelectorAll(".singleRound.add").forEach(function(round) {
+                const roundNumber = round.getAttribute('data-round');
+                if (roundNumber !== "0") {
+                    round.remove();
+                }
+            });
+            proUsersArr = [[]];
+            numberOfRounds = 0;
+
+            // Remove validation class from inputs
+            const isInvalid = document.getElementsByClassName('is-invalid');
+            while (isInvalid.length) {
+                isInvalid[0].classList.remove('is-invalid');
+            }
+
+            // Hide danger alert in form
+            this.allRequired.classList.add('d-none');
+            console.log(proUsersArr);
+        });
+
+        // Form validation
+        const formValidation = (obj) => {
+            return !Object.values(obj).every( input => input !== '' )
+        };
+        
+        // Submmiting data
+        this.buttonAddNew.addEventListener('click', (event) => {
+            event.preventDefault();
+            const roundsDefinition = () => {
+                const rounds = this.editAddForm.querySelectorAll('.singleRound.add');
+                const roundsDefinition = [];
+                rounds.forEach(( round, index ) => {
+                    roundsDefinition.push({
+                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString(),
+                        featuredUserIds: proUsersArr[index]
+                    });
+                });
+                return roundsDefinition;
+            }
+
+            // Creating data
+            const updatedGlobalData = {
+                userId: this.userId,
+                profileId: this.addEditProfileID.value,
+                sessionId: this.addEditSessionID.value,
+                eventId: this.addEditEventID.value,
+                roundsDefinition: roundsDefinition(),
+                maxUsers: parseInt(this.addEditMaxUsers.value),
+                rules: 'COMPETITIVE',
+                isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
+                launchOptions: {
+                    maxInstances: 3,
+                    maxSeconds: 300
+                },
+                warmupSeconds: parseInt(this.addEditWarmUpTime.value),
+                mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
+            };
+
+            // Form validation
+            if (formValidation(updatedGlobalData)) {
+                // Show danger alert
+                this.allRequired.classList.remove('d-none');
+
+                // Add validation class to inputs
+                const formFields = this.editAddForm.querySelectorAll('input');
+                formFields.forEach(field => {
+                    if (field.value === '') {
+                        field.classList.add('is-invalid');
+                    }
+                });
+                
+            } else {
+                handler(updatedGlobalData);
+
+                // Hide modal
+                this.myModal.hide();
+            }
         });
     }
 
@@ -239,11 +480,37 @@ class View {
     }
 
     // First UI app render action
-    firstUiAppRender() {
-        document.addEventListener('DOMContentLoaded', event => {
+    firstUiAppRender(loadedUsers) {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Date on sidebar
             const currentDate = new Date();
             const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
             this.dateStart.value = currentDateToLocaleDateString;
+        });
+
+        // Populate featured users buttons
+        loadedUsers.forEach((user, index) => {
+            // Getting user values
+            const { avatarUrl, surname, name, id } = user;
+
+            // Adding user buttons
+            // Find-Replace elements in template
+            const findReplace = {
+                '{{avatarUrl}}': avatarUrl,
+                '{{userId}}': id,
+                '{{userName}}': name,
+                '{{userSurname}}': surname
+            };
+
+            // Replaced in template
+            const singleButton = Templates.featuredUserBtnTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            // Inserted to html
+            document.querySelector('.addEditProUsers .users').insertAdjacentHTML('beforeend', singleButton);
+
+            const usersSelectOption = Templates.featuredUserSelectOptionTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            this.filterSessionUser.insertAdjacentHTML('beforeend', usersSelectOption);
         });
     }
 
@@ -254,6 +521,7 @@ class View {
             const elementId = element.id;
             const isBtnSidebar = elementId === 'btnSidebar';
             const isBtnNewSession = elementId === 'btnNewSession';
+
             // If element is the "sidebar toggle" button
             if (isBtnSidebar) {
                 this.sidebar.classList.toggle('expand');
@@ -266,7 +534,7 @@ class View {
 
             // If element is the "Add new session" button
             if (isBtnNewSession) {
-                console.log(isBtnNewSession);
+                this.renderForm(null, null, 'add')
             }
         });
     }

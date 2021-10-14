@@ -59,6 +59,13 @@ body {
             pointer-events: none;
         }
     }
+    #rounds {
+        .singleRound {
+            border-bottom: 1px solid $light;
+            margin-bottom: 1rem;
+            padding-bottom: .75rem;
+        }
+    }
 }
 
 //---------------------------------------------
