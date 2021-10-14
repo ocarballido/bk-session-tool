@@ -174,12 +174,10 @@ class View {
             this.addEditEventID.closest('.form-group').classList.add('d-none');
             this.buttonAddNew.classList.add('d-none');
             this.addRound.classList.add('d-none');
-            // document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.add('d-none'));
 
             // Showing some form fields
             this.sessionName.closest('.form-group').classList.remove('d-none');
             this.buttonUpdate.classList.remove('d-none');
-            // document.querySelector('.singleRound.edit').classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
@@ -196,6 +194,7 @@ class View {
             this.addEditWarmUpTime.value = warmupSeconds;
             this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
             const featuredUsersCollection = document.querySelector('.singleRound .addEditProUsers .users');
+
             // Styling featured users toggle buttons
             document.querySelectorAll(".singleRound .addEditProUsers .users .btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
@@ -208,7 +207,6 @@ class View {
             this.sessionName.closest('.form-group').classList.add('d-none');
             this.buttonUpdate.classList.add('d-none');
             this.addRound.classList.remove('d-none');
-            // document.querySelector('.singleRound.edit').classList.add('d-none');
 
             // Showing some form fields
             this.addEditUserID.closest('.form-group').classList.remove('d-none');
@@ -216,7 +214,6 @@ class View {
             this.addEditSessionID.closest('.form-group').classList.remove('d-none');
             this.addEditEventID.closest('.form-group').classList.remove('d-none');
             this.buttonAddNew.classList.remove('d-none');
-            // document.querySelectorAll('.singleRound.add').forEach( elm => elm.classList.remove('d-none'));
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -275,7 +272,6 @@ class View {
             const isBtnProUser = element.classList.contains('btn-proUser');
 
             if (isBtnProUser) {
-                // const isEdit = element.closest('.singleRound').classList.contains('edit');
                 const isActive = element.classList.contains('active');
                 const userId = element.getAttribute('data-user-id');
                 if (isActive) {
@@ -525,6 +521,7 @@ class View {
             const elementId = element.id;
             const isBtnSidebar = elementId === 'btnSidebar';
             const isBtnNewSession = elementId === 'btnNewSession';
+            
             // If element is the "sidebar toggle" button
             if (isBtnSidebar) {
                 this.sidebar.classList.toggle('expand');

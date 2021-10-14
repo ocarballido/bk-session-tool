@@ -28,19 +28,19 @@ class Model {
                     .then(([sessions, scheduledSessions]) => {
                         // Filling our data model object
                         this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                            
                             // Creating single session object
                             const singleSession = {
                                 ...singleScheduledSession,
                                 sessionName
                             };
-                            
+
                             // Traversing session API array to extract session name based on id
                             const sessionName = sessions.map(session => {
                                 if (session.id === singleScheduledSession.profileId) {
                                     singleSession.sessionName = session.name;
                                 }
                             });
-    
                             return singleSession;
                         });
                         resolve(this._scheduledSessions);                   
@@ -61,9 +61,6 @@ class Model {
         // Remove sessionName property. We dont need it to update db
         delete sessionItem.sessionName;
 
-        // Get if this sessions have 1 or more rounds
-        // const isSingleRound = sessionItem.roundsDefinition.length === 1;
-
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
             return apiServices
@@ -71,7 +68,6 @@ class Model {
                 .then((scheduledSessions) => {
                     // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-                    // console.log(scheduledSessions);
                     return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
@@ -82,7 +78,7 @@ class Model {
                 .then(() => {
                     // Get index of session editted
                     const sessionRoundDeletedIndex = this._scheduledSessions.findIndex( session => session.id === id );
-                    
+
                     // Update local data
                     this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition = this._scheduledSessions[sessionRoundDeletedIndex].roundsDefinition.filter( round => round.startDate !== sessionDate );
                 });
