@@ -22,28 +22,22 @@ Es necesario tener instalado [Node.js](https://nodejs.org/en/) en tu sistema.
 - [npm](https://www.npmjs.com/get-npm)
 
 ```sh
-$ cd ../folder
-$ npm install
-$ npm run dev
+$ cd ../carpeta
 ```
 
 1. Instalar dependencias
 
-   ```bash
-   npm install
-   ```
+```sh
+$ npm install
+```
 
 2. Correr webpack
 
-   ```bash
-   npm run dev
-   ```
+```sh
+$ npm run dev
+```
 
-   El comando dev iniciará Webpack y le indicará que esté atento a los cambios en los archivos JS y SCSS, para volver a compilar los assets.
-
-   ```bash
-   npm run build
-   ```
+El comando dev iniciará Webpack y le indicará que esté atento a los cambios en los archivos JS y SCSS, para volver a compilar los assets.
 
 ## Compilar carpeta /dist
 Se creará la carpeta dist con toda la estructura de la app.
