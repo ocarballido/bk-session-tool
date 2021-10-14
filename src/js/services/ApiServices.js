@@ -53,6 +53,13 @@ const fetchDb = (endpoint, method, data) => {
 };
 
 class ApiServices {
+    // Load featured users
+    loadFeaturedUsers() {
+        return fetchDb(
+            USERS_SERVER,
+            METHODS.GET
+        );
+    }
     // Load scheduled sessions
     loadScheduledSessions() {
         return fetchDb(

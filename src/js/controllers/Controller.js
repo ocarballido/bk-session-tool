@@ -37,6 +37,12 @@ class Controller {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
             })
             .finally(() => this.view.toggleSpinner());;
+
+        // Load featured users
+        this.model.loadFeaturedUsers()
+            .then((loadedUsers) => {
+                console.log(loadedUsers);
+            });
     }
 
     // Delete scheduled session handler

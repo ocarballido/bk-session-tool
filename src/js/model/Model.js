@@ -5,6 +5,16 @@ class Model {
         this._scheduledSessions = [];
     }
 
+    // Get users
+    loadFeaturedUsers() {
+        return apiServices
+            .loadFeaturedUsers()
+            .then((featuredUsers) => {
+                console.log(featuredUsers);
+                return featuredUsers;
+            });
+    }
+
     // Return promise with data
     getScheduledSessions() {
         return new Promise((resolve, reject) => {
@@ -115,23 +125,6 @@ class Model {
                 console.log(this._scheduledSessions);
             });
     }
-
-    // async addScheduledSession(postData) {
-    //     // Get session
-    //     const session = await apiServices.loadSingleSession(postData.profileId);
-
-    //     // Check if profileId existe in sessions
-    //     if (session) {
-    //         return apiServices
-    //             //.addScheduledSession(postData)
-    //             .addScheduledSession(postData)
-    //             .then((data) => {
-    //                 // Return session name
-    //                 console.log(data);
-    //                 //return data
-    //             });
-    //     }
-    // }
 
     async addScheduledSession(data) {
         // Get session
