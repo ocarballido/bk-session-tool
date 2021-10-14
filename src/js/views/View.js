@@ -247,7 +247,6 @@ class View {
     editScheduledSessionAction(handler) {
         // Getting ids of pro users
         let proUsersArrEdited = [];
-        const proUsersNode = document.querySelectorAll('.singleRound[data-round="0"] .users .btn-proUser');
 
         // Remove extra rounds and classes when modal exit
         this.modalEditAdd.addEventListener('hidden.bs.modal', () => {
@@ -255,6 +254,7 @@ class View {
         });
 
         this.modalEditAdd.addEventListener('shown.bs.modal', () => {
+            const proUsersNode = document.querySelectorAll('.singleRound[data-round="0"] .users .btn-proUser');
             [...proUsersNode].forEach(button => {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
@@ -481,15 +481,33 @@ class View {
     }
 
     // First UI app render action
-    firstUiAppRender() {
-        document.addEventListener('DOMContentLoaded', event => {
+    firstUiAppRender(loadedUsers) {
+        console.log(loadedUsers);
+        document.addEventListener('DOMContentLoaded', () => {
             // Date on sidebar
             const currentDate = new Date();
             const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
             this.dateStart.value = currentDateToLocaleDateString;
+        });
 
-            // Featured users buttons
+        // Populate featured users buttons
+        loadedUsers.forEach((user, index) => {
+            // Getting user values
+            const { surname, name, id } = user;
 
+            // Adding user buttons
+            // Find-Replace elements in template
+            const findReplace = {
+                '{{userId}}': id,
+                '{{userName}}': name,
+                '{{userSurname}}': surname
+            };
+
+            // Replaced in template
+            const singleButton = Templates.featuredUserBtnTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            // Inserted to html
+            document.querySelector('.addEditProUsers .users').insertAdjacentHTML('beforeend', singleButton);
         });
     }
 

@@ -77,7 +77,6 @@ class Model {
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
-            console.log(sessionItem);
             return apiServices
                 .updateScheduledSession(id, sessionItem)
                 .then((scheduledSessions) => {

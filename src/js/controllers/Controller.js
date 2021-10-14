@@ -41,7 +41,6 @@ class Controller {
         // Load featured users
         this.model.loadFeaturedUsers()
             .then((loadedUsers) => {
-                console.log(loadedUsers);
                 this.view.firstUiAppRender(loadedUsers);
             });
     }
