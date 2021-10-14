@@ -54,6 +54,9 @@ export const alertTemplate = `
 export const featuredUserBtnTemplate = `
     <button data-user-id="{{userId}}" type="button" data-bs-toggle="button" class="btn btn-outline-success btn-proUser btn-sm mb-1 btn-text-icon">{{userName}} {{userSurname}} <span class="icon-add"></span></button>
 `;
+export const featuredUserSelectOptionTemplate = `
+    <option value="{{userId}}">{{userName}} {{userSurname}}</option>
+`;
 export const roundTemplate = `
     <div class="singleRound add" data-round="{{roundNumber}}">
         <!-- Date start -->

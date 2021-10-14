@@ -20,6 +20,7 @@ class View {
         this.sidebar = document.getElementById('filterSidebar');
         this.dateStart = document.getElementById('filterSessionDateStart');
         this.dateEnd = document.getElementById('filterSessionDateEnd');
+        this.filterSessionUser = document.getElementById('filterSessionUser');
 
         // List
         this.scheduledSessionsList = document.getElementById('scheduledSessionsList');
@@ -508,6 +509,10 @@ class View {
 
             // Inserted to html
             document.querySelector('.addEditProUsers .users').insertAdjacentHTML('beforeend', singleButton);
+
+            const usersSelectOption = Templates.featuredUserSelectOptionTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            this.filterSessionUser.insertAdjacentHTML('beforeend', usersSelectOption);
         });
     }
 
