@@ -111,6 +111,7 @@ class Controller {
 
     filterScheduledSessionsHandler(filterObject) {
         console.log(filterObject);
+        this.model.filterScheduledSession(filterObject);
     }
 }
 

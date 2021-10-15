@@ -129,6 +129,7 @@ class Model {
             });
     }
 
+    // Add session
     async addScheduledSession(data) {
         // Get session
         const session = await apiServices.loadSingleSession(data.profileId);
@@ -140,6 +141,13 @@ class Model {
                     this._scheduledSessions = [];
                 });
         }
+    }
+
+    // Filtering
+    filterScheduledSession(filterObject) {
+        let { startDate, endDate, userId, eventId } = filterObject;
+        console.log(startDate, endDate = endDate !== '' ? endDate : null, userId = userId !== 'all' ? userId : null, eventId = eventId !== 'all' ? eventId : null);
+        return apiServices.filterScheduledSessions(startDate, endDate, userId, eventId);
     }
 };
 

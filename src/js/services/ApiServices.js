@@ -60,6 +60,7 @@ class ApiServices {
             METHODS.GET
         );
     }
+
     // Load scheduled sessions
     loadScheduledSessions() {
         return fetchDb(
@@ -67,6 +68,7 @@ class ApiServices {
             METHODS.GET
         );
     }
+
     // Load sessions
     loadSessions() {
         return fetchDb(
@@ -74,6 +76,7 @@ class ApiServices {
             METHODS.GET
         );
     }
+
     // Load sigle session
     loadSingleSession(id) {
         return fetchDb(
@@ -81,6 +84,7 @@ class ApiServices {
             METHODS.GET
         );
     }
+
     // Delete session
     deleteScheduledSession(id) {
         return fetchDb(
@@ -88,6 +92,7 @@ class ApiServices {
             METHODS.GET
         );
     }
+
     // Update scheduled sessions rounds definition
     updateScheduledSession(id, data) {
         return fetchDb(
@@ -96,6 +101,7 @@ class ApiServices {
             { ...data }
         );
     }
+
     // Add new scheduled session
     addScheduledSession(data) {
         return fetchDb(
@@ -104,7 +110,19 @@ class ApiServices {
             { ...data }
         );
     }
+
+    // Load filtered scheduled sessions
+    filterScheduledSessions(startDate, endDate, userId, eventId) {
+        const filterEndPoint = `${SCHEDULED_SESSIONS_SERVER}${userId !== null ? '/' + userId : ''}${eventId !== null ? '/' + eventId : ''}${startDate !== null ? '/' + startDate : ''}${endDate !== null ? '/' + endDate : ''}`;
+        console.log(filterEndPoint);
+        // return fetchDb(
+        //     SCHEDULED_SESSIONS_SERVER,
+        //     METHODS.GET
+        // );
+    }
 }
+
+// https://sessions-lab.bkool.com/sessions/scheduledSessions?limit=5&userId=b949a83a-6de6-4787-808e-12c8951afb41&profileId=1be4fd71-ef3d-4556-bd87-ea3fc2c9e273&eventId=GIV2021&startDate=2016-05-18T16%3A00%3A00.000Z&endDate=2016-05-18T16%3A00%3A00.000Z&featuredUserId=b949a83a-6de6-4787-808e-12c8951afb41
 
 const apiServices = new ApiServices();
 
