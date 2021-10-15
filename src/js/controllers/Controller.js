@@ -39,13 +39,16 @@ class Controller {
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
             })
-            .finally(() => this.view.toggleSpinner());;
+            .finally(() => this.view.toggleSpinner());
 
         // Load featured users
         this.model.loadFeaturedUsers()
             .then((loadedUsers) => {
                 this.view.firstUiAppRender(loadedUsers);
-            });
+            })
+            .catch(() => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro', 'danger');
+            })
     }
 
     // Delete scheduled session handler
