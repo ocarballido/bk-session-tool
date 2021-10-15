@@ -18,9 +18,14 @@ class View {
 
         // Sidebar
         this.sidebar = document.getElementById('filterSidebar');
-        this.dateStart = document.getElementById('filterSessionDateStart');
-        this.dateEnd = document.getElementById('filterSessionDateEnd');
+        this.sessionFilters = document.getElementById('sessionFilters');
+        this.startDate = document.getElementById('filterSessionDateStart');
+        this.endDate = document.getElementById('filterSessionDateEnd');
+        this.filterSessionEvent = document.getElementById('filterSessionEvent');
         this.filterSessionUser = document.getElementById('filterSessionUser');
+        this.filterButtons = document.getElementById('filterButtons');
+        this.submitFilterButton = document.getElementById('submitFilterButton');
+        this.clearFilterButton = document.getElementById('clearFilterButton');
 
         // List
         this.scheduledSessionsList = document.getElementById('scheduledSessionsList');
@@ -110,6 +115,66 @@ class View {
 
             // Inserted to html
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
+        });
+    }
+
+    // Filter action
+    filterScheduledSessionsAction(handler) {
+        // Create filter object
+        const filterObject = {
+            endDate: '',
+            eventId: '',
+            startDate: '',
+            userId: ''
+        };
+        // Form filter object on form change
+        this.sessionFilters.addEventListener('change', (event) => {
+            // Update filter object
+            filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
+            filterObject.eventId = this.filterSessionEvent.value;
+            filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
+            filterObject.userId = this.filterSessionUser.value;
+
+            // Disabled or not limpiar filtros button depending on fields change
+            if (this.endDate.value !== '' || this.filterSessionEvent.value !== 'all' || this.filterSessionUser.value !== 'all') {
+                this.clearFilterButton.classList.remove('disabled');
+            } else {
+                this.clearFilterButton.classList.add('disabled');
+            }
+        });
+
+        // Clean filters or submit form
+        this.filterButtons.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementId = element.id;
+
+            if (elementId === 'clearFilterButton') {
+                console.log('clear filter');
+
+                // Reset form fields
+                this.endDate.value = '';
+                this.filterSessionEvent.value = 'all';
+                this.filterSessionUser.value = 'all';
+                this.startDate.value = todayDateTime();
+
+                // Update filter object
+                filterObject.startDate = new Date().toISOString();
+                filterObject.endDate = '';
+                filterObject.eventId = 'all';
+                filterObject.userId = 'all';
+                
+                this.clearFilterButton.classList.add('disabled');
+                handler(filterObject);
+            } else if (elementId === 'submitFilterButton') {
+                console.log('filtering');
+
+                // Update filter object
+                filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
+                filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
+                filterObject.eventId = this.filterSessionEvent.value;
+                filterObject.userId = this.filterSessionUser.value;
+                handler(filterObject);
+            }
         });
     }
 
@@ -481,12 +546,8 @@ class View {
 
     // First UI app render action
     firstUiAppRender(loadedUsers) {
-        document.addEventListener('DOMContentLoaded', () => {
-            // Date on sidebar
-            const currentDate = new Date();
-            const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
-            this.dateStart.value = currentDateToLocaleDateString;
-        });
+        // Date on sidebar
+        this.startDate.value = todayDateTime();
 
         // Populate featured users buttons
         loadedUsers.forEach((user, index) => {

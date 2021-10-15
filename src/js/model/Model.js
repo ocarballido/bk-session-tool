@@ -3,12 +3,12 @@ import { apiServices } from '../services/ApiServices';
 class Model {
     constructor() {
         this._scheduledSessions = [];
-        this._sessionFilter = {
-            startDate: new Date().toISOString(),
-            endDate: '',
-            eventId: 'GIV2021',
-            userId: 'all',
-        };
+        // this._sessionFilter = {
+        //     endDate: '',
+        //     eventId: 'GIV2021',
+        //     startDate: new Date().toISOString(),
+        //     userId: 'all',
+        // };
     }
 
     // Get users

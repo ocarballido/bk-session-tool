@@ -52,14 +52,14 @@
 
                     <!-- Date start -->
                     <div class="form-group floating-label mb-2">
-                        <input type="date" class="form-control" id="filterSessionDateStart" placeholder="Dede" tabindex="2" name="filterSessionDateStart" value="2018-07-22" min="2018-07-22" >
+                        <input type="datetime-local" class="form-control" id="filterSessionDateStart" placeholder="Dede" tabindex="2" name="filterSessionDateStart" >
                         <label for="filterSessionDateStart">Desde</label>
                     </div>
                     <!-- /Date start -->
 
                     <!-- Date end -->
                     <div class="form-group floating-label mb-2">
-                        <input type="date" class="form-control" id="filterSessionDateEnd" placeholder="Hasta" tabindex="2" name="filterSessionDateEnd" value="" min="2018-07-22" >
+                        <input type="datetime-local" class="form-control" id="filterSessionDateEnd" placeholder="Hasta" tabindex="2" name="filterSessionDateEnd" >
                         <label for="filterSessionDateEnd">Hasta</label>
                     </div>
                     <!-- /Date end -->
@@ -85,7 +85,7 @@
 
                     <!-- Button -->
                     <div id="filterButtons" class="d-grid gap-2">
-                        <button id="submitFilterButton" type="submit" class="btn btn-secondary">Filtrar</button>
+                        <button id="submitFilterButton" type="button" class="btn btn-secondary">Filtrar</button>
                         <button id="clearFilterButton" type="button" class="btn btn-light disabled">Limpiar filtros</button>
                     </div>
                     <!-- /Button -->

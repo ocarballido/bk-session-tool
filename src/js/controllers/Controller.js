@@ -27,6 +27,9 @@ class Controller {
         // Binding edit session action
         this.view.addScheduledSessionAction(this.addScheduledSessionHandler.bind(this));
 
+        // Binding filter session action
+        this.view.filterScheduledSessionsAction(this.filterScheduledSessionsHandler.bind(this));
+
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
@@ -104,6 +107,10 @@ class Controller {
             .finally(() => this.view.toggleSpinner());
 
         console.log(postData);
+    }
+
+    filterScheduledSessionsHandler(filterObject) {
+        console.log(filterObject);
     }
 }
 
