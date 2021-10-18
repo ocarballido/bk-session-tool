@@ -470,6 +470,17 @@ class View {
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
             event.preventDefault();
+
+            // Create filter object
+            // This way we reload the data with the filters updated
+            const filterObject = {};
+
+            // Update filter object
+            filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
+            filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
+            filterObject.eventId = this.filterSessionEvent.value;
+            filterObject.userId = this.filterSessionUser.value;
+
             const roundsDefinition = () => {
                 const rounds = this.editAddForm.querySelectorAll('.singleRound.add');
                 const roundsDefinition = [];
@@ -514,7 +525,7 @@ class View {
                 });
                 
             } else {
-                handler(updatedGlobalData);
+                handler(updatedGlobalData, filterObject);
 
                 // Hide modal
                 this.myModal.hide();

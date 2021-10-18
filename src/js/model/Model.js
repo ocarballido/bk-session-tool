@@ -21,14 +21,25 @@ class Model {
     }
 
     // Return promise with data
-    getScheduledSessions() {
+    getScheduledSessions(filterObject) {
+        let startDate, endDate, userId, eventId;
+        if (filterObject) {
+           ({ startDate, endDate, userId, eventId } = filterObject);
+           console.log(startDate, endDate = endDate !== '' ? endDate : null, userId = userId !== 'all' ? userId : null, eventId = eventId !== 'all' ? eventId : null);
+        } else {
+            startDate = null;
+            endDate = null;
+            userId = null;
+            eventId = null;
+        }
+        
         return new Promise((resolve, reject) => {
             if ( this._scheduledSessions.length ) {
                 resolve(this._scheduledSessions);
             } else {
                 Promise.all([
                     apiServices.loadSessions(),
-                    apiServices.loadScheduledSessions()
+                    apiServices.loadScheduledSessions(startDate, endDate, userId, eventId)
                 ])
                     .then(([sessions, scheduledSessions]) => {
                         // Filling our data model object

@@ -92,11 +92,12 @@ class Controller {
     }
 
     // Add scheduled session handler
-    addScheduledSessionHandler(postData) {
+    addScheduledSessionHandler(postData, filterObject) {
         this.view.toggleSpinner();
 
         this.model.addScheduledSession(postData)
             .then(() => {
+                // Añadir filterObject en la llamada de abajo cuando tengamos la API real
                 return this.model.getScheduledSessions();
             })
             .then((scheduledSessions) => {

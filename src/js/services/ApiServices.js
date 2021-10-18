@@ -62,9 +62,11 @@ class ApiServices {
     }
 
     // Load scheduled sessions
-    loadScheduledSessions() {
+    loadScheduledSessions(startDate, endDate, userId, eventId) {
+        const END_POINT = `${SCHEDULED_SESSIONS_SERVER}${userId !== null ? '/' + userId : ''}${eventId !== null ? '/' + eventId : ''}${startDate !== null ? '/' + startDate : ''}${endDate !== null ? '/' + endDate : ''}`;
+        console.log(END_POINT);
         return fetchDb(
-            SCHEDULED_SESSIONS_SERVER,
+            END_POINT,
             METHODS.GET
         );
     }
@@ -113,8 +115,8 @@ class ApiServices {
 
     // Load filtered scheduled sessions
     filterScheduledSessions(startDate, endDate, userId, eventId) {
-        const filterEndPoint = `${SCHEDULED_SESSIONS_SERVER}${userId !== null ? '/' + userId : ''}${eventId !== null ? '/' + eventId : ''}${startDate !== null ? '/' + startDate : ''}${endDate !== null ? '/' + endDate : ''}`;
-        console.log(filterEndPoint);
+        const END_POINT = `${SCHEDULED_SESSIONS_SERVER}${userId !== null ? '/' + userId : ''}${eventId !== null ? '/' + eventId : ''}${startDate !== null ? '/' + startDate : ''}${endDate !== null ? '/' + endDate : ''}`;
+        console.log(END_POINT);
         // return fetchDb(
         //     SCHEDULED_SESSIONS_SERVER,
         //     METHODS.GET
