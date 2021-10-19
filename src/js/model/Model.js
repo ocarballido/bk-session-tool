@@ -3,12 +3,9 @@ import { apiServices } from '../services/ApiServices';
 class Model {
     constructor() {
         this._scheduledSessions = [];
-        // this._sessionFilter = {
-        //     endDate: '',
-        //     eventId: 'GIV2021',
-        //     startDate: new Date().toISOString(),
-        //     userId: 'all',
-        // };
+        this._sessionFilter = {
+            startDate: new Date().toISOString(),
+        };
     }
 
     // Get users
@@ -22,50 +19,25 @@ class Model {
 
     // Return promise with data
     getScheduledSessions(filterObject) {
-        let startDate, endDate, userId, eventId;
-        if (filterObject) {
-           ({ startDate, endDate, userId, eventId } = filterObject);
-           console.log(startDate, endDate = endDate !== '' ? endDate : null, userId = userId !== 'all' ? userId : null, eventId = eventId !== 'all' ? eventId : null);
-        } else {
-            startDate = null;
-            endDate = null;
-            userId = null;
-            eventId = null;
-        }
-        
+        console.log(filterObject);
         return new Promise((resolve, reject) => {
-            if ( this._scheduledSessions.length ) {
-                resolve(this._scheduledSessions);
-            } else {
-                Promise.all([
-                    apiServices.loadSessions(),
-                    apiServices.loadScheduledSessions(startDate, endDate, userId, eventId)
-                ])
-                    .then(([sessions, scheduledSessions]) => {
-                        // Filling our data model object
-                        this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
-                            
-                            // Creating single session object
-                            const singleSession = {
-                                ...singleScheduledSession,
-                                sessionName
-                            };
-
-                            // Traversing session API array to extract session name based on id
-                            const sessionName = sessions.map(session => {
-                                if (session.id === singleScheduledSession.profileId) {
-                                    singleSession.sessionName = session.name;
-                                }
-                            });
-                            return singleSession;
-                        });
-                        resolve(this._scheduledSessions);                   
-                    })
-                    .catch((error) => {
-                        reject(error);
-                        console.log(error);
+            apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
+                .then((scheduledSessions) => {
+                    // Filling our data model object
+                    this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                        
+                        // Creating single session object
+                        const singleSession = {
+                            ...singleScheduledSession
+                        };
+                        return singleSession;
                     });
-            }
+                    resolve(this._scheduledSessions);                   
+                })
+                .catch((error) => {
+                    reject(error);
+                    console.log(error);
+                });
 
         });
     }
@@ -140,25 +112,32 @@ class Model {
             });
     }
 
-    // Add session
-    async addScheduledSession(data) {
-        // Get session
-        const session = await apiServices.loadSingleSession(data.profileId);
-
-        // If this session exist
-        if (session) {
-            return apiServices.addScheduledSession(data)
-                .then(() => {
-                    this._scheduledSessions = [];
-                });
-        }
+    addScheduledSession(data) {
+        return new Promise((resolve, reject) => {
+           // Get session
+            apiServices.loadSingleSession(data.profileId)
+                .then((session) => {
+                    // If this session exist
+                    if (session) {
+                        apiServices.addScheduledSession(data)
+                            .then(() => {
+                                resolve();
+                            })
+                            .catch(() => reject());
+                    } else {
+                        reject();
+                    }
+                }).catch(() => reject());
+        });
     }
 
     // Filtering
-    filterScheduledSession(filterObject) {
-        let { startDate, endDate, userId, eventId } = filterObject;
-        console.log(startDate, endDate = endDate !== '' ? endDate : null, userId = userId !== 'all' ? userId : null, eventId = eventId !== 'all' ? eventId : null);
-        return apiServices.filterScheduledSessions(startDate, endDate, userId, eventId);
+    filterScheduledSession(data) {
+        return apiServices.addScheduledSession(data)
+            .then(() => {
+                resolve();
+            })
+            .catch(() => reject());
     }
 };
 

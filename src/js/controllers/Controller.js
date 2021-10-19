@@ -98,7 +98,7 @@ class Controller {
         this.model.addScheduledSession(postData)
             .then(() => {
                 // Añadir filterObject en la llamada de abajo cuando tengamos la API real
-                return this.model.getScheduledSessions();
+                return this.model.getScheduledSessions(filterObject);
             })
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
@@ -106,7 +106,7 @@ class Controller {
                 this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. Comprueba que ', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. Recarga la página.', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
 
@@ -115,7 +115,12 @@ class Controller {
 
     filterScheduledSessionsHandler(filterObject) {
         console.log(filterObject);
-        this.model.filterScheduledSession(filterObject);
+        this.model.getScheduledSessions(filterObject)
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                // this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
+            });
     }
 }
 

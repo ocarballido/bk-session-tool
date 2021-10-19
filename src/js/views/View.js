@@ -46,7 +46,7 @@ class View {
         this.allRequired = document.getElementById('allRequired');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.editAddForm = document.getElementById('editAddForm');
-        this.sessionName = document.getElementById('sessionName');
+        this.profileId = document.getElementById('profileId');
         this.addEditUserID = document.getElementById('addEditUserID');
         this.addEditProfileID = document.getElementById('addEditProfileID');
         this.addEditSessionID = document.getElementById('addEditSessionID');
@@ -121,19 +121,11 @@ class View {
     // Filter action
     filterScheduledSessionsAction(handler) {
         // Create filter object
-        const filterObject = {
-            endDate: '',
-            eventId: '',
-            startDate: '',
-            userId: ''
-        };
+        const filterObject = {};
         // Form filter object on form change
         this.sessionFilters.addEventListener('change', (event) => {
             // Update filter object
-            filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
-            filterObject.eventId = this.filterSessionEvent.value;
-            filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
-            filterObject.userId = this.filterSessionUser.value;
+            
 
             // Disabled or not limpiar filtros button depending on fields change
             if (this.endDate.value !== '' || this.filterSessionEvent.value !== 'all' || this.filterSessionUser.value !== 'all') {
@@ -156,23 +148,31 @@ class View {
                 this.filterSessionEvent.value = 'all';
                 this.filterSessionUser.value = 'all';
                 this.startDate.value = todayDateTime();
-
-                // Update filter object
-                filterObject.startDate = new Date().toISOString();
-                filterObject.endDate = '';
-                filterObject.eventId = 'all';
-                filterObject.userId = 'all';
                 
                 this.clearFilterButton.classList.add('disabled');
+
+                // Update filter object
+                filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
+
+                this.endDate.value === '' ? delete filterObject.endDate : filterObject.endDate = dateTimeFormater(this.endDate.value).date.toISOString()
+
+                this.filterSessionEvent.value === 'all' ? delete filterObject.eventId : filterObject.eventId = this.filterSessionEvent.value;
+                
+                this.filterSessionUser.value === 'all' ? delete filterObject.userId : filterObject.userId = this.filterSessionUser.value;
+                
                 handler(filterObject);
             } else if (elementId === 'submitFilterButton') {
                 console.log('filtering');
 
                 // Update filter object
                 filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
-                filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
-                filterObject.eventId = this.filterSessionEvent.value;
-                filterObject.userId = this.filterSessionUser.value;
+
+                this.endDate.value === '' ? delete filterObject.endDate : filterObject.endDate = dateTimeFormater(this.endDate.value).date.toISOString()
+
+                this.filterSessionEvent.value === 'all' ? delete filterObject.eventId : filterObject.eventId = this.filterSessionEvent.value;
+                
+                this.filterSessionUser.value === 'all' ? delete filterObject.userId : filterObject.userId = this.filterSessionUser.value;
+                // console.log(filterObject);
                 handler(filterObject);
             }
         });
@@ -229,7 +229,7 @@ class View {
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
             // Form fields values
-            const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
@@ -241,15 +241,15 @@ class View {
             this.addRound.classList.add('d-none');
 
             // Showing some form fields
-            this.sessionName.closest('.form-group').classList.remove('d-none');
+            this.profileId.closest('.form-group').classList.remove('d-none');
             this.buttonUpdate.classList.remove('d-none');
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
             this.editAddForm.dataset.date = sessionDate;
             this.editAddModalTitle.innerHTML = "Editar sesión";
-            this.sessionName.value = sessionName;
-            this.sessionName.disabled = true;
+            this.profileId.value = profileId;
+            this.profileId.disabled = true;
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             document.getElementById('addSessionDateStart-0').value = `${date}T${time}`;
@@ -269,7 +269,7 @@ class View {
             } );
         } else if (type === 'add') {
             // Hiding form fields
-            this.sessionName.closest('.form-group').classList.add('d-none');
+            this.profileId.closest('.form-group').classList.add('d-none');
             this.buttonUpdate.classList.add('d-none');
             this.addRound.classList.remove('d-none');
 
@@ -284,8 +284,8 @@ class View {
             this.editAddForm.dataset.id = '';
             this.editAddForm.dataset.date = '';
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
-            this.sessionName.value = '';
-            this.sessionName.disabled = true;
+            this.profileId.value = '';
+            this.profileId.disabled = true;
             document.getElementById('addSessionDateStart-0').value = todayDateTime();
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;

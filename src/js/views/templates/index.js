@@ -11,11 +11,10 @@ export const scheduledSessionLi = `
         data-is-real-weather="{{isRealWeather}}"
         data-warmup-seconds="{{warmupSeconds}}"
         data-main-part-min-seconds="{{mainPartMinSeconds}}"
-        data-session-name="{{sessionName}}"
         data-featured-users-id="{{featuredUserIds}}"
     >
         <div class="{{sessionFirst}} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-{{id}}">
-            {{sessionName}}
+            {{profileId}}
             <span class="icon-expand-more text-dark"></span>
         </div>
         <div class="collapse collapse-body {{sessionShow}}" id="target-{{id}}">
