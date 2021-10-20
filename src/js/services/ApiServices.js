@@ -3,7 +3,7 @@ const HOST = 'http://localhost:3001';
 const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
 // const SESSIONS_SERVER = `${HOST}/sessions`;
 const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
-const USERS_SERVER = `${HOST}/users`;
+const USERS_SERVER = `https://users-staging.bkool.com/users`;
 // const SERVER_SHEDULED_SESSIONS = `${SCHEDULED_SESSIONS_SERVER}`;
 // const SERVER_SESSIONS = `${SERVER}/sessions`;
 // const SERVER_USERS = `${SERVER}/users`;
@@ -20,7 +20,7 @@ const fetchDb = (endpoint, method, data) => {
     const options = { method, redirect: 'follow' };
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", "");
+    myHeaders.append("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZaFljdmZoN05MVlpvVTNZdlZsOGJ4V0tDQkFJU1dzMDEwSEJPWjZZVG1rIn0.eyJleHAiOjE2MzQ4MDMwNTUsImlhdCI6MTYzNDcxNjY1NSwianRpIjoiNzUyNGU4NTAtZjY2NS00ZDllLWI4YjYtZDk4MzVhZmMwODE0IiwiaXNzIjoiaHR0cHM6Ly9hdXRoLXN0YWdpbmcuYmtvb2wuY29tL2F1dGgvcmVhbG1zL2Jrb29sIiwiYXVkIjpbInJlYWxtLW1hbmFnZW1lbnQiLCJhY2NvdW50Il0sInN1YiI6ImU4MjQyM2M0LTVhM2YtNDc3OC04YjJiLTNlZGIyNDAwMTcwNCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImJrb29sLXdlYiIsInNlc3Npb25fc3RhdGUiOiI4ZjNlM2Q1ZS02MDA5LTRiMjAtODAyNC1kN2IzM2UzYjRiMDIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiIiwic2lkIjoiOGYzZTNkNWUtNjAwOS00YjIwLTgwMjQtZDdiMzNlM2I0YjAyIiwibmFtZSI6IlVzdWFyaW8gQWRtaW5XZWJVc2VyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYmtvb2x3ZWIiLCJnaXZlbl9uYW1lIjoiVXN1YXJpbyIsImxvY2FsZSI6ImVzIiwiZmFtaWx5X25hbWUiOiJBZG1pbldlYlVzZXIiLCJlbWFpbCI6ImJrb29sd2ViQGJrb29sLmNvbSJ9.kiDdrjpLJ-AU0qc__6eVu-wfvctg8IjMumPVxhnxU4Q_fVvsqlWT5kDhiubvxEYfoxcrCcohQsJJfcZCu7c9A2w1actb3YO2kAiIWgqNuUKhjnc6V5pfb7Gi_0NMVzbFYN4SrIzqZo6noKyVdYQcPUqASoyyef3M7zHowqCVg-aLP_tICPkOdwpiNSPm23HCy1KppNIdaUiY8lWw2Vg3blf1cyksHSb3b5BBKg9To2yh-nSXCmoKcTZIcXRYXhSo4Jo-M3PPI0XMZU4b-BTlG9HypaDYzNnfUAl02RL3XaUzgZPoY0-Uh8GPazkA4rgR7n6MmdanWHoN1CscjFhV9Q");
     myHeaders.append("Cookie", "JSESSIONID=9kXZFLASkjNzDXINzV2rg4DH3I7-0AD2HBpX64rk");
 
     if (data) {

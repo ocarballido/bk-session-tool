@@ -557,6 +557,7 @@ class View {
 
     // First UI app render action
     firstUiAppRender(loadedUsers) {
+        console.log(loadedUsers);
         // Date on sidebar
         this.startDate.value = todayDateTime();
 

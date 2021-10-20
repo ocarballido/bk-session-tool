@@ -13,6 +13,7 @@ class Model {
         return apiServices
             .loadFeaturedUsers()
             .then((featuredUsers) => {
+                console.log(featuredUsers);
                 return featuredUsers;
             });
     }
