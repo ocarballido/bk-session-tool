@@ -33,7 +33,11 @@ class Model {
                         };
                         return singleSession;
                     });
-                    resolve(this._scheduledSessions);                   
+                    this._sessionFilter = {
+                        ...filterObject
+                    }
+                    console.log(this._sessionFilter);
+                    resolve(this._scheduledSessions);
                 })
                 .catch((error) => {
                     reject(error);
