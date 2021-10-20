@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "dev": "npm run server & webpack serve --config webpack.config.js --mode development",
+    "dev": "webpack serve --config webpack.config.js --mode development",
     "fakeDev": "npm run fakeServer & webpack serve --config webpack.config.js --mode development",
     "fakeServer": "node server/server.js",
     "server": "json-server -p3001 --watch server/db.json",
