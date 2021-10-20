@@ -638,4 +638,10 @@ class View {
     }
 };
 
+//  Understanding pagination
+//  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20
+//  |___________________|___________________|___________________|___________________|
+//   Limit: 5            Limmit: 10          Limmit: 15          Limmit: 20
+//   Offset: 0           Offset: 5           Offset: 10          Offset: 15
+
 export { View };
