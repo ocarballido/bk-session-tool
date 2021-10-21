@@ -30,6 +30,9 @@ class Controller {
         // Binding filter session action
         this.view.filterScheduledSessionsAction(this.filterScheduledSessionsHandler.bind(this));
 
+        // Binding pagination session action
+        this.view.paginationAction(this.paginationHandler.bind(this));
+
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
@@ -125,6 +128,10 @@ class Controller {
                 console.log(error);
                 this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Cambia los filtros y busca de nuevo', 'info');
             });
+    }
+
+    paginationHandler(filterObject) {
+        console.log(filterObject);
     }
 }
 

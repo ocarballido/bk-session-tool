@@ -123,6 +123,9 @@ class View {
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
         });
 
+        // Pagination btnPrev button disabled
+        this.btnPrev.classList.add('disabled');
+
         // Disable pagination buttons if no results
         if (!scheduledSessions.length) {
             this.btnPrev.classList.add('disabled');
@@ -178,11 +181,56 @@ class View {
         });
     }
 
-    pagination() {
+    //  Understanding pagination
+    //  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20
+    //  |___________________|___________________|___________________|___________________|
+    //   Limit: 10           Limmit: 20          Limmit: 30          Limmit: 40
+    //   Offset: 0           Offset: 10          Offset: 20          Offset: 30
+    paginationAction(handler) {
+        const offsetLimit = {
+            offset: 0,
+            limit: 10
+        }
+        let filterObject = {};
         this.sessionsPagination.addEventListener('click', (event) => {
             event.preventDefault();
             const element = event.target;
-            const elementClasses = element.classList;
+            const elementId = element.id;
+
+            if (elementId === 'btnPrev') {
+                offsetLimit.offset = offsetLimit.offset > 0 ? offsetLimit.offset -= 10 : 0;
+                offsetLimit.limit -= 10;
+                if (offsetLimit.offset === 0) {
+                    this.btnPrev.classList.add('disabled');
+                }
+                filterObject = {
+                    ...filterObject,
+                    ...filterdValues(
+                        this.startDate.value,
+                        this.endDate.value,
+                        this.filterSessionEvent.value,
+                        this.filterSessionUser.value
+                    ),
+                    ...offsetLimit
+                }
+            } else if (elementId === 'btnNext') {
+                offsetLimit.limit += 10;
+                offsetLimit.offset += 10;
+                if (offsetLimit.offset > 0) {
+                    this.btnPrev.classList.remove('disabled');
+                }
+                filterObject = {
+                    ...filterObject,
+                    ...filterdValues(
+                        this.startDate.value,
+                        this.endDate.value,
+                        this.filterSessionEvent.value,
+                        this.filterSessionUser.value
+                    ),
+                    ...offsetLimit
+                }
+            }
+            handler(filterObject);
         });
     }
 
@@ -635,32 +683,6 @@ class View {
             document.querySelector('.alert').remove();
         }, 5000);
     }
-
-    // filterdValues(startDate, endDate, eventId, userId) {
-    //     // Create filter object
-    //     // This way we reload the data with the filters updated
-    //     const filterObject = {};
-    
-    //     // Update filter object
-    //     filterObject.startDate = dateTimeFormater(startDate).date.toISOString();
-    //     if (endDate !== '') {
-    //         filterObject.endDate = dateTimeFormater(endDate).date.toISOString()
-    //     }
-    //     if (eventId !== 'all') {
-    //         filterObject.eventId = eventId;
-    //     }
-    //     if (userId !== 'all') {
-    //         filterObject.userId = userId;
-    //     }
-
-    //     return filterObject;
-    // };
 };
-
-//  Understanding pagination
-//  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20
-//  |___________________|___________________|___________________|___________________|
-//   Limit: 5            Limmit: 10          Limmit: 15          Limmit: 20
-//   Offset: 0           Offset: 5           Offset: 10          Offset: 15
 
 export { View };
