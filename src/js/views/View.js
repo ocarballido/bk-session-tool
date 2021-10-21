@@ -189,7 +189,7 @@ class View {
     paginationAction(handler) {
         const offsetLimit = {
             offset: 0,
-            limit: 10
+            limit: 1
         }
         let filterObject = {};
         this.sessionsPagination.addEventListener('click', (event) => {
@@ -198,8 +198,8 @@ class View {
             const elementId = element.id;
 
             if (elementId === 'btnPrev') {
-                offsetLimit.offset = offsetLimit.offset > 0 ? offsetLimit.offset -= 10 : 0;
-                offsetLimit.limit -= 10;
+                offsetLimit.offset = offsetLimit.offset > 0 ? offsetLimit.offset -= 1 : 0;
+                offsetLimit.limit -= 1;
                 if (offsetLimit.offset === 0) {
                     this.btnPrev.classList.add('disabled');
                 }
@@ -213,9 +213,11 @@ class View {
                     ),
                     ...offsetLimit
                 }
+
+                handler(filterObject);
             } else if (elementId === 'btnNext') {
-                offsetLimit.limit += 10;
-                offsetLimit.offset += 10;
+                offsetLimit.limit += 1;
+                offsetLimit.offset += 1;
                 if (offsetLimit.offset > 0) {
                     this.btnPrev.classList.remove('disabled');
                 }
@@ -229,8 +231,9 @@ class View {
                     ),
                     ...offsetLimit
                 }
+
+                handler(filterObject);
             }
-            handler(filterObject);
         });
     }
 
