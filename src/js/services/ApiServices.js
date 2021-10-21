@@ -42,7 +42,8 @@ const fetchDb = (endpoint, method, data) => {
                     if (method === METHODS.GET) {
                         response
                             .json()
-                            .then(json => resolve(json));
+                            .then(json => resolve(json))
+                            .catch(error => reject(error));
                     } else {
                         response
                             .text()

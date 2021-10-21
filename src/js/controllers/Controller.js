@@ -120,6 +120,10 @@ class Controller {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 // this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
+            })
+            .catch((error) => {
+                console.log(error);
+                this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Cambia los filtros y busca de nuevo', 'info');
             });
     }
 }

@@ -63,6 +63,11 @@ class View {
         this.addRound = document.getElementById('addRound');
         this.buttonAddRound = document.getElementById('buttonAddRound');
         this.rounds = document.getElementById('rounds');
+
+        // Pagination
+        this.sessionsPagination = document.getElementById('sessionsPagination');
+        this.btnPrev = document.getElementById('btnPrev');
+        this.btnNext = document.getElementById('btnNext');
     }
 
     // First scheduled sessions render
@@ -117,6 +122,12 @@ class View {
             // Inserted to html
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
         });
+
+        // Disable pagination buttons if no results
+        if (!scheduledSessions.length) {
+            this.btnPrev.classList.add('disabled');
+            this.btnNext.classList.add('disabled');
+        }
     }
 
     // Filter action
@@ -137,8 +148,6 @@ class View {
             const elementId = element.id;
 
             if (elementId === 'clearFilterButton') {
-                console.log('clear filter');
-
                 // Reset form fields
                 this.endDate.value = '';
                 this.filterSessionEvent.value = 'all';
@@ -157,8 +166,6 @@ class View {
                 
                 handler(filterObject);
             } else if (elementId === 'submitFilterButton') {
-                console.log('filtering');
-
                 // Create filter object
                 const filterObject = filterdValues(
                     this.startDate.value,
@@ -168,6 +175,14 @@ class View {
                 )
                 handler(filterObject);
             }
+        });
+    }
+
+    pagination() {
+        this.sessionsPagination.addEventListener('click', (event) => {
+            event.preventDefault();
+            const element = event.target;
+            const elementClasses = element.classList;
         });
     }
 
@@ -294,7 +309,6 @@ class View {
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
-            console.log(todayDateTime())
 
             // Showing add new session modal
             this.myModal.show();
@@ -317,10 +331,8 @@ class View {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
                     proUsersArrEdited.push(userId);
-                    console.log('tiene');
                 } else {
                     proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
-                    console.log('no tiene');
                 }
             });
         });
@@ -338,7 +350,6 @@ class View {
                     proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
                 }
             }
-            console.log(proUsersArrEdited);
         });
         
         // Submmiting data
@@ -428,7 +439,6 @@ class View {
                 const roundToRemove = element.closest('.singleRound');
                 roundToRemove.remove();
                 proUsersArr.splice(numberOfRounds, 1);
-                console.log(proUsersArr);
                 numberOfRounds --;
             }
         });
@@ -452,7 +462,6 @@ class View {
 
             // Hide danger alert in form
             this.allRequired.classList.add('d-none');
-            console.log(proUsersArr);
         });
 
         // Form validation
@@ -548,7 +557,6 @@ class View {
 
     // First UI app render action
     firstUiAppRender(loadedUsers) {
-        console.log(loadedUsers);
         // Date on sidebar
         this.startDate.value = todayDateTime();
 
