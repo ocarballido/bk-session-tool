@@ -1,5 +1,6 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
+import { filterdValues } from '../helpers/filter-object';
 import { Modal } from 'bootstrap';
 
 class View {
@@ -120,14 +121,9 @@ class View {
 
     // Filter action
     filterScheduledSessionsAction(handler) {
-        // Create filter object
-        const filterObject = {};
         // Form filter object on form change
         this.sessionFilters.addEventListener('change', (event) => {
-            // Update filter object
-            
-
-            // Disabled or not limpiar filtros button depending on fields change
+            // Disabled or not "limpiar filtros" button depending on fields change
             if (this.endDate.value !== '' || this.filterSessionEvent.value !== 'all' || this.filterSessionUser.value !== 'all') {
                 this.clearFilterButton.classList.remove('disabled');
             } else {
@@ -151,28 +147,25 @@ class View {
                 
                 this.clearFilterButton.classList.add('disabled');
 
-                // Update filter object
-                filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
-
-                this.endDate.value === '' ? delete filterObject.endDate : filterObject.endDate = dateTimeFormater(this.endDate.value).date.toISOString()
-
-                this.filterSessionEvent.value === 'all' ? delete filterObject.eventId : filterObject.eventId = this.filterSessionEvent.value;
-                
-                this.filterSessionUser.value === 'all' ? delete filterObject.userId : filterObject.userId = this.filterSessionUser.value;
+                // Create filter object
+                const filterObject = filterdValues(
+                    this.startDate.value,
+                    this.endDate.value,
+                    this.filterSessionEvent.value,
+                    this.filterSessionUser.value
+                )
                 
                 handler(filterObject);
             } else if (elementId === 'submitFilterButton') {
                 console.log('filtering');
 
-                // Update filter object
-                filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
-
-                this.endDate.value === '' ? delete filterObject.endDate : filterObject.endDate = dateTimeFormater(this.endDate.value).date.toISOString()
-
-                this.filterSessionEvent.value === 'all' ? delete filterObject.eventId : filterObject.eventId = this.filterSessionEvent.value;
-                
-                this.filterSessionUser.value === 'all' ? delete filterObject.userId : filterObject.userId = this.filterSessionUser.value;
-                // console.log(filterObject);
+                // Create filter object
+                const filterObject = filterdValues(
+                    this.startDate.value,
+                    this.endDate.value,
+                    this.filterSessionEvent.value,
+                    this.filterSessionUser.value
+                )
                 handler(filterObject);
             }
         });
@@ -472,14 +465,12 @@ class View {
             event.preventDefault();
 
             // Create filter object
-            // This way we reload the data with the filters updated
-            const filterObject = {};
-
-            // Update filter object
-            filterObject.startDate = dateTimeFormater(this.startDate.value).date.toISOString();
-            filterObject.endDate = `${this.endDate.value === '' ? '' : dateTimeFormater(this.endDate.value).date.toISOString()}`;
-            filterObject.eventId = this.filterSessionEvent.value;
-            filterObject.userId = this.filterSessionUser.value;
+            const filterObject = filterdValues(
+                this.startDate.value,
+                this.endDate.value,
+                this.filterSessionEvent.value,
+                this.filterSessionUser.value,
+            );
 
             const roundsDefinition = () => {
                 const rounds = this.editAddForm.querySelectorAll('.singleRound.add');
@@ -636,6 +627,26 @@ class View {
             document.querySelector('.alert').remove();
         }, 5000);
     }
+
+    // filterdValues(startDate, endDate, eventId, userId) {
+    //     // Create filter object
+    //     // This way we reload the data with the filters updated
+    //     const filterObject = {};
+    
+    //     // Update filter object
+    //     filterObject.startDate = dateTimeFormater(startDate).date.toISOString();
+    //     if (endDate !== '') {
+    //         filterObject.endDate = dateTimeFormater(endDate).date.toISOString()
+    //     }
+    //     if (eventId !== 'all') {
+    //         filterObject.eventId = eventId;
+    //     }
+    //     if (userId !== 'all') {
+    //         filterObject.userId = userId;
+    //     }
+
+    //     return filterObject;
+    // };
 };
 
 //  Understanding pagination
