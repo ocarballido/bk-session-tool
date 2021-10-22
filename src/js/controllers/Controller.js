@@ -118,6 +118,7 @@ class Controller {
 
     filterScheduledSessionsHandler(filterObject) {
         console.log(filterObject);
+        this.view.toggleSpinner();
         this.model.getScheduledSessions(filterObject)
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
@@ -126,12 +127,27 @@ class Controller {
             })
             .catch((error) => {
                 console.log(error);
-                this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Cambia los filtros y busca de nuevo', 'info');
-            });
+                this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Recarga la página', 'info');
+            })
+            .finally(() => this.view.toggleSpinner());;
     }
 
     paginationHandler(filterObject) {
         console.log(filterObject);
+        this.view.toggleSpinner();
+        this.model.getScheduledSessions(filterObject)
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen más sesiones programadas en adelante. Filtra de nuevo', 'info');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.view.renderAlertMessages('Ha ocurrido un error.', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());;
     }
 }
 
