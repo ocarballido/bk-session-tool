@@ -1,3 +1,4 @@
+import { offset } from '@popperjs/core';
 import { apiServices } from '../services/ApiServices';
 
 class Model {
@@ -5,6 +6,8 @@ class Model {
         this._scheduledSessions = [];
         this._sessionFilter = {
             startDate: new Date().toISOString(),
+            offset: 0,
+            limit: 1
         };
     }
 
@@ -40,6 +43,12 @@ class Model {
                 })
                 .catch((error) => {
                     reject(error);
+                    // let offset = filterObject.offset - 1;
+                    // this._sessionFilter = {
+                    //     ...filterObject,
+                    //     offset: offset--
+                    // }
+                    // console.log(filterObject, this._sessionFilter, offset);
                     console.log(error);
                 });
 

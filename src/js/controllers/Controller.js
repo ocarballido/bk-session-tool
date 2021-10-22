@@ -38,6 +38,9 @@ class Controller {
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen sesiones programadas en adelante. Filtra de nuevo', 'info');
+                }
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');

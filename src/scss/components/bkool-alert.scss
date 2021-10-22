@@ -37,4 +37,16 @@
 			top: .5rem;
 		}
 	}
+	.alert-time {
+		bottom: 0;
+		display: block;
+		height: 4px;
+		left: 0;
+		position: absolute;
+		transition: all linear 8s;
+		width: 0;
+		&.on {
+			width: 100%;
+		}
+	}
 }

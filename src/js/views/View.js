@@ -68,6 +68,9 @@ class View {
         this.sessionsPagination = document.getElementById('sessionsPagination');
         this.btnPrev = document.getElementById('btnPrev');
         this.btnNext = document.getElementById('btnNext');
+
+        // Alert
+        this.alert = document.querySelector('#sessionsContent .alert-info');
     }
 
     // First scheduled sessions render
@@ -123,13 +126,17 @@ class View {
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
         });
 
-        // Pagination btnPrev button disabled
-        this.btnPrev.classList.add('disabled');
-
         // Disable pagination buttons if no results
         if (!scheduledSessions.length) {
             this.btnPrev.classList.add('disabled');
             this.btnNext.classList.add('disabled');
+        } else {
+            this.btnNext.classList.remove('disabled');
+        }
+
+        // Remove possible alert
+        if (document.querySelector('#sessionsContent .alert-info')) {
+            document.querySelector('#sessionsContent .alert-info').remove();
         }
     }
 
@@ -164,8 +171,13 @@ class View {
                     this.startDate.value,
                     this.endDate.value,
                     this.filterSessionEvent.value,
-                    this.filterSessionUser.value
+                    this.filterSessionUser.value,
+                    0,
+                    1
                 )
+
+                // Pagination btnPrev button disabled
+                this.btnPrev.classList.add('disabled');
                 
                 handler(filterObject);
             } else if (elementId === 'submitFilterButton') {
@@ -174,8 +186,14 @@ class View {
                     this.startDate.value,
                     this.endDate.value,
                     this.filterSessionEvent.value,
-                    this.filterSessionUser.value
+                    this.filterSessionUser.value,
+                    0,
+                    1
                 )
+
+                // Pagination btnPrev button disabled
+                this.btnPrev.classList.add('disabled');
+                
                 handler(filterObject);
             }
         });
@@ -199,7 +217,7 @@ class View {
 
             if (elementId === 'btnPrev') {
                 offsetLimit.offset = offsetLimit.offset > 0 ? offsetLimit.offset -= 1 : 0;
-                offsetLimit.limit -= 1;
+                // offsetLimit.limit -= 1;
                 if (offsetLimit.offset === 0) {
                     this.btnPrev.classList.add('disabled');
                 }
@@ -216,7 +234,7 @@ class View {
 
                 handler(filterObject);
             } else if (elementId === 'btnNext') {
-                offsetLimit.limit += 1;
+                // offsetLimit.limit += 1;
                 offsetLimit.offset += 1;
                 if (offsetLimit.offset > 0) {
                     this.btnPrev.classList.remove('disabled');
@@ -611,6 +629,9 @@ class View {
         // Date on sidebar
         this.startDate.value = todayDateTime();
 
+        // Pagination btnPrev button disabled
+        this.btnPrev.classList.add('disabled');
+
         // Populate featured users buttons
         loadedUsers.forEach((user, index) => {
             // Getting user values
@@ -681,10 +702,17 @@ class View {
         // Insert to html
         this.scheduledSessionsList.insertAdjacentHTML('beforebegin', alertDiv);
 
-        // Set time out to remove alert message
-        setTimeout(() => {
-            document.querySelector('.alert').remove();
-        }, 5000);
+        if (alertType !== 'info') {
+            // Set time out to add alert progress
+            setTimeout(() => {
+                document.querySelectorAll('.alert-time').forEach(alert => alert.classList.add('on'));
+            }, 100);
+
+            // Set time out to remove alert message
+            setTimeout(() => {
+                document.querySelector('.alert').remove();
+            }, 8100);
+        }
     }
 };
 

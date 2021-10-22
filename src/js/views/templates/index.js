@@ -48,7 +48,11 @@ export const scheduledSessionTableRowTemplate = `
     </tr>
 `;
 export const alertTemplate = `
-    <div class="alert alert-{{alertType}} mx-0 mb-3 border-0" role="alert">{{alertMassage}}</div>
+    <div class="alert alert-{{alertType}} mx-0 mb-3 border-0 overflow-hidden" role="alert">
+        {{alertMassage}}
+        
+        <div class="alert-time bg-{{alertType}}"></div>
+    </div>
 `;
 export const featuredUserBtnTemplate = `
     <button data-user-id="{{userId}}" type="button" data-bs-toggle="button" class="btn btn-proUser btn-sm mb-1 btn-text-icon"><img src="{{avatarUrl}}" />{{userName}} {{userSurname}} <span class="icon-add"></span></button>
