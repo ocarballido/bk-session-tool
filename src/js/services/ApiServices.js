@@ -123,16 +123,6 @@ class ApiServices {
             { ...data }
         );
     }
-
-    // Load filtered scheduled sessions
-    filterScheduledSessions(startDate, endDate, userId, eventId) {
-        const END_POINT = `${SCHEDULED_SESSIONS_SERVER}${userId !== null ? '/' + userId : ''}${eventId !== null ? '/' + eventId : ''}${startDate !== null ? '/' + startDate : ''}${endDate !== null ? '/' + endDate : ''}`;
-        console.log(END_POINT);
-        // return fetchDb(
-        //     SCHEDULED_SESSIONS_SERVER,
-        //     METHODS.GET
-        // );
-    }
 }
 
 // https://sessions-lab.bkool.com/sessions/scheduledSessions?limit=5&userId=b949a83a-6de6-4787-808e-12c8951afb41&profileId=1be4fd71-ef3d-4556-bd87-ea3fc2c9e273&eventId=GIV2021&startDate=2016-05-18T16%3A00%3A00.000Z&endDate=2016-05-18T16%3A00%3A00.000Z&featuredUserId=b949a83a-6de6-4787-808e-12c8951afb41
