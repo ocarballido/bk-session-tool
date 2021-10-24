@@ -199,11 +199,7 @@ class View {
         });
     }
 
-    //  Understanding pagination
-    //  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20
-    //  |___________________|___________________|___________________|___________________|
-    //   Limit: 10           Limmit: 20          Limmit: 30          Limmit: 40
-    //   Offset: 0           Offset: 10          Offset: 20          Offset: 30
+    //  Pagination
     paginationAction(handler) {
         const offsetLimit = {
             offset: 0,
@@ -311,6 +307,7 @@ class View {
 
             // Hiding some form fields
             this.addEditUserID.closest('.form-group').classList.add('d-none');
+            this.addEditUserID.disabled = false;
             this.addEditProfileID.closest('.form-group').classList.add('d-none');
             this.addEditSessionID.closest('.form-group').classList.add('d-none');
             this.addEditEventID.closest('.form-group').classList.add('d-none');
@@ -366,6 +363,7 @@ class View {
             document.getElementById('addSessionDateStart-0').value = todayDateTime();
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;
+            this.addEditUserID.disabled = true;
             this.addEditProfileID.value = '';
             this.addEditSessionID.value = '';
             this.addEditEventID.value = '';
