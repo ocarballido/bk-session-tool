@@ -68,6 +68,11 @@ class View {
         this.sessionsPagination = document.getElementById('sessionsPagination');
         this.btnPrev = document.getElementById('btnPrev');
         this.btnNext = document.getElementById('btnNext');
+        this.limmit = 10;  
+        this.offsetLimit = {
+            offset: 0,
+            limit: this.limmit
+        };
 
         // Alert
         this.alert = document.querySelector('#sessionsContent .alert-info');
@@ -173,7 +178,7 @@ class View {
                     this.filterSessionEvent.value,
                     this.filterSessionUser.value,
                     0,
-                    1
+                    10
                 )
 
                 // Pagination btnPrev button disabled
@@ -188,7 +193,7 @@ class View {
                     this.filterSessionEvent.value,
                     this.filterSessionUser.value,
                     0,
-                    1
+                    10
                 )
 
                 // Pagination btnPrev button disabled
@@ -201,10 +206,7 @@ class View {
 
     //  Pagination
     paginationAction(handler) {
-        const offsetLimit = {
-            offset: 0,
-            limit: 1
-        }
+        // const offsetLimit 
         let filterObject = {};
         this.sessionsPagination.addEventListener('click', (event) => {
             event.preventDefault();
@@ -212,9 +214,9 @@ class View {
             const elementId = element.id;
 
             if (elementId === 'btnPrev') {
-                offsetLimit.offset = offsetLimit.offset > 0 ? offsetLimit.offset -= 1 : 0;
-                // offsetLimit.limit -= 1;
-                if (offsetLimit.offset === 0) {
+                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset -= this.limmit : 0;
+                // this.offsetLimit.limit -= 1;
+                if (this.offsetLimit.offset === 0) {
                     this.btnPrev.classList.add('disabled');
                 }
                 filterObject = {
@@ -225,14 +227,14 @@ class View {
                         this.filterSessionEvent.value,
                         this.filterSessionUser.value
                     ),
-                    ...offsetLimit
+                    ...this.offsetLimit
                 }
 
                 handler(filterObject);
             } else if (elementId === 'btnNext') {
-                // offsetLimit.limit += 1;
-                offsetLimit.offset += 1;
-                if (offsetLimit.offset > 0) {
+                // this.offsetLimit.limit += 1;
+                this.offsetLimit.offset += this.limmit;
+                if (this.offsetLimit.offset > 0) {
                     this.btnPrev.classList.remove('disabled');
                 }
                 filterObject = {
@@ -243,7 +245,7 @@ class View {
                         this.filterSessionEvent.value,
                         this.filterSessionUser.value
                     ),
-                    ...offsetLimit
+                    ...this.offsetLimit
                 }
 
                 handler(filterObject);
@@ -710,6 +712,10 @@ class View {
             setTimeout(() => {
                 document.querySelector('.alert').remove();
             }, 8100);
+        } else if (alertType === 'info') {
+            // Reset offsetLimit pagination
+            this.offsetLimit.offset = 0;
+            console.log(this.offsetLimit)
         }
     }
 };

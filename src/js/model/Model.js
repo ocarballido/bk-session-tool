@@ -7,7 +7,7 @@ class Model {
         this._sessionFilter = {
             startDate: new Date().toISOString(),
             offset: 0,
-            limit: 1
+            limit: 10
         };
     }
 
