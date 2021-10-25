@@ -1,6 +1,7 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 import { filterdValues } from '../helpers/filter-object';
+import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
 
 class View {
@@ -67,11 +68,10 @@ class View {
         // Pagination
         this.sessionsPagination = document.getElementById('sessionsPagination');
         this.btnPrev = document.getElementById('btnPrev');
-        this.btnNext = document.getElementById('btnNext');
-        this.limmit = 10;  
+        this.btnNext = document.getElementById('btnNext'); 
         this.offsetLimit = {
             offset: 0,
-            limit: this.limmit
+            limit: paginationLimmit
         };
 
         // Alert
@@ -178,7 +178,7 @@ class View {
                     this.filterSessionEvent.value,
                     this.filterSessionUser.value,
                     0,
-                    10
+                    paginationLimmit
                 )
 
                 // Pagination btnPrev button disabled
@@ -193,7 +193,7 @@ class View {
                     this.filterSessionEvent.value,
                     this.filterSessionUser.value,
                     0,
-                    10
+                    paginationLimmit
                 )
 
                 // Pagination btnPrev button disabled
@@ -214,7 +214,7 @@ class View {
             const elementId = element.id;
 
             if (elementId === 'btnPrev') {
-                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset -= this.limmit : 0;
+                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset -= paginationLimmit : 0;
                 // this.offsetLimit.limit -= 1;
                 if (this.offsetLimit.offset === 0) {
                     this.btnPrev.classList.add('disabled');
@@ -233,7 +233,7 @@ class View {
                 handler(filterObject);
             } else if (elementId === 'btnNext') {
                 // this.offsetLimit.limit += 1;
-                this.offsetLimit.offset += this.limmit;
+                this.offsetLimit.offset += paginationLimmit;
                 if (this.offsetLimit.offset > 0) {
                     this.btnPrev.classList.remove('disabled');
                 }

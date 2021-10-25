@@ -1,5 +1,6 @@
 import { offset } from '@popperjs/core';
 import { apiServices } from '../services/ApiServices';
+import { paginationLimmit } from '../helpers/offsetLimit';
 
 class Model {
     constructor() {
@@ -7,7 +8,7 @@ class Model {
         this._sessionFilter = {
             startDate: new Date().toISOString(),
             offset: 0,
-            limit: 10
+            limit: paginationLimmit
         };
     }
 

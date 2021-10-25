@@ -1,0 +1,1 @@
+export const paginationLimmit = 1;
