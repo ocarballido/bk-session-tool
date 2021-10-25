@@ -64,6 +64,8 @@ class View {
         this.addRound = document.getElementById('addRound');
         this.buttonAddRound = document.getElementById('buttonAddRound');
         this.rounds = document.getElementById('rounds');
+        this.checkProfileId = document.getElementById('checkProfileId');
+        this.profileIdChecked = document.getElementById('profileIdChecked');
 
         // Pagination
         this.sessionsPagination = document.getElementById('sessionsPagination');
@@ -440,6 +442,44 @@ class View {
         });
     }
 
+    // Check profileId action
+    checkProfileIdAction(handler) {
+        this.addEditProfileID.addEventListener('keypress', event => {
+            this.checkProfileId.classList.remove('d-none');
+            this.profileIdChecked.classList.add('d-none');
+            this.addEditProfileID.classList.remove('is-invalid');
+        });
+        this.addEditProfileID.addEventListener('change', event => {
+            this.checkProfileId.classList.remove('d-none');
+            this.profileIdChecked.classList.add('d-none');
+            this.addEditProfileID.classList.remove('is-invalid');
+        });
+        this.editAddForm.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementId = element.id;
+
+            if (elementId === 'checkProfileId') {
+                if (this.addEditProfileID.value !== '') {
+                    handler(this.addEditProfileID.value);
+                }
+            }
+        });
+    }
+
+    // Render profileId checked
+    renderCheckProfileIdAction(isChecked) {
+        console.log(isChecked)
+        if (isChecked) {
+            this.checkProfileId.classList.add('d-none');
+            this.profileIdChecked.classList.remove('d-none');
+            this.addEditProfileID.classList.remove('is-invalid');
+        } else if (isChecked === undefined) {
+            this.checkProfileId.classList.remove('d-none');
+            this.profileIdChecked.classList.add('d-none');
+            this.addEditProfileID.classList.add('is-invalid');
+        }
+    }
+
     // Add scheduled session Action
     addScheduledSessionAction(handler) {
         let proUsersArr = [[]];
@@ -583,6 +623,7 @@ class View {
             // Form validation
             if (formValidation(updatedGlobalData)) {
                 // Show danger alert
+                this.allRequired.innerHTML = 'Todos los campos son obligatorios';
                 this.allRequired.classList.remove('d-none');
 
                 // Add validation class to inputs
@@ -590,9 +631,17 @@ class View {
                 formFields.forEach(field => {
                     if (field.value === '') {
                         field.classList.add('is-invalid');
+                    } else {
+                        field.classList.remove('is-invalid');
                     }
                 });
                 
+            } else if (this.addEditSessionID.value !== '' && this.addEditEventID.value !== '' && !this.addEditProfileID.classList.contains('profileChecked')) {
+                this.addEditProfileID.classList.add('is-invalid');
+                this.addEditSessionID.classList.remove('is-invalid');
+                this.addEditEventID.classList.remove('is-invalid');
+                this.allRequired.innerHTML = 'El ID de perfil no ha sido comprobado';
+                this.allRequired.classList.remove('d-none');
             } else {
                 handler(updatedGlobalData, filterObject);
 

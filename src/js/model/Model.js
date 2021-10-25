@@ -126,6 +126,14 @@ class Model {
             });
     }
 
+    // Check profile ID
+    checkProfileId(sessionId) {
+        return apiServices.loadSingleSession(sessionId)
+            .then((session) => {
+                return session;
+            });
+    }
+
     addScheduledSession(data) {
         return new Promise((resolve, reject) => {
            // Get session

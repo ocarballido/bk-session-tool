@@ -33,6 +33,9 @@ class Controller {
         // Binding pagination session action
         this.view.paginationAction(this.paginationHandler.bind(this));
 
+        // Binding check profile id action
+        this.view.checkProfileIdAction(this.checkProfileIdHandler.bind(this));
+
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
@@ -93,6 +96,23 @@ class Controller {
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());
+    }
+
+    // Check profile Id handler
+    checkProfileIdHandler(sessionId) {
+        console.log(sessionId);
+        this.view.toggleSpinner();
+
+        this.model.checkProfileId(sessionId)
+            .then((session) => {
+                this.view.renderCheckProfileIdAction(sessionId);
+                console.log(session.profileId);
+            }).catch((error) => {
+                this.view.renderCheckProfileIdAction(undefined);
+                console.log(error);
+                console.log(session.profileId);
             })
             .finally(() => this.view.toggleSpinner());
     }
