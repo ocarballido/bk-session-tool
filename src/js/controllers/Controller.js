@@ -122,17 +122,13 @@ class Controller {
         this.view.toggleSpinner();
 
         this.model.addScheduledSession(postData)
-            .then(() => {
-                // Añadir filterObject en la llamada de abajo cuando tengamos la API real
-                return this.model.getScheduledSessions(filterObject);
-            })
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error.', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
 

@@ -134,23 +134,28 @@ class Model {
             });
     }
 
+    // Add scheduled session
+    // addScheduledSession(data) {
+    //     return new Promise((resolve, reject) => {
+    //        // Get session
+    //         apiServices.loadSingleSession(data.profileId)
+    //             .then((session) => {
+    //                 // If this session exist
+    //                 if (session) {
+    //                     apiServices.addScheduledSession(data)
+    //                         .then(() => {
+    //                             resolve();
+    //                         })
+    //                         .catch(() => reject());
+    //                 } else {
+    //                     reject();
+    //                 }
+    //             }).catch(() => reject());
+    //     });
+    // }
+
     addScheduledSession(data) {
-        return new Promise((resolve, reject) => {
-           // Get session
-            apiServices.loadSingleSession(data.profileId)
-                .then((session) => {
-                    // If this session exist
-                    if (session) {
-                        apiServices.addScheduledSession(data)
-                            .then(() => {
-                                resolve();
-                            })
-                            .catch(() => reject());
-                    } else {
-                        reject();
-                    }
-                }).catch(() => reject());
-        });
+        return apiServices.addScheduledSession(data);
     }
 
     // Filtering

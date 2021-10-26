@@ -468,6 +468,7 @@ class View {
             this.checkProfileId.classList.add('d-none');
             this.profileIdChecked.classList.remove('d-none');
             this.addEditProfileID.classList.remove('is-invalid');
+            this.addEditProfileID.classList.add('profileChecked');
             this.allRequired.classList.add('d-none');
         } else if (isChecked === undefined) {
             this.checkProfileId.classList.remove('d-none');
@@ -571,6 +572,9 @@ class View {
             // Hide cheched profile button and show check profile button
             this.checkProfileId.classList.remove('d-none');
             this.profileIdChecked.classList.add('d-none');
+
+            // Remove checked class
+            this.addEditProfileID.classList.remove('profileChecked');
         });
 
         // Form validation
