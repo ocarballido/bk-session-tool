@@ -449,11 +449,6 @@ class View {
             this.profileIdChecked.classList.add('d-none');
             this.addEditProfileID.classList.remove('is-invalid');
         });
-        // this.addEditProfileID.addEventListener('change', event => {
-        //     this.checkProfileId.classList.remove('d-none');
-        //     this.profileIdChecked.classList.add('d-none');
-        //     this.addEditProfileID.classList.remove('is-invalid');
-        // });
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
             const elementId = element.id;
@@ -473,6 +468,7 @@ class View {
             this.checkProfileId.classList.add('d-none');
             this.profileIdChecked.classList.remove('d-none');
             this.addEditProfileID.classList.remove('is-invalid');
+            this.allRequired.classList.add('d-none');
         } else if (isChecked === undefined) {
             this.checkProfileId.classList.remove('d-none');
             this.profileIdChecked.classList.add('d-none');
@@ -571,6 +567,10 @@ class View {
 
             // Hide danger alert in form
             this.allRequired.classList.add('d-none');
+
+            // Hide cheched profile button and show check profile button
+            this.checkProfileId.classList.remove('d-none');
+            this.profileIdChecked.classList.add('d-none');
         });
 
         // Form validation
