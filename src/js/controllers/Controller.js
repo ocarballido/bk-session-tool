@@ -46,7 +46,7 @@ class Controller {
                 }
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas.', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
 
@@ -74,7 +74,7 @@ class Controller {
                 }
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas.', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
     }
@@ -95,7 +95,7 @@ class Controller {
                 console.log(data);
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
     }
