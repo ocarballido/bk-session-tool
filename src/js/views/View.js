@@ -444,16 +444,16 @@ class View {
 
     // Check profileId action
     checkProfileIdAction(handler) {
-        this.addEditProfileID.addEventListener('keypress', event => {
+        this.addEditProfileID.addEventListener('input', event => {
             this.checkProfileId.classList.remove('d-none');
             this.profileIdChecked.classList.add('d-none');
             this.addEditProfileID.classList.remove('is-invalid');
         });
-        this.addEditProfileID.addEventListener('change', event => {
-            this.checkProfileId.classList.remove('d-none');
-            this.profileIdChecked.classList.add('d-none');
-            this.addEditProfileID.classList.remove('is-invalid');
-        });
+        // this.addEditProfileID.addEventListener('change', event => {
+        //     this.checkProfileId.classList.remove('d-none');
+        //     this.profileIdChecked.classList.add('d-none');
+        //     this.addEditProfileID.classList.remove('is-invalid');
+        // });
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
             const elementId = element.id;

@@ -4,7 +4,8 @@
   "description": "Manage BKOOL scheduled sessions.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production",
+    "build": "webpack --config webpack.config.js --mode production && npm run copy",
+    "copy": "cp -r ./dist/. ./",
     "dev": "webpack serve --config webpack.config.js --mode development",
     "fakeDev": "npm run fakeServer & webpack serve --config webpack.config.js --mode development",
     "fakeServer": "node server/server.js",
