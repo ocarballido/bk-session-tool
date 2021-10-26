@@ -154,13 +154,13 @@ class Model {
     }
 
     // Filtering
-    filterScheduledSession(data) {
-        return apiServices.addScheduledSession(data)
-            .then(() => {
-                resolve();
-            })
-            .catch(() => reject());
-    }
+    // filterScheduledSession(data) {
+    //     return apiServices.addScheduledSession(data)
+    //         .then(() => {
+    //             resolve();
+    //         })
+    //         .catch(() => reject());
+    // }
 };
 
 export { Model };
