@@ -23,7 +23,6 @@ class Model {
 
     // Return promise with data
     getScheduledSessions(filterObject) {
-        console.log(filterObject);
         return new Promise((resolve, reject) => {
             apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
                 .then((scheduledSessions) => {

@@ -1,1 +1,1 @@
-export const paginationLimmit = 1;
+export const paginationLimmit = 5;
