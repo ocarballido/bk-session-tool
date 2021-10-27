@@ -1,0 +1,19 @@
+//---------------------------------------------
+//
+//    4. Root + Reboot
+//
+//---------------------------------------------
+
+//---------------------------------------------
+// 4. Root + Reboot
+//---------------------------------------------
+
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/utilities/api";
+@import "components/bkool-font";
+
+#main {
+    height: 100%;
+}

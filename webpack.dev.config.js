@@ -1,12 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
 const aliases = require('./aliases');
 
 module.exports = {
-    mode: 'production',
-
+    mode: 'development',
+    
     // Define the entry points of our application (can be multiple for different sections of a website)
     entry: {
         main: './src/index.js',
@@ -35,7 +33,7 @@ module.exports = {
             {
                 test: /\.s(c|a)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'style-loader',
                     'css-loader',
                     {
                         loader: 'postcss-loader',
@@ -55,7 +53,7 @@ module.exports = {
                             additionalData: '@import "~/src/scss/_bootstrap-base.scss";'
                         }
                     }
-                ]
+                ],
             },
             // Assets Modules
             {
@@ -70,14 +68,6 @@ module.exports = {
 
     // Define used plugins
     plugins: [
-        new CleanWebpackPlugin({}),
-
-        // Extracts CSS into separate files
-        new MiniCssExtractPlugin({
-            filename: "css/[name].css",
-            chunkFilename: "[id].css"
-        }),
-
         new HtmlWebpackPlugin({
             title: 'BKOOL session manager',
             template: 'src/template.html'

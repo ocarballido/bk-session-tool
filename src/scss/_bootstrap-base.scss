@@ -1,0 +1,40 @@
+//---------------------------------------------
+// 1. Basics
+//---------------------------------------------
+
+// @import "variables";
+// @import "bootstrap";
+// @import "fonts";
+@import "bkool-variables";
+
+//---------------------------------------------
+//
+//  Partially loading Bootstrap's components
+//
+//    1. Functions
+//    2. Variables
+//    3. Mixins
+//
+//---------------------------------------------
+
+//---------------------------------------------
+// 1. Functions
+//---------------------------------------------
+
+@import "bootstrap/scss/functions";
+
+//---------------------------------------------
+// 2. Variables
+//---------------------------------------------
+
+@import "bootstrap/scss/variables";
+
+//---------------------------------------------
+// 3. Mixins
+//---------------------------------------------
+
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
