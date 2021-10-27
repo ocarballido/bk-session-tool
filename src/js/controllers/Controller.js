@@ -46,7 +46,7 @@ class Controller {
                 }
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas.', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas. Vuelve a intentarlo mas tarde', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
 
@@ -56,7 +56,7 @@ class Controller {
                 this.view.firstUiAppRender(loadedUsers);
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro. Vuelve a intentarlo mas tarde', 'danger');
             })
     }
 
@@ -65,8 +65,10 @@ class Controller {
         this.view.toggleSpinner();
         this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
             .then(() => {
-                if (isSingleRound) {
-                    this.view.renderDeletedSession(id);
+                if (scheduledSessions) {
+                    console.log(scheduledSessions)
+                    // this.view.renderDeletedSession(id);
+                    this.view.renderScheduledSessions(scheduledSessions);
                     this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
                 } else {
                     this.view.renderDeletedRound(id, sessionDate);

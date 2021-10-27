@@ -1,4 +1,5 @@
-const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
+const SCHEDULED_SESSIONS_SERVER_RPUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
+const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions`;
 const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
 const USERS_SERVER = `https://users-staging.bkool.com/users`;
 const ACCESS_TOKEN = sessionStorage.getItem('accessToken');
@@ -70,7 +71,7 @@ class ApiServices {
     // Load scheduled sessions
     loadScheduledSessions(filterObject) {
         return fetchDb(
-            SCHEDULED_SESSIONS_SERVER,
+            SCHEDULED_SESSIONS_SERVER_RPUNDS,
             // END_POINT,
             METHODS.GET,
             filterObject

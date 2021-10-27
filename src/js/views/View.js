@@ -656,10 +656,10 @@ class View {
     }
 
     // Render items after delete session
-    renderDeletedSession(id) {
-        const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
-        sessionToDelete.remove();
-    }
+    // renderDeletedSession(id) {
+    //     const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
+    //     sessionToDelete.remove();
+    // }
 
     // Render items after delete round
     renderDeletedRound(id, sessionDate) {
