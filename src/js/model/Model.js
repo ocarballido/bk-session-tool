@@ -21,6 +21,31 @@ class Model {
             });
     }
 
+    // Get events
+    loadEvents() {
+        return apiServices
+            .loadEvents()
+            .then((events) => {
+                return events;
+            });
+    }
+
+    // Get users and events
+    loadFeaturedUsersAndEvents() {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                apiServices.loadFeaturedUsers(),
+                apiServices.loadEvents()
+            ])
+                .then(([featuredUsers, events]) => {
+                    resolve([featuredUsers, events]);
+                }).catch((error) => {
+                    reject(error);
+                    console.log(error);
+                });
+        });
+    }
+
     // Return promise with data
     getScheduledSessions(filterObject) {
         return new Promise((resolve, reject) => {

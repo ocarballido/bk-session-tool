@@ -60,6 +60,9 @@ export const featuredUserBtnTemplate = `
 export const featuredUserSelectOptionTemplate = `
     <option value="{{userId}}">{{userName}} {{userSurname}}</option>
 `;
+export const eventSelectOptionTemplate = `
+    <option value="{{eventId}}">{{eventName}}</option>
+`;
 export const roundTemplate = `
     <div class="singleRound add" data-round="{{roundNumber}}">
         <!-- Date start -->

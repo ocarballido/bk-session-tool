@@ -51,12 +51,23 @@ class Controller {
             .finally(() => this.view.toggleSpinner());
 
         // Load featured users
-        this.model.loadFeaturedUsers()
-            .then((loadedUsers) => {
-                this.view.firstUiAppRender(loadedUsers);
+        // this.model.loadFeaturedUsers()
+        //     .then((loadedUsers) => {
+        //         this.view.firstUiAppRender(loadedUsers);
+        //     })
+        //     .catch(() => {
+        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro. Vuelve a intentarlo mas tarde', 'danger');
+        //     });
+
+        // Load featured users and events
+        this.model.loadFeaturedUsersAndEvents()
+            .then(([featuredUsers, events]) => {
+                this.view.firstUiAppRender(featuredUsers, events);
+                console.log(featuredUsers, events);
             })
-            .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro. Vuelve a intentarlo mas tarde', 'danger');
+            .catch((error) => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');
+                console.log(error);
             })
     }
 

@@ -1,6 +1,7 @@
 const SCHEDULED_SESSIONS_SERVER_RPUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
 const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions`;
 const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
+const EVENTS_SERVER = `https://events-staging.bkool.com/events`;
 const USERS_SERVER = `https://users-staging.bkool.com/users`;
 const ACCESS_TOKEN = sessionStorage.getItem('accessToken');
 
@@ -64,6 +65,14 @@ class ApiServices {
     loadFeaturedUsers() {
         return fetchDb(
             USERS_SERVER,
+            METHODS.GET
+        );
+    }
+
+    // Load events
+    loadEvents() {
+        return fetchDb(
+            EVENTS_SERVER,
             METHODS.GET
         );
     }

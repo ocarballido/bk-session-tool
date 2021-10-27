@@ -391,7 +391,7 @@ class View {
             this.addEditUserID.disabled = true;
             this.addEditProfileID.value = '';
             this.addEditSessionID.value = '';
-            this.addEditEventID.value = '';
+            this.addEditEventID.value = 'all';
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -661,10 +661,10 @@ class View {
                     }
                 });
                 
-            } else if (this.addEditSessionID.value !== '' && this.addEditEventID.value !== '' && !this.addEditProfileID.classList.contains('profileChecked')) {
+            } else if (this.addEditSessionID.value !== '' && !this.addEditProfileID.classList.contains('profileChecked')) {
                 this.addEditProfileID.classList.add('is-invalid');
                 this.addEditSessionID.classList.remove('is-invalid');
-                this.addEditEventID.classList.remove('is-invalid');
+                // this.addEditEventID.classList.remove('is-invalid');
                 this.allRequired.innerHTML = 'El ID de perfil no ha sido comprobado';
                 this.allRequired.classList.remove('d-none');
             } else {
@@ -699,7 +699,7 @@ class View {
     }
 
     // First UI app render action
-    firstUiAppRender(loadedUsers) {
+    firstUiAppRender(loadedUsers, loadedEvents) {
         // Date on sidebar
         this.startDate.value = todayDateTime();
 
@@ -729,6 +729,25 @@ class View {
             const usersSelectOption = Templates.featuredUserSelectOptionTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
 
             this.filterSessionUser.insertAdjacentHTML('beforeend', usersSelectOption);
+        });
+
+        // Populate events buttons
+        loadedEvents.forEach((event, index) => {
+            // Getting user values
+            const { eventId, eventName: {enValue} } = event;
+
+            // Adding user buttons
+            // Find-Replace elements in template
+            const findReplace = {
+                '{{eventId}}': eventId,
+                '{{eventName}}': enValue,
+            };
+
+            // Replaced in template
+            const eventsSelectOption = Templates.eventSelectOptionTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            this.filterSessionEvent.insertAdjacentHTML('beforeend', eventsSelectOption);
+            this.addEditEventID.insertAdjacentHTML('beforeend', eventsSelectOption);
         });
     }
 
