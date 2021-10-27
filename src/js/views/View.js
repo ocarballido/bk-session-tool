@@ -163,8 +163,19 @@ class View {
         this.filterButtons.addEventListener('click', (event) => {
             const element = event.target;
             const elementId = element.id;
+            const isSidebarExpended = this.sidebar.classList.contains('expand');
 
             if (elementId === 'clearFilterButton') {
+                // If element is the "Filtrar" or "Limpiar filtros" button
+                if (isSidebarExpended) {
+                    this.sidebar.classList.toggle('expand');
+                    this.btnSidebar.classList.toggle('btn-white');
+                    this.btnSidebar.classList.toggle('btn-outline-white');
+                    for(let i = 0; i < 2; i ++) {
+                        this.btnSidebarSpans[i].classList.toggle('d-none');
+                    }
+                }
+
                 // Reset form fields
                 this.endDate.value = '';
                 this.filterSessionEvent.value = 'all';
@@ -188,6 +199,16 @@ class View {
                 
                 handler(filterObject);
             } else if (elementId === 'submitFilterButton') {
+                // If element is the "Filtrar" or "Limpiar filtros" button
+                if (isSidebarExpended) {
+                    this.sidebar.classList.toggle('expand');
+                    this.btnSidebar.classList.toggle('btn-white');
+                    this.btnSidebar.classList.toggle('btn-outline-white');
+                    for(let i = 0; i < 2; i ++) {
+                        this.btnSidebarSpans[i].classList.toggle('d-none');
+                    }
+                }
+
                 // Create filter object
                 const filterObject = filterdValues(
                     this.startDate.value,
