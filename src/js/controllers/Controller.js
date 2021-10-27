@@ -63,7 +63,6 @@ class Controller {
         this.model.loadFeaturedUsersAndEvents()
             .then(([featuredUsers, events]) => {
                 this.view.firstUiAppRender(featuredUsers, events);
-                console.log(featuredUsers, events);
             })
             .catch((error) => {
                 this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');

@@ -391,7 +391,7 @@ class View {
             this.addEditUserID.disabled = true;
             this.addEditProfileID.value = '';
             this.addEditSessionID.value = '';
-            this.addEditEventID.value = 'all';
+            // this.addEditEventID.value = 'all';
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -596,6 +596,9 @@ class View {
 
             // Remove checked class
             this.addEditProfileID.classList.remove('profileChecked');
+
+            // Reset event select value
+            this.addEditEventID.value = this.addEditEventID.options[0].value;
         });
 
         // Form validation
@@ -734,13 +737,13 @@ class View {
         // Populate events buttons
         loadedEvents.forEach((event, index) => {
             // Getting user values
-            const { eventId, eventName: {enValue} } = event;
+            const { eventId, eventName: {esValue} } = event;
 
             // Adding user buttons
             // Find-Replace elements in template
             const findReplace = {
                 '{{eventId}}': eventId,
-                '{{eventName}}': enValue,
+                '{{eventName}}': esValue
             };
 
             // Replaced in template
@@ -748,6 +751,11 @@ class View {
 
             this.filterSessionEvent.insertAdjacentHTML('beforeend', eventsSelectOption);
             this.addEditEventID.insertAdjacentHTML('beforeend', eventsSelectOption);
+
+            // Adding default value
+            if (index === 0) {
+                this.addEditEventID.value = esValue;
+            }
         });
     }
 
