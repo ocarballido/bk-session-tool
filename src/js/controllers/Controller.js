@@ -71,22 +71,25 @@ class Controller {
     }
 
     // Delete scheduled session handler
-    deleteScheduledSessionHandler(id, sessionDate, isSingleRound) {
+    deleteScheduledSessionHandler(id, sessionDate, isSingleRound, filterObject) {
         this.view.toggleSpinner();
         this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
             .then(() => {
-                if (scheduledSessions) {
-                    console.log(scheduledSessions)
+                if (isSingleRound) {
                     // this.view.renderDeletedSession(id);
-                    this.view.renderScheduledSessions(scheduledSessions);
-                    this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
+                    return this.model.getScheduledSessions(filterObject);
                 } else {
                     this.view.renderDeletedRound(id, sessionDate);
                     this.view.renderAlertMessages('La ronda de la sesión se ha eliminado con éxito', 'success');
                 }
             })
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
+            })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas.', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdassssssdelete.', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
     }
@@ -134,13 +137,17 @@ class Controller {
         this.view.toggleSpinner();
 
         this.model.addScheduledSession(postData)
+            .then(() => {
+                return this.model.getScheduledSessions(filterObject);
+            })
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
             })
-            .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas', 'danger');
+            .catch((error) => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdasssssssssADD', 'danger');
+                console.log(error);
             })
             .finally(() => this.view.toggleSpinner());
 

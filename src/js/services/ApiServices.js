@@ -107,7 +107,7 @@ class ApiServices {
     deleteScheduledSession(id) {
         return fetchDb(
             `${SCHEDULED_SESSIONS_SERVER}/${id}`,
-            METHODS.GET
+            METHODS.DELETE
         );
     }
 

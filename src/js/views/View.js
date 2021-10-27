@@ -303,7 +303,14 @@ class View {
         });
 
         this.btnDeleteSession.addEventListener('click', () => {
-            handler(id, sessionDate, isSingleRound);
+            // Create filter object
+            const filterObject = filterdValues(
+                this.startDate.value,
+                this.endDate.value,
+                this.filterSessionEvent.value,
+                this.filterSessionUser.value,
+            );
+            handler(id, sessionDate, isSingleRound, filterObject);
         });
     }
 
@@ -456,7 +463,7 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
             const updatedRound = {
-                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString(),
+                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString().split('.')[0]+"Z",
                 featuredUserIds: proUsersArrEdited,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
@@ -623,7 +630,7 @@ class View {
                 const roundsDefinition = [];
                 rounds.forEach(( round, index ) => {
                     roundsDefinition.push({
-                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString(),
+                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString().split('.')[0]+"Z",
                         featuredUserIds: proUsersArr[index]
                     });
                 });

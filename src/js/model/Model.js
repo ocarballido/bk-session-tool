@@ -91,7 +91,7 @@ class Model {
         if (isSingleRound) {
             return apiServices
                 .deleteScheduledSession(id)
-                .then((scheduledSessions) => {
+                .then(() => {
                     // Update local data
                     this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
                     return true;
@@ -179,7 +179,16 @@ class Model {
     // }
 
     addScheduledSession(data) {
-        return apiServices.addScheduledSession(data);
+        return new Promise((resolve, reject) => {
+            apiServices.addScheduledSession(data)
+                .then(() => {
+                    resolve();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
     }
 
     // Filtering
