@@ -86,7 +86,7 @@ class Controller {
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
-                this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
+                this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdassssssdelete.', 'danger');

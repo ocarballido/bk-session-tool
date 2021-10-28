@@ -7,7 +7,7 @@ import { Modal } from 'bootstrap';
 class View {
     constructor() {
         // Global variables
-        this.userId = sessionStorage.getItem('loggedUserId');
+        this.userId = sessionStorage.getItem('loggedUserId') || '';
 
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
