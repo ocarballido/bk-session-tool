@@ -46,7 +46,7 @@
 			// 	}
 			// }
 			td {
-				// background-color: #e8e8e83d;
+				background-color: #efefef;
 				vertical-align: middle;
 				padding: 0.63rem 1rem;
 				&.sessionBegins {
@@ -61,6 +61,9 @@
 			}
 		}
 	}
+}
+.table-hover > tbody > tr:hover {
+	background-color: #ffffffa6 !important;
 }
 th {
 	font-size: 0.85rem;
