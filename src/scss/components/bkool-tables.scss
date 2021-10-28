@@ -3,7 +3,8 @@
 		tr {
 			// position: sticky; top: 1rem; z-index: 1;
 			th {
-				border-bottom: none;
+				background-color: #efefef;
+				border-bottom: 1px solid #d0d0d057 !important;
 				border-top: none;
 				font-family: "HKGrotesk-Bold";
 				padding: 0.63rem 1rem;
@@ -45,6 +46,7 @@
 			// 	}
 			// }
 			td {
+				// background-color: #e8e8e83d;
 				vertical-align: middle;
 				padding: 0.63rem 1rem;
 				&.sessionBegins {
