@@ -238,7 +238,7 @@ class View {
             const elementId = element.id;
 
             if (elementId === 'btnPrev') {
-                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset -= paginationLimmit : 0;
+                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset - paginationLimmit : 0;
                 // this.offsetLimit.limit -= 1;
                 if (this.offsetLimit.offset === 0) {
                     this.btnPrev.classList.add('disabled');
@@ -257,7 +257,7 @@ class View {
                 handler(filterObject);
             } else if (elementId === 'btnNext') {
                 // this.offsetLimit.limit += 1;
-                this.offsetLimit.offset += paginationLimmit;
+                this.offsetLimit.offset + paginationLimmit;
                 if (this.offsetLimit.offset > 0) {
                     this.btnPrev.classList.remove('disabled');
                 }
