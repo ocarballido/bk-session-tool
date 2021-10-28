@@ -492,14 +492,13 @@ class View {
     // Render profileId checked
     renderCheckProfileIdAction(isChecked) {
         console.log(isChecked)
+        this.checkProfileId.classList.toggle('d-none', isChecked);
         if (isChecked) {
-            this.checkProfileId.classList.add('d-none');
             this.profileIdChecked.classList.remove('d-none');
             this.addEditProfileID.classList.remove('is-invalid');
             this.addEditProfileID.classList.add('profileChecked');
             this.allRequired.classList.add('d-none');
         } else if (isChecked === undefined) {
-            this.checkProfileId.classList.remove('d-none');
             this.profileIdChecked.classList.add('d-none');
             this.addEditProfileID.classList.add('is-invalid');
         }
