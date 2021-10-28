@@ -16,7 +16,7 @@ export const filterdValues = (startDate, endDate, eventId, userId, offset, limit
     if (userId !== 'all') {
         filterObject.featuredUserId = userId;
     }
-    if (offset !== undefined) {
+    if (offset) {
         filterObject.offset = offset;
     }
     if (limit !== undefined) {
