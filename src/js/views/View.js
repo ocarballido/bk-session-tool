@@ -143,9 +143,8 @@ class View {
         }
 
         // Remove possible alert
-        if (document.querySelector('#sessionsContent .alert-info')) {
-            document.querySelector('#sessionsContent .alert-info').remove();
-        }
+        const alertInfo = document.querySelector('#sessionsContent .alert-info');
+        alertInfo && alertInfo.remove();
     }
 
     // Filter action
