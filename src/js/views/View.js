@@ -135,8 +135,11 @@ class View {
         });
 
         // Disable pagination buttons if no results
+        // and if the number of items renderd are less than paginationLimmit
         if (!scheduledSessions.length) {
             this.btnPrev.classList.add('disabled');
+            this.btnNext.classList.add('disabled');
+        } else if (scheduledSessions.length < paginationLimmit) {
             this.btnNext.classList.add('disabled');
         } else {
             this.btnNext.classList.remove('disabled');
