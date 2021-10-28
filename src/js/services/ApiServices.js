@@ -24,6 +24,7 @@ const fetchDb = (endpoint, method, data) => {
         if (method === METHODS.GET) {
             const params = new URLSearchParams(data);
             endpoint += `?${params.toString()}`;
+            console.log(endpoint)
         } else {
             myHeaders.append('Content-Type', 'application/json');
             options.body = JSON.stringify(data);

@@ -89,16 +89,20 @@ class Model {
 
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
+            console.log('lo es ', isSingleRound)
             return apiServices
                 .deleteScheduledSession(id)
                 .then(() => {
                     // Update local data
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-                    return true;
+                    this._scheduledSessions = [];
+                    console.log(this._scheduledSessions)
+                    // return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
+            console.log('no lo es ', isSingleRound)
+            console.log(sessionItem)
             return apiServices
                 .updateScheduledSession(id, sessionItem)
                 .then(() => {
@@ -159,37 +163,21 @@ class Model {
     }
 
     // Add scheduled session
+    addScheduledSession(data) {
+        return apiServices.addScheduledSession(data);
+    }
     // addScheduledSession(data) {
     //     return new Promise((resolve, reject) => {
-    //        // Get session
-    //         apiServices.loadSingleSession(data.profileId)
-    //             .then((session) => {
-    //                 // If this session exist
-    //                 if (session) {
-    //                     apiServices.addScheduledSession(data)
-    //                         .then(() => {
-    //                             resolve();
-    //                         })
-    //                         .catch(() => reject());
-    //                 } else {
-    //                     reject();
-    //                 }
-    //             }).catch(() => reject());
+    //         apiServices.addScheduledSession(data)
+    //             .then(() => {
+    //                 resolve();
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //                 reject(error);
+    //             });
     //     });
     // }
-
-    addScheduledSession(data) {
-        return new Promise((resolve, reject) => {
-            apiServices.addScheduledSession(data)
-                .then(() => {
-                    resolve();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    reject(error);
-                });
-        });
-    }
 
     // Filtering
     // filterScheduledSession(data) {
