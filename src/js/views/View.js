@@ -3,6 +3,7 @@ import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 import { filterdValues } from '../helpers/filter-object';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
+import { dNone, isInvalid, isValid } from '../helpers/const';
 
 class View {
     constructor() {
@@ -172,7 +173,7 @@ class View {
                     this.btnSidebar.classList.toggle('btn-white');
                     this.btnSidebar.classList.toggle('btn-outline-white');
                     for(let i = 0; i < 2; i ++) {
-                        this.btnSidebarSpans[i].classList.toggle('d-none');
+                        this.btnSidebarSpans[i].classList.toggle(dNone);
                     }
                 }
 
@@ -205,7 +206,7 @@ class View {
                     this.btnSidebar.classList.toggle('btn-white');
                     this.btnSidebar.classList.toggle('btn-outline-white');
                     for(let i = 0; i < 2; i ++) {
-                        this.btnSidebarSpans[i].classList.toggle('d-none');
+                        this.btnSidebarSpans[i].classList.toggle(dNone);
                     }
                 }
 
@@ -338,17 +339,17 @@ class View {
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
-            this.addEditUserID.closest('.form-group').classList.add('d-none');
+            this.addEditUserID.closest('.form-group').classList.add(dNone);
             this.addEditUserID.disabled = false;
-            this.addEditProfileID.closest('.form-group').classList.add('d-none');
-            this.addEditSessionID.closest('.form-group').classList.add('d-none');
-            this.addEditEventID.closest('.form-group').classList.add('d-none');
-            this.buttonAddNew.classList.add('d-none');
-            this.addRound.classList.add('d-none');
+            this.addEditProfileID.closest('.form-group').classList.add(dNone);
+            this.addEditSessionID.closest('.form-group').classList.add(dNone);
+            this.addEditEventID.closest('.form-group').classList.add(dNone);
+            this.buttonAddNew.classList.add(dNone);
+            this.addRound.classList.add(dNone);
 
             // Showing some form fields
-            this.profileId.closest('.form-group').classList.remove('d-none');
-            this.buttonUpdate.classList.remove('d-none');
+            this.profileId.closest('.form-group').classList.remove(dNone);
+            this.buttonUpdate.classList.remove(dNone);
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
@@ -375,16 +376,16 @@ class View {
             } );
         } else if (type === 'add') {
             // Hiding form fields
-            this.profileId.closest('.form-group').classList.add('d-none');
-            this.buttonUpdate.classList.add('d-none');
-            this.addRound.classList.remove('d-none');
+            this.profileId.closest('.form-group').classList.add(dNone);
+            this.buttonUpdate.classList.add(dNone);
+            this.addRound.classList.remove(dNone);
 
             // Showing some form fields
-            this.addEditUserID.closest('.form-group').classList.remove('d-none');
-            this.addEditProfileID.closest('.form-group').classList.remove('d-none');
-            this.addEditSessionID.closest('.form-group').classList.remove('d-none');
-            this.addEditEventID.closest('.form-group').classList.remove('d-none');
-            this.buttonAddNew.classList.remove('d-none');
+            this.addEditUserID.closest('.form-group').classList.remove(dNone);
+            this.addEditProfileID.closest('.form-group').classList.remove(dNone);
+            this.addEditSessionID.closest('.form-group').classList.remove(dNone);
+            this.addEditEventID.closest('.form-group').classList.remove(dNone);
+            this.buttonAddNew.classList.remove(dNone);
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
@@ -473,9 +474,9 @@ class View {
     // Check profileId action
     checkProfileIdAction(handler) {
         this.addEditProfileID.addEventListener('input', event => {
-            this.checkProfileId.classList.remove('d-none');
-            this.profileIdChecked.classList.add('d-none');
-            this.addEditProfileID.classList.remove('is-invalid');
+            this.checkProfileId.classList.remove(dNone);
+            this.profileIdChecked.classList.add(dNone);
+            this.addEditProfileID.classList.remove(isInvalid);
         });
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
@@ -492,15 +493,15 @@ class View {
     // Render profileId checked
     renderCheckProfileIdAction(isChecked) {
         console.log(isChecked)
-        this.checkProfileId.classList.toggle('d-none', isChecked);
+        this.checkProfileId.classList.toggle(dNone, isChecked);
         if (isChecked) {
-            this.profileIdChecked.classList.remove('d-none');
-            this.addEditProfileID.classList.remove('is-invalid');
+            this.profileIdChecked.classList.remove(dNone);
+            this.addEditProfileID.classList.remove(isInvalid);
             this.addEditProfileID.classList.add('profileChecked');
-            this.allRequired.classList.add('d-none');
+            this.allRequired.classList.add(dNone);
         } else if (isChecked === undefined) {
-            this.profileIdChecked.classList.add('d-none');
-            this.addEditProfileID.classList.add('is-invalid');
+            this.profileIdChecked.classList.add(dNone);
+            this.addEditProfileID.classList.add(isInvalid);
         }
     }
 
@@ -588,17 +589,17 @@ class View {
             numberOfRounds = 0;
 
             // Remove validation class from inputs
-            const isInvalid = document.getElementsByClassName('is-invalid');
+            const isInvalid = document.getElementsByClassName(isInvalid);
             while (isInvalid.length) {
-                isInvalid[0].classList.remove('is-invalid');
+                isInvalid[0].classList.remove(isInvalid);
             }
 
             // Hide danger alert in form
-            this.allRequired.classList.add('d-none');
+            this.allRequired.classList.add(dNone);
 
             // Hide cheched profile button and show check profile button
-            this.checkProfileId.classList.remove('d-none');
-            this.profileIdChecked.classList.add('d-none');
+            this.checkProfileId.classList.remove(dNone);
+            this.profileIdChecked.classList.add(dNone);
 
             // Remove checked class
             this.addEditProfileID.classList.remove('profileChecked');
@@ -658,24 +659,24 @@ class View {
             if (formValidation(updatedGlobalData)) {
                 // Show danger alert
                 this.allRequired.innerHTML = 'Todos los campos son obligatorios';
-                this.allRequired.classList.remove('d-none');
+                this.allRequired.classList.remove(dNone);
 
                 // Add validation class to inputs
                 const formFields = this.editAddForm.querySelectorAll('input');
                 formFields.forEach(field => {
                     if (field.value === '') {
-                        field.classList.add('is-invalid');
+                        field.classList.add(isInvalid);
                     } else {
-                        field.classList.remove('is-invalid');
+                        field.classList.remove(isInvalid);
                     }
                 });
                 
             } else if (this.addEditSessionID.value !== '' && !this.addEditProfileID.classList.contains('profileChecked')) {
-                this.addEditProfileID.classList.add('is-invalid');
-                this.addEditSessionID.classList.remove('is-invalid');
-                // this.addEditEventID.classList.remove('is-invalid');
+                this.addEditProfileID.classList.add(isInvalid);
+                this.addEditSessionID.classList.remove(isInvalid);
+                // this.addEditEventID.classList.remove(isInvalid);
                 this.allRequired.innerHTML = 'El ID de perfil no ha sido comprobado';
-                this.allRequired.classList.remove('d-none');
+                this.allRequired.classList.remove(dNone);
             } else {
                 handler(updatedGlobalData, filterObject);
 
@@ -779,7 +780,7 @@ class View {
                 element.classList.toggle('btn-white');
                 element.classList.toggle('btn-outline-white');
                 for(let i = 0; i < 2; i ++) {
-                    this.btnSidebarSpans[i].classList.toggle('d-none');
+                    this.btnSidebarSpans[i].classList.toggle(dNone);
                 }
             }
 
@@ -792,7 +793,7 @@ class View {
 
     // Spinner toggle action
     toggleSpinner() {
-        this.spinner.classList.toggle('d-none');
+        this.spinner.classList.toggle(dNone);
     }
 
     // Render alert messages
