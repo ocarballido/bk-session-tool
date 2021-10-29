@@ -27,41 +27,94 @@ class Controller {
         // Binding edit session action
         this.view.addScheduledSessionAction(this.addScheduledSessionHandler.bind(this));
 
+        // Binding filter session action
+        this.view.filterScheduledSessionsAction(this.filterScheduledSessionsHandler.bind(this));
+
+        // Binding pagination session action
+        this.view.paginationAction(this.paginationHandler.bind(this));
+
+        // Binding check profile id action
+        this.view.checkProfileIdAction(this.checkProfileIdHandler.bind(this));
+
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen sesiones programadas en adelante. Filtra de nuevo', 'info');
+                }
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas. Vuelve a intentarlo mas tarde', 'danger');
             })
-            .finally(() => this.view.toggleSpinner());;
+            .finally(() => this.view.toggleSpinner());
 
         // Load featured users
-        this.model.loadFeaturedUsers()
-            .then((loadedUsers) => {
-                this.view.firstUiAppRender(loadedUsers);
-            });
+        // this.model.loadFeaturedUsers()
+        //     .then((loadedUsers) => {
+        //         this.view.firstUiAppRender(loadedUsers);
+        //     })
+        //     .catch(() => {
+        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro. Vuelve a intentarlo mas tarde', 'danger');
+        //     });
+
+        // Load featured users and events
+        this.model.loadFeaturedUsersAndEvents()
+            .then(([featuredUsers, events]) => {
+                this.view.firstUiAppRender(featuredUsers, events);
+            })
+            .catch((error) => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');
+                console.log(error);
+            })
     }
 
     // Delete scheduled session handler
-    deleteScheduledSessionHandler(id, sessionDate, isSingleRound) {
+    deleteScheduledSessionHandler(id, sessionDate, isSingleRound, filterObject) {
         this.view.toggleSpinner();
         this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
             .then(() => {
                 if (isSingleRound) {
-                    this.view.renderDeletedSession(id);
-                    this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
+                    // this.view.renderDeletedSession(id);
+                    console.log(filterObject)
+                    this.model.getScheduledSessions(filterObject)
+                        .then((scheduledSessions) => {
+                            this.view.renderScheduledSessions(scheduledSessions);
+                            this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
+                        });
                 } else {
                     this.view.renderDeletedRound(id, sessionDate);
                     this.view.renderAlertMessages('La ronda de la sesión se ha eliminado con éxito', 'success');
+                    // return this.model.getScheduledSessions(filterObject);
                 }
             })
-            .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+            .catch((error) => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdassssssdelete.', 'danger');
+                console.log(error);
             })
             .finally(() => this.view.toggleSpinner());
+        // this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
+        //     .then(() => {
+        //         if (isSingleRound) {
+        //             // this.view.renderDeletedSession(id);
+        //             return this.model.getScheduledSessions(filterObject);
+        //         } else {
+        //             this.view.renderDeletedRound(id, sessionDate);
+        //             this.view.renderAlertMessages('La ronda de la sesión se ha eliminado con éxito', 'success');
+        //             return this.model.getScheduledSessions(filterObject);
+        //         }
+        //     })
+        //     .then((scheduledSessions) => {
+        //         console.log(scheduledSessions);
+        //         this.view.renderScheduledSessions(scheduledSessions);
+        //         this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
+        //     })
+        //     .catch(() => {
+        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdassssssdelete.', 'danger');
+        //     })
+        //     .finally(() => this.view.toggleSpinner());
+        // this.model.deleteScheduledSession(id, sessionDate, isSingleRound);
     }
 
     // Send data to modal handler
@@ -80,30 +133,82 @@ class Controller {
                 console.log(data);
             })
             .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());
+    }
+
+    // Check profile Id handler
+    checkProfileIdHandler(sessionId) {
+        console.log(sessionId);
+        this.view.toggleSpinner();
+
+        this.model.checkProfileId(sessionId)
+            .then((session) => {
+                this.view.renderCheckProfileIdAction(sessionId);
+                console.log(session.profileId);
+            }).catch((error) => {
+                this.view.renderCheckProfileIdAction(undefined);
+                console.log(error);
+                console.log(session.profileId);
             })
             .finally(() => this.view.toggleSpinner());
     }
 
     // Add scheduled session handler
-    addScheduledSessionHandler(postData) {
+    addScheduledSessionHandler(postData, filterObject) {
         this.view.toggleSpinner();
 
         this.model.addScheduledSession(postData)
-            .then(() => {
-                return this.model.getScheduledSessions();
-            })
+            .then(() => this.model.getScheduledSessions(filterObject))
             .then((scheduledSessions) => {
                 console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
             })
-            .catch(() => {
-                this.view.renderAlertMessages('Ha ocurrido un error. Comprueba que ', 'danger');
+            .catch((error) => {
+                this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdasssssssssADD', 'danger');
+                console.log(error);
             })
             .finally(() => this.view.toggleSpinner());
 
         console.log(postData);
+    }
+
+    filterScheduledSessionsHandler(filterObject) {
+        console.log(filterObject);
+        this.view.toggleSpinner();
+        this.model.getScheduledSessions(filterObject)
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Filtra de nuevo', 'info');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.view.renderAlertMessages('Ha ocurrido un error', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());;
+    }
+
+    paginationHandler(filterObject) {
+        console.log(filterObject);
+        this.view.toggleSpinner();
+        this.model.getScheduledSessions(filterObject)
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen más sesiones programadas en adelante. Filtra de nuevo', 'info');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.view.renderAlertMessages('Ha ocurrido un error.', 'danger');
+            })
+            .finally(() => this.view.toggleSpinner());;
     }
 }
 

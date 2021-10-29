@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <link rel="icon" type="image/png" href="/favicon.ico"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 
@@ -52,14 +53,14 @@
 
                     <!-- Date start -->
                     <div class="form-group floating-label mb-2">
-                        <input type="date" class="form-control" id="filterSessionDateStart" placeholder="Dede" tabindex="2" name="filterSessionDateStart" value="2018-07-22" min="2018-07-22" >
+                        <input type="datetime-local" class="form-control" id="filterSessionDateStart" placeholder="Dede" tabindex="2" name="filterSessionDateStart" >
                         <label for="filterSessionDateStart">Desde</label>
                     </div>
                     <!-- /Date start -->
 
                     <!-- Date end -->
                     <div class="form-group floating-label mb-2">
-                        <input type="date" class="form-control" id="filterSessionDateEnd" placeholder="Hasta" tabindex="2" name="filterSessionDateEnd" value="" min="2018-07-22" >
+                        <input type="datetime-local" class="form-control" id="filterSessionDateEnd" placeholder="Hasta" tabindex="2" name="filterSessionDateEnd" >
                         <label for="filterSessionDateEnd">Hasta</label>
                     </div>
                     <!-- /Date end -->
@@ -68,7 +69,6 @@
                     <div class="form-group floating-label mb-2">
                         <select id="filterSessionEvent" class="custom-select" >
                             <option selected value="all">Todos</option>
-                            <option value="GIV2021">GIV</option>
                         </select>
                         <label for="filterSessionEvent">Evento</label>
                     </div>
@@ -85,7 +85,7 @@
 
                     <!-- Button -->
                     <div id="filterButtons" class="d-grid gap-2">
-                        <button id="submitFilterButton" type="submit" class="btn btn-secondary">Filtrar</button>
+                        <button id="submitFilterButton" type="button" class="btn btn-secondary">Filtrar</button>
                         <button id="clearFilterButton" type="button" class="btn btn-light disabled">Limpiar filtros</button>
                     </div>
                     <!-- /Button -->
@@ -108,24 +108,9 @@
                 <!-- /Sessions -->
 
                 <!-- Pagination -->
-                <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-center shadow-lg">
-                    <nav aria-label="Pagination">
-                        <ul class="pagination m-0">
-                            <li class="page-item disabled">
-                                <a class="page-link px-2" href="#" aria-label="Previous">
-                                    <span class="icon-chevron-left" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link px-2" href="#" aria-label="Next">
-                                    <span class="icon-chevron-right" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                <div id="sessionsPagination" class="bg-white border-top border-light d-flex align-items-center justify-content-between shadow-lg">
+                    <button data-offset="" data-limmit="" id="btnPrev" type="button" class="btn btn-secondary btn-sm ms-3">Anterior</button>
+                    <button data-offset="" data-limmit="" id="btnNext" type="button" class="btn btn-secondary btn-sm me-3">Siguiente</button>
                 </div>
                 <!-- /Pagination -->
             </div>
@@ -147,8 +132,8 @@
                     <form id="editAddForm" data-id="" novalidate>
                         <!-- Session name -->
                         <div class="form-group floating-label mb-2">
-                            <input type="text" class="form-control" id="sessionName" name="sessionName" placeholder="Nomnbre de sesion">
-                            <label for="sessionName">Nomnbre de sesión</label>
+                            <input type="text" class="form-control" id="profileId" name="profileId" placeholder="Nomnbre de sesion">
+                            <label for="profileId">Id de perfil</label>
                         </div>
                         <!-- /Session name -->
 
@@ -161,15 +146,17 @@
 
                         <!-- Profile ID -->
                         <div class="form-group floating-label mb-2">
-                            <!-- <div class="input-group floating-label">
+                            <div class="input-group floating-label">
                                 <input id="addEditProfileID" name="addEditProfileID" type="text" class="form-control" placeholder="ID del perfil" aria-label="Example text with button addon" aria-describedby="checkProfileId">
                                 <label for="addEditProfileID">ID del perfil</label>
                                 <div class="input-group-append">
-                                    <button class="btn btn-light" type="button" id="checkProfileId">Comprobar</button>
+                                    <button class="btn btn-sm btn-light" type="button" id="checkProfileId">Comprobar</button>
+                                    <button id="profileIdChecked" type="button" class="btn btn-success btn-icon text-white d-none"><span class="icon-cheked"></span></button>
                                 </div>
-                            </div> -->
-                            <input type="text" class="form-control" id="addEditProfileID" name="addEditProfileID" placeholder="ID del perfil">
-                            <label for="addEditProfileID">ID del perfil</label>
+                                <div class="invalid-feedback">El ID de perfil no ha sido comprobado</div>
+                            </div>
+                            <!-- <input type="text" class="form-control" id="addEditProfileID" name="addEditProfileID" placeholder="ID del perfil">
+                            <label for="addEditProfileID">ID del perfil</label> -->
                         </div>
                         <!-- /Profile ID -->
 
@@ -177,12 +164,19 @@
                         <div class="form-group floating-label mb-2">
                             <input type="text" class="form-control" id="addEditSessionID" name="addEditSessionID" placeholder="ID de sesión">
                             <label for="addEditSessionID">ID de sesión</label>
+                            <div class="invalid-feedback">Este campo es obligatorio</div>
                         </div>
                         <!-- /Session ID -->
 
                         <!-- Event ID -->
-                        <div class="form-group floating-label mb-2">
+                        <!-- <div class="form-group floating-label mb-2">
                             <input type="text" class="form-control" id="addEditEventID" name="addEditEventID" placeholder="ID de evento">
+                            <label for="addEditEventID">ID de evento</label>
+                        </div> -->
+                        <div class="form-group floating-label mb-2">
+                            <select name="addEditEventID" id="addEditEventID" class="custom-select" >
+                                
+                            </select>
                             <label for="addEditEventID">ID de evento</label>
                         </div>
                         <!-- /Event ID -->
@@ -225,6 +219,7 @@
                                 <div class="form-group floating-label mb-2">
                                     <input type="datetime-local" class="form-control" id="addSessionDateStart-0" placeholder="Dede" tabindex="2" name="addSessionDateStart-0" value="" >
                                     <label for="addSessionDateStart-0">Desde</label>
+                                    <div class="invalid-feedback">Ya existe una roda con esta fecha y hora. Cámbiala!</div>
                                 </div>
                                 <!-- /Date start -->
 

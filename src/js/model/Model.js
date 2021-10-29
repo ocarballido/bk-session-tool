@@ -1,8 +1,15 @@
+import { offset } from '@popperjs/core';
 import { apiServices } from '../services/ApiServices';
+import { paginationLimmit } from '../helpers/offsetLimit';
 
 class Model {
     constructor() {
         this._scheduledSessions = [];
+        this._sessionFilter = {
+            startDate: new Date().toISOString(),
+            offset: 0,
+            limit: paginationLimmit
+        };
     }
 
     // Get users
@@ -14,41 +21,61 @@ class Model {
             });
     }
 
-    // Return promise with data
-    getScheduledSessions() {
-        return new Promise((resolve, reject) => {
-            if ( this._scheduledSessions.length ) {
-                resolve(this._scheduledSessions);
-            } else {
-                Promise.all([
-                    apiServices.loadSessions(),
-                    apiServices.loadScheduledSessions()
-                ])
-                    .then(([sessions, scheduledSessions]) => {
-                        // Filling our data model object
-                        this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
-                            
-                            // Creating single session object
-                            const singleSession = {
-                                ...singleScheduledSession,
-                                sessionName
-                            };
+    // Get events
+    loadEvents() {
+        return apiServices
+            .loadEvents()
+            .then((events) => {
+                return events;
+            });
+    }
 
-                            // Traversing session API array to extract session name based on id
-                            const sessionName = sessions.map(session => {
-                                if (session.id === singleScheduledSession.profileId) {
-                                    singleSession.sessionName = session.name;
-                                }
-                            });
-                            return singleSession;
-                        });
-                        resolve(this._scheduledSessions);                   
-                    })
-                    .catch((error) => {
-                        reject(error);
-                        console.log(error);
+    // Get users and events
+    loadFeaturedUsersAndEvents() {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                apiServices.loadFeaturedUsers(),
+                apiServices.loadEvents()
+            ])
+                .then(([featuredUsers, events]) => {
+                    resolve([featuredUsers, events]);
+                }).catch((error) => {
+                    reject(error);
+                    console.log(error);
+                });
+        });
+    }
+
+    // Return promise with data
+    getScheduledSessions(filterObject) {
+        return new Promise((resolve, reject) => {
+            apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
+                .then((scheduledSessions) => {
+                    // Filling our data model object
+                    this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                        
+                        // Creating single session object
+                        const singleSession = {
+                            ...singleScheduledSession
+                        };
+                        return singleSession;
                     });
-            }
+                    this._sessionFilter = {
+                        ...filterObject
+                    }
+                    console.log(this._sessionFilter);
+                    resolve(this._scheduledSessions);
+                })
+                .catch((error) => {
+                    reject(error);
+                    // let offset = filterObject.offset - 1;
+                    // this._sessionFilter = {
+                    //     ...filterObject,
+                    //     offset: offset--
+                    // }
+                    // console.log(filterObject, this._sessionFilter, offset);
+                    console.log(error);
+                });
 
         });
     }
@@ -62,16 +89,20 @@ class Model {
 
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
+            console.log('lo es ', isSingleRound)
             return apiServices
                 .deleteScheduledSession(id)
-                .then((scheduledSessions) => {
+                .then(() => {
                     // Update local data
-                    this._scheduledSessions = this._scheduledSessions.filter( session => session.id !== id );
-                    return true;
+                    this._scheduledSessions = [];
+                    console.log(this._scheduledSessions)
+                    // return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
+            console.log('no lo es ', isSingleRound)
+            console.log(sessionItem)
             return apiServices
                 .updateScheduledSession(id, sessionItem)
                 .then(() => {
@@ -123,18 +154,39 @@ class Model {
             });
     }
 
-    async addScheduledSession(data) {
-        // Get session
-        const session = await apiServices.loadSingleSession(data.profileId);
-
-        // If this session exist
-        if (session) {
-            return apiServices.addScheduledSession(data)
-                .then(() => {
-                    this._scheduledSessions = [];
-                });
-        }
+    // Check profile ID
+    checkProfileId(sessionId) {
+        return apiServices.loadSingleSession(sessionId)
+            .then((session) => {
+                return session;
+            });
     }
+
+    // Add scheduled session
+    addScheduledSession(data) {
+        return apiServices.addScheduledSession(data);
+    }
+    // addScheduledSession(data) {
+    //     return new Promise((resolve, reject) => {
+    //         apiServices.addScheduledSession(data)
+    //             .then(() => {
+    //                 resolve();
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //                 reject(error);
+    //             });
+    //     });
+    // }
+
+    // Filtering
+    // filterScheduledSession(data) {
+    //     return apiServices.addScheduledSession(data)
+    //         .then(() => {
+    //             resolve();
+    //         })
+    //         .catch(() => reject());
+    // }
 };
 
 export { Model };

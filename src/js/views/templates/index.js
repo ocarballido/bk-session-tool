@@ -11,11 +11,10 @@ export const scheduledSessionLi = `
         data-is-real-weather="{{isRealWeather}}"
         data-warmup-seconds="{{warmupSeconds}}"
         data-main-part-min-seconds="{{mainPartMinSeconds}}"
-        data-session-name="{{sessionName}}"
         data-featured-users-id="{{featuredUserIds}}"
     >
         <div class="{{sessionFirst}} p-3 d-flex align-items-center justify-content-between collapse-trigger" data-bs-toggle="collapse" href="#target-{{id}}">
-            {{sessionName}}
+            {{profileId}}
             <span class="icon-expand-more text-dark"></span>
         </div>
         <div class="collapse collapse-body {{sessionShow}}" id="target-{{id}}">
@@ -49,13 +48,20 @@ export const scheduledSessionTableRowTemplate = `
     </tr>
 `;
 export const alertTemplate = `
-    <div class="alert alert-{{alertType}} mx-0 mb-3 border-0" role="alert">{{alertMassage}}</div>
+    <div class="alert alert-{{alertType}} mx-0 mb-3 border-0 overflow-hidden" role="alert">
+        {{alertMassage}}
+        
+        <div class="alert-time bg-{{alertType}}"></div>
+    </div>
 `;
 export const featuredUserBtnTemplate = `
     <button data-user-id="{{userId}}" type="button" data-bs-toggle="button" class="btn btn-proUser btn-sm mb-1 btn-text-icon"><img src="{{avatarUrl}}" />{{userName}} {{userSurname}} <span class="icon-add"></span></button>
 `;
 export const featuredUserSelectOptionTemplate = `
     <option value="{{userId}}">{{userName}} {{userSurname}}</option>
+`;
+export const eventSelectOptionTemplate = `
+    <option value="{{eventId}}">{{eventName}}</option>
 `;
 export const roundTemplate = `
     <div class="singleRound add" data-round="{{roundNumber}}">

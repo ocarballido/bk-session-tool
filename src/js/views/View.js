@@ -1,11 +1,15 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
+import { filterdValues } from '../helpers/filter-object';
+import { checkDuplicates } from '../helpers/check-duplicates-dates';
+import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
+import { dNone, isInvalid, isValid } from '../helpers/const';
 
 class View {
     constructor() {
         // Global variables
-        this.userId = 133479;
+        this.userId = sessionStorage.getItem('loggedUserId') || '';
 
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
@@ -18,9 +22,14 @@ class View {
 
         // Sidebar
         this.sidebar = document.getElementById('filterSidebar');
-        this.dateStart = document.getElementById('filterSessionDateStart');
-        this.dateEnd = document.getElementById('filterSessionDateEnd');
+        this.sessionFilters = document.getElementById('sessionFilters');
+        this.startDate = document.getElementById('filterSessionDateStart');
+        this.endDate = document.getElementById('filterSessionDateEnd');
+        this.filterSessionEvent = document.getElementById('filterSessionEvent');
         this.filterSessionUser = document.getElementById('filterSessionUser');
+        this.filterButtons = document.getElementById('filterButtons');
+        this.submitFilterButton = document.getElementById('submitFilterButton');
+        this.clearFilterButton = document.getElementById('clearFilterButton');
 
         // List
         this.scheduledSessionsList = document.getElementById('scheduledSessionsList');
@@ -41,7 +50,7 @@ class View {
         this.allRequired = document.getElementById('allRequired');
         this.editAddModalTitle = document.getElementById('editAddSessionLabel');
         this.editAddForm = document.getElementById('editAddForm');
-        this.sessionName = document.getElementById('sessionName');
+        this.profileId = document.getElementById('profileId');
         this.addEditUserID = document.getElementById('addEditUserID');
         this.addEditProfileID = document.getElementById('addEditProfileID');
         this.addEditSessionID = document.getElementById('addEditSessionID');
@@ -57,6 +66,20 @@ class View {
         this.addRound = document.getElementById('addRound');
         this.buttonAddRound = document.getElementById('buttonAddRound');
         this.rounds = document.getElementById('rounds');
+        this.checkProfileId = document.getElementById('checkProfileId');
+        this.profileIdChecked = document.getElementById('profileIdChecked');
+
+        // Pagination
+        this.sessionsPagination = document.getElementById('sessionsPagination');
+        this.btnPrev = document.getElementById('btnPrev');
+        this.btnNext = document.getElementById('btnNext'); 
+        this.offsetLimit = {
+            offset: 0,
+            limit: paginationLimmit
+        };
+
+        // Alert
+        this.alert = document.querySelector('#sessionsContent .alert-info');
     }
 
     // First scheduled sessions render
@@ -111,6 +134,150 @@ class View {
             // Inserted to html
             this.scheduledSessionsList.insertAdjacentHTML('beforeend', singleLi);
         });
+
+        // Disable pagination buttons if no results
+        // and if the number of items renderd are less than paginationLimmit
+        if (!scheduledSessions.length) {
+            this.btnPrev.classList.add('disabled');
+            this.btnNext.classList.add('disabled');
+        } else if (scheduledSessions.length < paginationLimmit) {
+            this.btnNext.classList.add('disabled');
+        } else {
+            this.btnNext.classList.remove('disabled');
+        }
+
+        // Remove possible alert
+        const alertInfo = document.querySelector('#sessionsContent .alert-info');
+        alertInfo && alertInfo.remove();
+    }
+
+    // Filter action
+    filterScheduledSessionsAction(handler) {
+        // Form filter object on form change
+        this.sessionFilters.addEventListener('change', (event) => {
+            // Disabled or not "limpiar filtros" button depending on fields change
+            if (this.endDate.value !== '' || this.filterSessionEvent.value !== 'all' || this.filterSessionUser.value !== 'all') {
+                this.clearFilterButton.classList.remove('disabled');
+            } else {
+                this.clearFilterButton.classList.add('disabled');
+            }
+        });
+
+        // Clean filters or submit form
+        this.filterButtons.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementId = element.id;
+            const isSidebarExpended = this.sidebar.classList.contains('expand');
+
+            if (elementId === 'clearFilterButton') {
+                // If element is the "Filtrar" or "Limpiar filtros" button
+                if (isSidebarExpended) {
+                    this.sidebar.classList.toggle('expand');
+                    this.btnSidebar.classList.toggle('btn-white');
+                    this.btnSidebar.classList.toggle('btn-outline-white');
+                    for(let i = 0; i < 2; i ++) {
+                        this.btnSidebarSpans[i].classList.toggle(dNone);
+                    }
+                }
+
+                // Reset form fields
+                this.endDate.value = '';
+                this.filterSessionEvent.value = 'all';
+                this.filterSessionUser.value = 'all';
+                this.startDate.value = todayDateTime();
+                
+                this.clearFilterButton.classList.add('disabled');
+
+                // Create filter object
+                const filterObject = filterdValues(
+                    this.startDate.value,
+                    this.endDate.value,
+                    this.filterSessionEvent.value,
+                    this.filterSessionUser.value,
+                    0,
+                    paginationLimmit
+                )
+
+                // Pagination btnPrev button disabled
+                this.btnPrev.classList.add('disabled');
+                
+                handler(filterObject);
+            } else if (elementId === 'submitFilterButton') {
+                // If element is the "Filtrar" or "Limpiar filtros" button
+                if (isSidebarExpended) {
+                    this.sidebar.classList.toggle('expand');
+                    this.btnSidebar.classList.toggle('btn-white');
+                    this.btnSidebar.classList.toggle('btn-outline-white');
+                    for(let i = 0; i < 2; i ++) {
+                        this.btnSidebarSpans[i].classList.toggle(dNone);
+                    }
+                }
+
+                // Create filter object
+                const filterObject = filterdValues(
+                    this.startDate.value,
+                    this.endDate.value,
+                    this.filterSessionEvent.value,
+                    this.filterSessionUser.value,
+                    0,
+                    paginationLimmit
+                )
+
+                // Pagination btnPrev button disabled
+                this.btnPrev.classList.add('disabled');
+                
+                handler(filterObject);
+            }
+        });
+    }
+
+    //  Pagination
+    paginationAction(handler) {
+        // const offsetLimit 
+        let filterObject = {};
+        this.sessionsPagination.addEventListener('click', (event) => {
+            event.preventDefault();
+            const element = event.target;
+            const elementId = element.id;
+
+            if (elementId === 'btnPrev') {
+                this.offsetLimit.offset = this.offsetLimit.offset > 0 ? this.offsetLimit.offset -= paginationLimmit : 0;
+                // this.offsetLimit.limit -= 1;
+                if (this.offsetLimit.offset === 0) {
+                    this.btnPrev.classList.add('disabled');
+                }
+                filterObject = {
+                    ...filterObject,
+                    ...filterdValues(
+                        this.startDate.value,
+                        this.endDate.value,
+                        this.filterSessionEvent.value,
+                        this.filterSessionUser.value
+                    ),
+                    ...this.offsetLimit
+                }
+
+                handler(filterObject);
+            } else if (elementId === 'btnNext') {
+                // this.offsetLimit.limit += 1;
+                this.offsetLimit.offset += paginationLimmit;
+                if (this.offsetLimit.offset > 0) {
+                    this.btnPrev.classList.remove('disabled');
+                }
+                filterObject = {
+                    ...filterObject,
+                    ...filterdValues(
+                        this.startDate.value,
+                        this.endDate.value,
+                        this.filterSessionEvent.value,
+                        this.filterSessionUser.value
+                    ),
+                    ...this.offsetLimit
+                }
+
+                handler(filterObject);
+            }
+        });
     }
 
     // Delete scheduled session
@@ -140,7 +307,16 @@ class View {
         });
 
         this.btnDeleteSession.addEventListener('click', () => {
-            handler(id, sessionDate, isSingleRound);
+            // Create filter object
+            const filterObject = filterdValues(
+                this.startDate.value,
+                this.endDate.value,
+                this.filterSessionEvent.value,
+                this.filterSessionUser.value,
+                0,
+                paginationLimmit
+            );
+            handler(id, sessionDate, isSingleRound, filterObject);
         });
     }
 
@@ -164,27 +340,28 @@ class View {
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
             // Form fields values
-            const { sessionName, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
-            this.addEditUserID.closest('.form-group').classList.add('d-none');
-            this.addEditProfileID.closest('.form-group').classList.add('d-none');
-            this.addEditSessionID.closest('.form-group').classList.add('d-none');
-            this.addEditEventID.closest('.form-group').classList.add('d-none');
-            this.buttonAddNew.classList.add('d-none');
-            this.addRound.classList.add('d-none');
+            this.addEditUserID.closest('.form-group').classList.add(dNone);
+            this.addEditUserID.disabled = false;
+            this.addEditProfileID.closest('.form-group').classList.add(dNone);
+            this.addEditSessionID.closest('.form-group').classList.add(dNone);
+            this.addEditEventID.closest('.form-group').classList.add(dNone);
+            this.buttonAddNew.classList.add(dNone);
+            this.addRound.classList.add(dNone);
 
             // Showing some form fields
-            this.sessionName.closest('.form-group').classList.remove('d-none');
-            this.buttonUpdate.classList.remove('d-none');
+            this.profileId.closest('.form-group').classList.remove(dNone);
+            this.buttonUpdate.classList.remove(dNone);
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
             this.editAddForm.dataset.date = sessionDate;
             this.editAddModalTitle.innerHTML = "Editar sesión";
-            this.sessionName.value = sessionName;
-            this.sessionName.disabled = true;
+            this.profileId.value = profileId;
+            this.profileId.disabled = true;
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             document.getElementById('addSessionDateStart-0').value = `${date}T${time}`;
@@ -204,29 +381,30 @@ class View {
             } );
         } else if (type === 'add') {
             // Hiding form fields
-            this.sessionName.closest('.form-group').classList.add('d-none');
-            this.buttonUpdate.classList.add('d-none');
-            this.addRound.classList.remove('d-none');
+            this.profileId.closest('.form-group').classList.add(dNone);
+            this.buttonUpdate.classList.add(dNone);
+            this.addRound.classList.remove(dNone);
 
             // Showing some form fields
-            this.addEditUserID.closest('.form-group').classList.remove('d-none');
-            this.addEditProfileID.closest('.form-group').classList.remove('d-none');
-            this.addEditSessionID.closest('.form-group').classList.remove('d-none');
-            this.addEditEventID.closest('.form-group').classList.remove('d-none');
-            this.buttonAddNew.classList.remove('d-none');
+            this.addEditUserID.closest('.form-group').classList.remove(dNone);
+            this.addEditProfileID.closest('.form-group').classList.remove(dNone);
+            this.addEditSessionID.closest('.form-group').classList.remove(dNone);
+            this.addEditEventID.closest('.form-group').classList.remove(dNone);
+            this.buttonAddNew.classList.remove(dNone);
 
             // Setting form fields value
             this.editAddForm.dataset.id = '';
             this.editAddForm.dataset.date = '';
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
-            this.sessionName.value = '';
-            this.sessionName.disabled = true;
+            this.profileId.value = '';
+            this.profileId.disabled = true;
             document.getElementById('addSessionDateStart-0').value = todayDateTime();
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;
+            this.addEditUserID.disabled = true;
             this.addEditProfileID.value = '';
             this.addEditSessionID.value = '';
-            this.addEditEventID.value = '';
+            // this.addEditEventID.value = 'all';
             this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
             this.addEditWarmUpTime.value = 600;
@@ -236,7 +414,6 @@ class View {
             document.querySelectorAll(".btn-proUser").forEach(function(element) {
                 element.classList.remove("active");
             });
-            console.log(todayDateTime())
 
             // Showing add new session modal
             this.myModal.show();
@@ -259,10 +436,8 @@ class View {
                 const userId = button.getAttribute('data-user-id');
                 if (button.classList.contains('active')) {
                     proUsersArrEdited.push(userId);
-                    console.log('tiene');
                 } else {
                     proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
-                    console.log('no tiene');
                 }
             });
         });
@@ -280,7 +455,6 @@ class View {
                     proUsersArrEdited = proUsersArrEdited.filter( user => user !== userId);
                 }
             }
-            console.log(proUsersArrEdited);
         });
         
         // Submmiting data
@@ -295,17 +469,55 @@ class View {
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
             const updatedRound = {
-                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString(),
+                startDate: dateTimeFormater(document.getElementById('addSessionDateStart-0').value).date.toISOString().split('.')[0]+"Z",
                 featuredUserIds: proUsersArrEdited,
             };
             handler(id, sessionDate, updatedGlobalData, updatedRound);
         });
     }
 
+    // Check profileId action
+    checkProfileIdAction(handler) {
+        this.addEditProfileID.addEventListener('input', event => {
+            this.checkProfileId.classList.remove(dNone);
+            this.profileIdChecked.classList.add(dNone);
+            // this.addEditProfileID.classList.remove(isInvalid);
+            this.addEditProfileID.classList.remove('profileChecked');
+        });
+        this.editAddForm.addEventListener('click', (event) => {
+            const element = event.target;
+            const elementId = element.id;
+
+            if (elementId === 'checkProfileId') {
+                if (this.addEditProfileID.value !== '') {
+                    handler(this.addEditProfileID.value);
+                }
+            }
+        });
+    }
+
+    // Render profileId checked
+    renderCheckProfileIdAction(isChecked) {
+        console.log(isChecked)
+        // this.checkProfileId.classList.toggle(dNone, isChecked);
+        if (isChecked) {
+            this.profileIdChecked.classList.remove(dNone);
+            this.addEditProfileID.classList.remove(isInvalid);
+            this.addEditProfileID.classList.add('profileChecked');
+            this.checkProfileId.classList.add(dNone);
+        } else if (isChecked === undefined) {
+            this.profileIdChecked.classList.add(dNone);
+            this.addEditProfileID.classList.add(isInvalid);
+            this.checkProfileId.classList.remove(dNone);
+        }
+    }
+
     // Add scheduled session Action
     addScheduledSessionAction(handler) {
         let proUsersArr = [[]];
         let numberOfRounds = 0;
+        let allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
+
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
             const isBtnProUser = element.classList.contains('btn-proUser');
@@ -365,12 +577,26 @@ class View {
 
                 // Add round to DOM
                 this.rounds.appendChild(clonedRoundElement);
+
+                // Check for duplicated dates
+                //- Update datetime inputs
+                allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
+
+                // Check for duplicates dates when changing dates inputs
+                allDatetimeInput.forEach((input, inputIndex, arr) => {
+                    input.addEventListener('change', (event) => {
+                        checkDuplicates(arr, event.target, inputIndex);
+                    })
+                });
+                
+                // Check for duplicates dates
+                checkDuplicates(allDatetimeInput, document.querySelector(`#addSessionDateStart-${numberOfRounds}`), numberOfRounds);
+                
             } else if (isRemoveRoundButton) { // Check if element is remove round button
                 event.preventDefault();
                 const roundToRemove = element.closest('.singleRound');
                 roundToRemove.remove();
                 proUsersArr.splice(numberOfRounds, 1);
-                console.log(proUsersArr);
                 numberOfRounds --;
             }
         });
@@ -387,30 +613,42 @@ class View {
             numberOfRounds = 0;
 
             // Remove validation class from inputs
-            const isInvalid = document.getElementsByClassName('is-invalid');
-            while (isInvalid.length) {
-                isInvalid[0].classList.remove('is-invalid');
+            const isInvalidClass = document.getElementsByClassName(isInvalid);
+            while (isInvalidClass.length) {
+                isInvalidClass[0].classList.remove(isInvalid);
             }
 
-            // Hide danger alert in form
-            this.allRequired.classList.add('d-none');
-            console.log(proUsersArr);
-        });
+            // Hide cheched profile button and show check profile button
+            this.checkProfileId.classList.remove(dNone);
+            this.profileIdChecked.classList.add(dNone);
 
-        // Form validation
-        const formValidation = (obj) => {
-            return !Object.values(obj).every( input => input !== '' )
-        };
+            // Remove checked class
+            this.addEditProfileID.classList.remove('profileChecked');
+
+            // Reset event select value
+            this.addEditEventID.value = this.addEditEventID.options[0].value;
+        });
         
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
             event.preventDefault();
+
+            // Create filter object
+            const filterObject = filterdValues(
+                this.startDate.value,
+                this.endDate.value,
+                this.filterSessionEvent.value,
+                this.filterSessionUser.value,
+                0,
+                paginationLimmit
+            );
+
             const roundsDefinition = () => {
                 const rounds = this.editAddForm.querySelectorAll('.singleRound.add');
                 const roundsDefinition = [];
                 rounds.forEach(( round, index ) => {
                     roundsDefinition.push({
-                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString(),
+                        startDate: dateTimeFormater(round.querySelector(`#addSessionDateStart-${index}`).value).date.toISOString().split('.')[0]+"Z",
                         featuredUserIds: proUsersArr[index]
                     });
                 });
@@ -423,7 +661,11 @@ class View {
                 profileId: this.addEditProfileID.value,
                 sessionId: this.addEditSessionID.value,
                 eventId: this.addEditEventID.value,
-                roundsDefinition: roundsDefinition(),
+                roundsDefinition: roundsDefinition().sort(function compare(a, b) {
+                    var dateA = new Date(a.startDate);
+                    var dateB = new Date(b.startDate);
+                    return dateA - dateB;
+                }),
                 maxUsers: parseInt(this.addEditMaxUsers.value),
                 rules: 'COMPETITIVE',
                 isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
@@ -436,20 +678,31 @@ class View {
             };
 
             // Form validation
-            if (formValidation(updatedGlobalData)) {
-                // Show danger alert
-                this.allRequired.classList.remove('d-none');
-
-                // Add validation class to inputs
-                const formFields = this.editAddForm.querySelectorAll('input');
-                formFields.forEach(field => {
-                    if (field.value === '') {
-                        field.classList.add('is-invalid');
-                    }
-                });
-                
+            //- Check sessionId value
+            if (this.addEditSessionID.value === '') {
+                this.addEditSessionID.classList.add(isInvalid);
             } else {
-                handler(updatedGlobalData);
+                this.addEditSessionID.classList.remove(isInvalid);
+            }
+            this.addEditSessionID.addEventListener('input', event => {
+                this.addEditSessionID.classList.remove(isInvalid);
+            });
+
+            //- Check profileId value
+            if (!this.addEditProfileID.classList.contains('profileChecked')) {
+                this.addEditProfileID.classList.add(isInvalid);
+            } else {
+                this.addEditProfileID.classList.remove(isInvalid);
+            }
+
+            // Check for isInvalid class on datetime inputs
+            const allInputsValid = Array.prototype.slice.call(allDatetimeInput).find(input => input.classList.contains(isInvalid));
+
+            console.log(updatedGlobalData, allInputsValid);
+
+            // Submit
+            if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
+                handler(updatedGlobalData, filterObject);
 
                 // Hide modal
                 this.myModal.hide();
@@ -458,10 +711,10 @@ class View {
     }
 
     // Render items after delete session
-    renderDeletedSession(id) {
-        const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
-        sessionToDelete.remove();
-    }
+    // renderDeletedSession(id) {
+    //     const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
+    //     sessionToDelete.remove();
+    // }
 
     // Render items after delete round
     renderDeletedRound(id, sessionDate) {
@@ -480,13 +733,12 @@ class View {
     }
 
     // First UI app render action
-    firstUiAppRender(loadedUsers) {
-        document.addEventListener('DOMContentLoaded', () => {
-            // Date on sidebar
-            const currentDate = new Date();
-            const currentDateToLocaleDateString = currentDate.toISOString().substr(0, 10);;
-            this.dateStart.value = currentDateToLocaleDateString;
-        });
+    firstUiAppRender(loadedUsers, loadedEvents) {
+        // Date on sidebar
+        this.startDate.value = todayDateTime();
+
+        // Pagination btnPrev button disabled
+        this.btnPrev.classList.add('disabled');
 
         // Populate featured users buttons
         loadedUsers.forEach((user, index) => {
@@ -512,6 +764,30 @@ class View {
 
             this.filterSessionUser.insertAdjacentHTML('beforeend', usersSelectOption);
         });
+
+        // Populate events buttons
+        loadedEvents.forEach((event, index) => {
+            // Getting user values
+            const { eventId, eventName: {esValue} } = event;
+
+            // Adding user buttons
+            // Find-Replace elements in template
+            const findReplace = {
+                '{{eventId}}': eventId,
+                '{{eventName}}': esValue
+            };
+
+            // Replaced in template
+            const eventsSelectOption = Templates.eventSelectOptionTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
+
+            this.filterSessionEvent.insertAdjacentHTML('beforeend', eventsSelectOption);
+            this.addEditEventID.insertAdjacentHTML('beforeend', eventsSelectOption);
+
+            // Adding default value
+            if (index === 0) {
+                this.addEditEventID.value = esValue;
+            }
+        });
     }
 
     // Sidebar toggle actions
@@ -528,7 +804,7 @@ class View {
                 element.classList.toggle('btn-white');
                 element.classList.toggle('btn-outline-white');
                 for(let i = 0; i < 2; i ++) {
-                    this.btnSidebarSpans[i].classList.toggle('d-none');
+                    this.btnSidebarSpans[i].classList.toggle(dNone);
                 }
             }
 
@@ -541,7 +817,7 @@ class View {
 
     // Spinner toggle action
     toggleSpinner() {
-        this.spinner.classList.toggle('d-none');
+        this.spinner.classList.toggle(dNone);
     }
 
     // Render alert messages
@@ -558,10 +834,21 @@ class View {
         // Insert to html
         this.scheduledSessionsList.insertAdjacentHTML('beforebegin', alertDiv);
 
-        // Set time out to remove alert message
-        setTimeout(() => {
-            document.querySelector('.alert').remove();
-        }, 5000);
+        if (alertType !== 'info') {
+            // Set time out to add alert progress
+            setTimeout(() => {
+                document.querySelectorAll('.alert-time').forEach(alert => alert.classList.add('on'));
+            }, 100);
+
+            // Set time out to remove alert message
+            setTimeout(() => {
+                document.querySelector('.alert').remove();
+            }, 8100);
+        } else if (alertType === 'info') {
+            // Reset offsetLimit pagination
+            this.offsetLimit.offset = 0;
+            console.log(this.offsetLimit)
+        }
     }
 };
 
