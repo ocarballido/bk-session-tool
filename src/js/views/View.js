@@ -480,7 +480,8 @@ class View {
         this.addEditProfileID.addEventListener('input', event => {
             this.checkProfileId.classList.remove(dNone);
             this.profileIdChecked.classList.add(dNone);
-            this.addEditProfileID.classList.remove(isInvalid);
+            // this.addEditProfileID.classList.remove(isInvalid);
+            this.addEditProfileID.classList.remove('profileChecked');
         });
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
@@ -497,15 +498,16 @@ class View {
     // Render profileId checked
     renderCheckProfileIdAction(isChecked) {
         console.log(isChecked)
-        this.checkProfileId.classList.toggle(dNone, isChecked);
+        // this.checkProfileId.classList.toggle(dNone, isChecked);
         if (isChecked) {
             this.profileIdChecked.classList.remove(dNone);
             this.addEditProfileID.classList.remove(isInvalid);
             this.addEditProfileID.classList.add('profileChecked');
-            this.allRequired.classList.add(dNone);
+            this.checkProfileId.classList.add(dNone);
         } else if (isChecked === undefined) {
             this.profileIdChecked.classList.add(dNone);
             this.addEditProfileID.classList.add(isInvalid);
+            this.checkProfileId.classList.remove(dNone);
         }
     }
 
@@ -593,13 +595,10 @@ class View {
             numberOfRounds = 0;
 
             // Remove validation class from inputs
-            const isInvalid = document.getElementsByClassName(isInvalid);
-            while (isInvalid.length) {
-                isInvalid[0].classList.remove(isInvalid);
+            const isInvalidClass = document.getElementsByClassName(isInvalid);
+            while (isInvalidClass.length) {
+                isInvalidClass[0].classList.remove(isInvalid);
             }
-
-            // Hide danger alert in form
-            this.allRequired.classList.add(dNone);
 
             // Hide cheched profile button and show check profile button
             this.checkProfileId.classList.remove(dNone);
@@ -611,11 +610,6 @@ class View {
             // Reset event select value
             this.addEditEventID.value = this.addEditEventID.options[0].value;
         });
-
-        // Form validation
-        const formValidation = (obj) => {
-            return !Object.values(obj).every( input => input !== '' )
-        };
         
         // Submmiting data
         this.buttonAddNew.addEventListener('click', (event) => {
@@ -662,28 +656,25 @@ class View {
             };
 
             // Form validation
-            if (formValidation(updatedGlobalData)) {
-                // Show danger alert
-                this.allRequired.innerHTML = 'Todos los campos son obligatorios';
-                this.allRequired.classList.remove(dNone);
-
-                // Add validation class to inputs
-                const formFields = this.editAddForm.querySelectorAll('input');
-                formFields.forEach(field => {
-                    if (field.value === '') {
-                        field.classList.add(isInvalid);
-                    } else {
-                        field.classList.remove(isInvalid);
-                    }
-                });
-                
-            } else if (this.addEditSessionID.value !== '' && !this.addEditProfileID.classList.contains('profileChecked')) {
-                this.addEditProfileID.classList.add(isInvalid);
-                this.addEditSessionID.classList.remove(isInvalid);
-                // this.addEditEventID.classList.remove(isInvalid);
-                this.allRequired.innerHTML = 'El ID de perfil no ha sido comprobado';
-                this.allRequired.classList.remove(dNone);
+            // Check sessionId value
+            if (this.addEditSessionID.value === '') {
+                this.addEditSessionID.classList.add(isInvalid);
             } else {
+                this.addEditSessionID.classList.remove(isInvalid);
+            }
+            this.addEditSessionID.addEventListener('input', event => {
+                this.addEditSessionID.classList.remove(isInvalid);
+            });
+
+            // Check profileId value
+            if (!this.addEditProfileID.classList.contains('profileChecked')) {
+                this.addEditProfileID.classList.add(isInvalid);
+            } else {
+                this.addEditProfileID.classList.remove(isInvalid);
+            }
+
+            // Submit
+            if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked')) {
                 handler(updatedGlobalData, filterObject);
 
                 // Hide modal
