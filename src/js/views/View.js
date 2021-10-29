@@ -1,6 +1,7 @@
 import * as Templates from './templates';
 import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 import { filterdValues } from '../helpers/filter-object';
+import { checkDuplicates } from '../helpers/check-duplicates-dates';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
 import { dNone, isInvalid, isValid } from '../helpers/const';
@@ -515,6 +516,7 @@ class View {
     addScheduledSessionAction(handler) {
         let proUsersArr = [[]];
         let numberOfRounds = 0;
+
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
             const isBtnProUser = element.classList.contains('btn-proUser');
@@ -574,6 +576,21 @@ class View {
 
                 // Add round to DOM
                 this.rounds.appendChild(clonedRoundElement);
+
+                // Check for duplicated dates
+                //- Get all datetime inputs
+                let allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
+
+                // Check for duplicates dates when changing dates inputs
+                allDatetimeInput.forEach((input, inputIndex, arr) => {
+                    input.addEventListener('change', (event) => {
+                        checkDuplicates(arr, event.target, inputIndex);
+                    })
+                });
+                
+                // Check for duplicates dates
+                checkDuplicates(allDatetimeInput, document.querySelector(`#addSessionDateStart-${numberOfRounds}`), numberOfRounds);
+                
             } else if (isRemoveRoundButton) { // Check if element is remove round button
                 event.preventDefault();
                 const roundToRemove = element.closest('.singleRound');
@@ -672,6 +689,31 @@ class View {
             } else {
                 this.addEditProfileID.classList.remove(isInvalid);
             }
+
+            // Check duplicates dates
+            Array.prototype.getDuplicates = function () {
+                var duplicates = {};
+                for (var i = 0; i < this.length; i++) {
+                    if(duplicates.hasOwnProperty(this[i].startDate)) {
+                        duplicates[this[i].startDate].push(i);
+                    } else if (this.lastIndexOf(this[i].startDate) !== i) {
+                        duplicates[this[i].startDate] = [i];
+                    }
+                }
+            
+                return duplicates;
+            };
+            const duplicatesDatesIndex = roundsDefinition().getDuplicates();
+            console.log(Object.values(duplicatesDatesIndex));
+
+            const roundsDefinitiosOrdered = roundsDefinition();
+            roundsDefinitiosOrdered.sort(function compare(a, b) {
+                var dateA = new Date(a.startDate);
+                var dateB = new Date(b.startDate);
+                return dateA - dateB;
+            });
+
+            console.log(updatedGlobalData, roundsDefinitiosOrdered);
 
             // Submit
             if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked')) {
