@@ -516,6 +516,7 @@ class View {
     addScheduledSessionAction(handler) {
         let proUsersArr = [[]];
         let numberOfRounds = 0;
+        let allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
 
         this.editAddForm.addEventListener('click', (event) => {
             const element = event.target;
@@ -578,8 +579,8 @@ class View {
                 this.rounds.appendChild(clonedRoundElement);
 
                 // Check for duplicated dates
-                //- Get all datetime inputs
-                let allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
+                //- Update datetime inputs
+                allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
 
                 // Check for duplicates dates when changing dates inputs
                 allDatetimeInput.forEach((input, inputIndex, arr) => {
@@ -660,7 +661,11 @@ class View {
                 profileId: this.addEditProfileID.value,
                 sessionId: this.addEditSessionID.value,
                 eventId: this.addEditEventID.value,
-                roundsDefinition: roundsDefinition(),
+                roundsDefinition: roundsDefinition().sort(function compare(a, b) {
+                    var dateA = new Date(a.startDate);
+                    var dateB = new Date(b.startDate);
+                    return dateA - dateB;
+                }),
                 maxUsers: parseInt(this.addEditMaxUsers.value),
                 rules: 'COMPETITIVE',
                 isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
@@ -673,7 +678,7 @@ class View {
             };
 
             // Form validation
-            // Check sessionId value
+            //- Check sessionId value
             if (this.addEditSessionID.value === '') {
                 this.addEditSessionID.classList.add(isInvalid);
             } else {
@@ -683,40 +688,20 @@ class View {
                 this.addEditSessionID.classList.remove(isInvalid);
             });
 
-            // Check profileId value
+            //- Check profileId value
             if (!this.addEditProfileID.classList.contains('profileChecked')) {
                 this.addEditProfileID.classList.add(isInvalid);
             } else {
                 this.addEditProfileID.classList.remove(isInvalid);
             }
 
-            // Check duplicates dates
-            Array.prototype.getDuplicates = function () {
-                var duplicates = {};
-                for (var i = 0; i < this.length; i++) {
-                    if(duplicates.hasOwnProperty(this[i].startDate)) {
-                        duplicates[this[i].startDate].push(i);
-                    } else if (this.lastIndexOf(this[i].startDate) !== i) {
-                        duplicates[this[i].startDate] = [i];
-                    }
-                }
-            
-                return duplicates;
-            };
-            const duplicatesDatesIndex = roundsDefinition().getDuplicates();
-            console.log(Object.values(duplicatesDatesIndex));
+            // Check for isInvalid class on datetime inputs
+            const allInputsValid = Array.prototype.slice.call(allDatetimeInput).find(input => input.classList.contains(isInvalid));
 
-            const roundsDefinitiosOrdered = roundsDefinition();
-            roundsDefinitiosOrdered.sort(function compare(a, b) {
-                var dateA = new Date(a.startDate);
-                var dateB = new Date(b.startDate);
-                return dateA - dateB;
-            });
-
-            console.log(updatedGlobalData, roundsDefinitiosOrdered);
+            console.log(updatedGlobalData, allInputsValid);
 
             // Submit
-            if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked')) {
+            if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
                 handler(updatedGlobalData, filterObject);
 
                 // Hide modal
