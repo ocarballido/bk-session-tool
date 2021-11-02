@@ -121,6 +121,7 @@ class Controller {
     editScheduledSessionModalHandler(id, sessionDate) {
         const sessionData = this.model.editScheduledSessionFormData(id);
         this.view.renderForm(sessionData, sessionDate, 'edit');
+        console.log(sessionDate)
     }
 
     // Edit scheduled session handler
