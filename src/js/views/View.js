@@ -1,7 +1,7 @@
 import * as Templates from './templates';
-import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
+import { dateTimeFormater, todayDateTime, toDateTimeLocalInput, fromDateTimeLocalInput } from '../helpers/date-formatter';
 import { filterdValues } from '../helpers/filter-object';
-import { checkDuplicates } from '../helpers/check-duplicates-dates';
+import { checkDuplicates, getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
 import { dNone, isInvalid, isValid } from '../helpers/const';
@@ -339,6 +339,8 @@ class View {
     // Render edit form
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
+            console.log(dateTimeFormater(sessionDate).date);
+            console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
             // Form fields values
             const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
@@ -364,7 +366,8 @@ class View {
             this.profileId.disabled = true;
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
-            document.getElementById('addSessionDateStart-0').value = `${date}T${time}`;
+            // document.getElementById('addSessionDateStart-0').setAttribute('value', `${date}T${time}`);
+            document.getElementById('addSessionDateStart-0').setAttribute('value', dateTimeFormater(sessionDate).fromUTCToLocal);
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = maxUsers;
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
@@ -398,7 +401,7 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.profileId.value = '';
             this.profileId.disabled = true;
-            document.getElementById('addSessionDateStart-0').value = todayDateTime();
+            document.getElementById('addSessionDateStart-0').setAttribute('value', todayDateTime());
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;
             this.addEditUserID.disabled = true;
@@ -585,12 +588,15 @@ class View {
                 // Check for duplicates dates when changing dates inputs
                 allDatetimeInput.forEach((input, inputIndex, arr) => {
                     input.addEventListener('change', (event) => {
-                        checkDuplicates(arr, event.target, inputIndex);
+                        markDuplicated(getDuplicates(allDatetimeInput), arr);
+                        console.log(getDuplicates(arr));
                     })
                 });
                 
                 // Check for duplicates dates
-                checkDuplicates(allDatetimeInput, document.querySelector(`#addSessionDateStart-${numberOfRounds}`), numberOfRounds);
+                markDuplicated(getDuplicates(allDatetimeInput), allDatetimeInput);
+
+                console.log(getDuplicates(allDatetimeInput));
                 
             } else if (isRemoveRoundButton) { // Check if element is remove round button
                 event.preventDefault();
