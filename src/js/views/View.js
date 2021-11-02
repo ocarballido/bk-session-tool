@@ -342,7 +342,6 @@ class View {
     // Render edit form
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
-            console.log(sessionDate);
             console.log(dateTimeFormater(sessionDate).date);
             console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
             // Form fields values
