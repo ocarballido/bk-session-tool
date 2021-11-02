@@ -342,6 +342,7 @@ class View {
     // Render edit form
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
+            console.log(sessionDate);
             console.log(dateTimeFormater(sessionDate).date);
             console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
             // Form fields values
@@ -370,7 +371,7 @@ class View {
             const date = sessionDate.split('T')[0];
             const time = dateTimeFormater(sessionDate).date.toLocaleString().slice(11, -3);
             // document.getElementById('addSessionDateStart-0').setAttribute('value', `${date}T${time}`);
-            document.getElementById('addSessionDateStart-0').setAttribute('value', dateTimeFormater(sessionDate).fromUTCToLocal);
+            document.getElementById('addSessionDateStart-0').value = dateTimeFormater(sessionDate).fromUTCToLocal;
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditMaxUsers.value = maxUsers;
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
@@ -404,7 +405,7 @@ class View {
             this.editAddModalTitle.innerHTML = "Añadir nueva sesión programada";
             this.profileId.value = '';
             this.profileId.disabled = true;
-            document.getElementById('addSessionDateStart-0').setAttribute('value', todayDateTime());
+            document.getElementById('addSessionDateStart-0').value = dateTimeFormater(todayDateTime()).fromUTCToLocal;
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;
             this.addEditUserID.disabled = true;

@@ -9,7 +9,7 @@ export const dateTimeFormater = (APIDate) => {
     const formattedTime = new Intl.DateTimeFormat(webLanguage, timeOptions).format(date);
     const formattedDateTime = formattedTime;
     const dateToString = date.toString();
-    const fromUTCToLocal = `${date.getFullYear()}-${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}T${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`;
+    const fromUTCToLocal = `${date.getFullYear()}-${date.getMonth() <= 8 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}T${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`;
     return {
         date,
         formattedDate,
