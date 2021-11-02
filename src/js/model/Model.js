@@ -166,27 +166,6 @@ class Model {
     addScheduledSession(data) {
         return apiServices.addScheduledSession(data);
     }
-    // addScheduledSession(data) {
-    //     return new Promise((resolve, reject) => {
-    //         apiServices.addScheduledSession(data)
-    //             .then(() => {
-    //                 resolve();
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //                 reject(error);
-    //             });
-    //     });
-    // }
-
-    // Filtering
-    // filterScheduledSession(data) {
-    //     return apiServices.addScheduledSession(data)
-    //         .then(() => {
-    //             resolve();
-    //         })
-    //         .catch(() => reject());
-    // }
 };
 
 export { Model };
