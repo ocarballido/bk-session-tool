@@ -1,5 +1,5 @@
 .collapse-trigger {
-    background-color: #e8e8e8;
+    background-color: $white;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
     font-family: "HKGrotesk-Bold";
     &:hover {
@@ -7,11 +7,11 @@
         cursor: pointer;
     }
     &.collapsed {
-        background-color: transparent;
+        background-color: $white;
         // border-top: 1px solid #999;
         font-family: "HKGrotesk-Medium";
         &:hover {
-            background-color: #e8e8e8;
+            background-color: transparent;
             cursor: pointer;
         }
         span {

@@ -66,6 +66,9 @@ body {
             padding-bottom: .75rem;
         }
     }
+    .list-group-flush > .list-group-item {
+        border-width: 0;
+    }
 }
 
 //---------------------------------------------
