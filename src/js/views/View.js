@@ -11,6 +11,9 @@ class View {
         // Global variables
         this.userId = sessionStorage.getItem('loggedUserId') || '';
 
+        // Card container
+        this.cardContainer = document.querySelector('.card');
+
         // Header buttons
         this.headerActions = document.getElementById('headerActions');
         this.btnSidebar = document.getElementById('btnSidebar');
@@ -838,7 +841,7 @@ class View {
         const alertDiv = Templates.alertTemplate.replace(new RegExp("(" + Object.keys(findReplace).map(function(i){return i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")}).join("|") + ")", "g"), function(s){ return findReplace[s]});
 
         // Insert to html
-        this.scheduledSessionsList.insertAdjacentHTML('beforebegin', alertDiv);
+        this.cardContainer.insertAdjacentHTML('beforebegin', alertDiv);
 
         if (alertType !== 'info') {
             // Set time out to add alert progress
