@@ -1,10 +1,10 @@
 import * as Templates from './templates';
-import { dateTimeFormater, todayDateTime, toDateTimeLocalInput, fromDateTimeLocalInput } from '../helpers/date-formatter';
+import { dateTimeFormater, todayDateTime } from '../helpers/date-formatter';
 import { filterdValues } from '../helpers/filter-object';
-import { checkDuplicates, getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates';
+import { getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
-import { dNone, isInvalid, isValid } from '../helpers/const';
+import { dNone, isInvalid } from '../helpers/const';
 
 class View {
     constructor() {
@@ -59,7 +59,6 @@ class View {
         this.addEditSessionID = document.getElementById('addEditSessionID');
         this.addEditEventID = document.getElementById('addEditEventID');
         this.editSessionDateStart = document.getElementById('editSessionDateStart');
-        // this.addEditProUsers = document.getElementById('addEditProUsers');
         this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
         this.addEditrealWeather = document.getElementById('addEditrealWeather');
         this.addEditWarmUpTime = document.getElementById('addEditWarmUpTime');
@@ -598,8 +597,6 @@ class View {
                 
                 // Check for duplicates dates
                 markDuplicated(getDuplicates(allDatetimeInput), allDatetimeInput);
-
-                console.log(getDuplicates(allDatetimeInput));
                 
             } else if (isRemoveRoundButton) { // Check if element is remove round button
                 event.preventDefault();
@@ -607,6 +604,11 @@ class View {
                 roundToRemove.remove();
                 proUsersArr.splice(numberOfRounds, 1);
                 numberOfRounds --;
+
+                // Check for duplicates dates
+                allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
+                console.log(allDatetimeInput)
+                markDuplicated(getDuplicates(allDatetimeInput), allDatetimeInput);
             }
         });
 
@@ -718,12 +720,6 @@ class View {
             }
         });
     }
-
-    // Render items after delete session
-    // renderDeletedSession(id) {
-    //     const sessionToDelete = document.querySelector(`.list-group-item[data-id="${id}"]`);
-    //     sessionToDelete.remove();
-    // }
 
     // Render items after delete round
     renderDeletedRound(id, sessionDate) {

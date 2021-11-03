@@ -6,12 +6,6 @@ class Controller {
         this.model = model;
         this.view = view;
 
-        // First test
-        // this.view.testView(this.testViewHandler.bind(this));
-
-        // Binding view first UI render action
-        // this.view.firstUiAppRender();
-
         // Binding view toggle saidebar action
         this.view.bindSideBarEvents();
 
@@ -50,15 +44,6 @@ class Controller {
             })
             .finally(() => this.view.toggleSpinner());
 
-        // Load featured users
-        // this.model.loadFeaturedUsers()
-        //     .then((loadedUsers) => {
-        //         this.view.firstUiAppRender(loadedUsers);
-        //     })
-        //     .catch(() => {
-        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro. Vuelve a intentarlo mas tarde', 'danger');
-        //     });
-
         // Load featured users and events
         this.model.loadFeaturedUsersAndEvents()
             .then(([featuredUsers, events]) => {
@@ -94,27 +79,6 @@ class Controller {
                 console.log(error);
             })
             .finally(() => this.view.toggleSpinner());
-        // this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
-        //     .then(() => {
-        //         if (isSingleRound) {
-        //             // this.view.renderDeletedSession(id);
-        //             return this.model.getScheduledSessions(filterObject);
-        //         } else {
-        //             this.view.renderDeletedRound(id, sessionDate);
-        //             this.view.renderAlertMessages('La ronda de la sesión se ha eliminado con éxito', 'success');
-        //             return this.model.getScheduledSessions(filterObject);
-        //         }
-        //     })
-        //     .then((scheduledSessions) => {
-        //         console.log(scheduledSessions);
-        //         this.view.renderScheduledSessions(scheduledSessions);
-        //         this.view.renderAlertMessages('La sesión se ha eliminado con éxito', 'success');
-        //     })
-        //     .catch(() => {
-        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdassssssdelete.', 'danger');
-        //     })
-        //     .finally(() => this.view.toggleSpinner());
-        // this.model.deleteScheduledSession(id, sessionDate, isSingleRound);
     }
 
     // Send data to modal handler
