@@ -5,6 +5,8 @@ import { getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
 import { dNone, isInvalid } from '../helpers/const';
+import Keycloak from 'keycloak-js';
+import { keycloak } from '../helpers/const';
 
 class View {
     constructor() {
@@ -802,6 +804,7 @@ class View {
             const elementId = element.id;
             const isBtnSidebar = elementId === 'btnSidebar';
             const isBtnNewSession = elementId === 'btnNewSession';
+            const isBtnLogOut = elementId === 'btnLogOut';
 
             // If element is the "sidebar toggle" button
             if (isBtnSidebar) {
@@ -815,7 +818,12 @@ class View {
 
             // If element is the "Add new session" button
             if (isBtnNewSession) {
-                this.renderForm(null, null, 'add')
+                this.renderForm(null, null, 'add');
+            }
+
+            // If element is "Log out icon"
+            if (isBtnLogOut) {
+                keycloak.logout();
             }
         });
     }

@@ -30,6 +30,15 @@ class Model {
             });
     }
 
+    checkForToken() {
+        return apiServices.checkForToken()
+            .then((token) => {
+                return token;
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
     // Get users and events
     loadFeaturedUsersAndEvents() {
         return new Promise((resolve, reject) => {
