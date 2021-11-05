@@ -62,11 +62,17 @@ class Model {
                 .then((scheduledSessions) => {
                     // Filling our data model object
                     this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
-                        
                         // Creating single session object
                         const singleSession = {
                             ...singleScheduledSession
                         };
+
+                        // Get session name
+                        apiServices.loadSingleSession(singleScheduledSession.profileId)
+                            .then((session) => {
+                                singleSession.sessionNane = session.profileId;
+                            });
+                        
                         return singleSession;
                     });
                     this._sessionFilter = {
@@ -77,17 +83,37 @@ class Model {
                 })
                 .catch((error) => {
                     reject(error);
-                    // let offset = filterObject.offset - 1;
-                    // this._sessionFilter = {
-                    //     ...filterObject,
-                    //     offset: offset--
-                    // }
-                    // console.log(filterObject, this._sessionFilter, offset);
                     console.log(error);
                 });
 
         });
     }
+    // getScheduledSessions(filterObject) {
+    //     return new Promise((resolve, reject) => {
+    //         apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
+    //             .then((scheduledSessions) => {
+    //                 // Filling our data model object
+    //                 this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                        
+    //                     // Creating single session object
+    //                     const singleSession = {
+    //                         ...singleScheduledSession
+    //                     };
+    //                     return singleSession;
+    //                 });
+    //                 this._sessionFilter = {
+    //                     ...filterObject
+    //                 }
+    //                 console.log(this._sessionFilter);
+    //                 resolve(this._scheduledSessions);
+    //             })
+    //             .catch((error) => {
+    //                 reject(error);
+    //                 console.log(error);
+    //             });
+
+    //     });
+    // }
 
     deleteScheduledSession(id, sessionDate, isSingleRound) {
         // Get session item

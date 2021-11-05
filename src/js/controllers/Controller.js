@@ -34,7 +34,6 @@ class Controller {
         this.model.checkForToken()
             .then((token) => {
                 console.log(token)
-                sessionStorage.setItem('loggedUserId', token[1]);
                 return token;
             })
             .then(() => {
@@ -58,7 +57,7 @@ class Controller {
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas. Vuelve a intentarlo mas tarde', 'danger');
             })
-            .finally(() => this.view.toggleSpinner());;
+            .finally(() => this.view.toggleSpinner());
 
         // Load data action
         // this.model.getScheduledSessions()
@@ -140,8 +139,8 @@ class Controller {
 
         this.model.checkProfileId(sessionId)
             .then((session) => {
-                this.view.renderCheckProfileIdAction(sessionId);
-                console.log(session.profileId);
+                this.view.renderCheckProfileIdAction(sessionId, session.profileName);
+                console.log(session.profileName);
             }).catch((error) => {
                 this.view.renderCheckProfileIdAction(undefined);
                 console.log(error);

@@ -4,14 +4,14 @@ import { filterdValues } from '../helpers/filter-object';
 import { getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
-import { dNone, isInvalid } from '../helpers/const';
+import { dNone, isInvalid, isValid } from '../helpers/const';
 import Keycloak from 'keycloak-js';
 import { keycloak } from '../helpers/const';
 
 class View {
     constructor() {
         // Global variables
-        this.userId = sessionStorage.getItem('loggedUserId') || '';
+        this.userId = '133479-yaMeLoDan';
 
         // Card container
         this.cardContainer = document.querySelector('.card');
@@ -72,6 +72,7 @@ class View {
         this.rounds = document.getElementById('rounds');
         this.checkProfileId = document.getElementById('checkProfileId');
         this.profileIdChecked = document.getElementById('profileIdChecked');
+        this.sessionProfileName = document.getElementById('sessionProfileName');
 
         // Pagination
         this.sessionsPagination = document.getElementById('sessionsPagination');
@@ -91,10 +92,15 @@ class View {
         // Clear ul 
         this.scheduledSessionsList.innerHTML = '';
 
+        console.log(scheduledSessions);
+        console.log(scheduledSessions[0]);
+        console.log(scheduledSessions[0].sessionName);
+
         // Populate ul
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = session;
+            console.log(sessionName);
 
             const sessionRows = roundsDefinition.map((round, index) => {
                 // Adding sessions table row
@@ -117,7 +123,7 @@ class View {
             // Find-Replace elements in template
             const findReplace = {
                 '{{id}}': id,
-                '{{sessionName}}': sessionName,
+                '{{sessionName}}': sessionName ? ` : ${sessionName}` : '',
                 '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
                 '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
                 '{{sessionTableRow}}': `${ sessionRows.join('') }`,
@@ -346,7 +352,7 @@ class View {
             console.log(dateTimeFormater(sessionDate).date);
             console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
             // Form fields values
-            const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id } = sessionData;
+            const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id, eventId } = sessionData;
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
 
             // Hiding some form fields
@@ -354,7 +360,7 @@ class View {
             this.addEditUserID.disabled = false;
             this.addEditProfileID.closest('.form-group').classList.add(dNone);
             this.addEditSessionID.closest('.form-group').classList.add(dNone);
-            this.addEditEventID.closest('.form-group').classList.add(dNone);
+            // this.addEditEventID.closest('.form-group').classList.add(dNone);
             this.buttonAddNew.classList.add(dNone);
             this.addRound.classList.add(dNone);
 
@@ -377,6 +383,7 @@ class View {
             this.addEditrealWeather.value = isRealWeather ? 'yes' : 'no';
             this.addEditWarmUpTime.value = warmupSeconds;
             this.addEditMainPartMinSecconds.value = mainPartMinSeconds;
+            this.addEditEventID.value = eventId;
             const featuredUsersCollection = document.querySelector('.singleRound .addEditProUsers .users');
 
             // Styling featured users toggle buttons
@@ -472,6 +479,7 @@ class View {
             const updatedGlobalData = {
                 maxUsers: parseInt(this.addEditMaxUsers.value),
                 isRealWeather: this.addEditrealWeather.value === 'yes' ? true : false,
+                eventId: this.addEditEventID.value,
                 warmupSeconds: parseInt(this.addEditWarmUpTime.value),
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             }
@@ -488,7 +496,7 @@ class View {
         this.addEditProfileID.addEventListener('input', event => {
             this.checkProfileId.classList.remove(dNone);
             this.profileIdChecked.classList.add(dNone);
-            // this.addEditProfileID.classList.remove(isInvalid);
+            this.addEditProfileID.classList.remove(isValid);
             this.addEditProfileID.classList.remove('profileChecked');
         });
         this.editAddForm.addEventListener('click', (event) => {
@@ -504,12 +512,14 @@ class View {
     }
 
     // Render profileId checked
-    renderCheckProfileIdAction(isChecked) {
+    renderCheckProfileIdAction(isChecked, profileName) {
         console.log(isChecked)
         // this.checkProfileId.classList.toggle(dNone, isChecked);
         if (isChecked) {
             this.profileIdChecked.classList.remove(dNone);
             this.addEditProfileID.classList.remove(isInvalid);
+            this.addEditProfileID.classList.add(isValid);
+            this.sessionProfileName.innerHTML = profileName;
             this.addEditProfileID.classList.add('profileChecked');
             this.checkProfileId.classList.add(dNone);
         } else if (isChecked === undefined) {
@@ -626,9 +636,13 @@ class View {
             numberOfRounds = 0;
 
             // Remove validation class from inputs
+            const isValidClass = document.getElementsByClassName(isValid);
             const isInvalidClass = document.getElementsByClassName(isInvalid);
             while (isInvalidClass.length) {
                 isInvalidClass[0].classList.remove(isInvalid);
+            }
+            while (isValidClass.length) {
+                isValidClass[0].classList.remove(isValid);
             }
 
             // Hide cheched profile button and show check profile button

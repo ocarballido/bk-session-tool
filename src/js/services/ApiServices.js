@@ -24,7 +24,6 @@ const EVENTS_SERVER = `https://events-staging.bkool.com/events`;
 const USERS_SERVER = `https://users-staging.bkool.com/users`;
 // let ACCESS_TOKEN = sessionStorage.getItem('accessToken');
 let ACCESS_TOKEN = '';
-let LOGGED_USER_ID = '';
 
 const METHODS = {
     GET: 'GET',
@@ -33,12 +32,12 @@ const METHODS = {
     DELETE: 'DELETE'
 };
 
-const fetchDb = (token, endpoint, method, data) => {
+const fetchDb = (endpoint, method, data) => {
     
     const options = { method, redirect: 'follow' };
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Authorization", `Bearer ${keycloak.token}`);
     // myHeaders.append("Cookie", "JSESSIONID=9kXZFLASkjNzDXINzV2rg4DH3I7-0AD2HBpX64rk");
 
     if (data) {
@@ -98,9 +97,7 @@ class ApiServices {
             }).then(function(authenticated) {
                 if(authenticated == false) { keycloak.login() } 
                 else {
-                    resolve(Promise.all([keycloak.token, keycloak.subject]));
-                    ACCESS_TOKEN = keycloak.token;
-                    LOGGED_USER_ID = keycloak.subject;
+                    resolve(keycloak.token);
                     // sessionStorage.setItem('loggedUserId', keycloak.subject);
                     // console.log(keycloak.subject)
                     // console.log(keycloak.token.getSubject());
@@ -112,7 +109,6 @@ class ApiServices {
     // Load featured users
     loadFeaturedUsers() {
         return fetchDb(
-            ACCESS_TOKEN,
             USERS_SERVER,
             METHODS.GET
         );
@@ -121,7 +117,6 @@ class ApiServices {
     // Load events
     loadEvents() {
         return fetchDb(
-            ACCESS_TOKEN,
             EVENTS_SERVER,
             METHODS.GET
         );
@@ -130,7 +125,6 @@ class ApiServices {
     // Load scheduled sessions
     loadScheduledSessions(filterObject) {
         return fetchDb(
-            ACCESS_TOKEN,
             SCHEDULED_SESSIONS_SERVER_RPUNDS,
             // END_POINT,
             METHODS.GET,
@@ -141,7 +135,6 @@ class ApiServices {
     // Load sessions
     loadSessions() {
         return fetchDb(
-            ACCESS_TOKEN,
             SESSIONS_SERVER,
             METHODS.GET
         );
@@ -150,7 +143,6 @@ class ApiServices {
     // Load sigle session
     loadSingleSession(id) {
         return fetchDb(
-            ACCESS_TOKEN,
             `${SESSIONS_SERVER}/${id}`,
             METHODS.GET
         );
@@ -159,7 +151,6 @@ class ApiServices {
     // Delete session
     deleteScheduledSession(id) {
         return fetchDb(
-            ACCESS_TOKEN,
             `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.DELETE
         );
@@ -168,7 +159,6 @@ class ApiServices {
     // Update scheduled sessions rounds definition
     updateScheduledSession(id, data) {
         return fetchDb(
-            ACCESS_TOKEN,
             `${SCHEDULED_SESSIONS_SERVER}/${id}`,
             METHODS.PUT,
             { ...data }
@@ -178,7 +168,6 @@ class ApiServices {
     // Add new scheduled session
     addScheduledSession(data) {
         return fetchDb(
-            ACCESS_TOKEN,
             `${SCHEDULED_SESSIONS_SERVER}`,
             METHODS.POST,
             { ...data }
