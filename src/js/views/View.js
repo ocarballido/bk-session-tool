@@ -4,9 +4,7 @@ import { filterdValues } from '../helpers/filter-object';
 import { getDuplicates, markDuplicated } from '../helpers/check-duplicates-dates';
 import { paginationLimmit } from '../helpers/offsetLimit';
 import { Modal } from 'bootstrap';
-import { dNone, isInvalid, isValid } from '../helpers/const';
-import Keycloak from 'keycloak-js';
-import { keycloak } from '../helpers/const';
+import { dNone, isInvalid, isValid, keycloak } from '../helpers/const';
 
 class View {
     constructor() {
@@ -58,7 +56,7 @@ class View {
         this.profileId = document.getElementById('profileId');
         this.addEditUserID = document.getElementById('addEditUserID');
         this.addEditProfileID = document.getElementById('addEditProfileID');
-        this.addEditSessionID = document.getElementById('addEditSessionID');
+        // this.addEditSessionID = document.getElementById('addEditSessionID');
         this.addEditEventID = document.getElementById('addEditEventID');
         this.editSessionDateStart = document.getElementById('editSessionDateStart');
         this.addEditMaxUsers = document.getElementById('addEditMaxUsers');
@@ -123,7 +121,7 @@ class View {
             // Find-Replace elements in template
             const findReplace = {
                 '{{id}}': id,
-                '{{sessionName}}': sessionName ? ` : ${sessionName}` : '',
+                '{{sessionName}}': sessionName ? `: ${sessionName}` : '',
                 '{{sessionShow}}': `${index === 0 ? "show" : ""}`,
                 '{{sessionFirst}}': `${index > 0 ? "collapsed" : ""}`,
                 '{{sessionTableRow}}': `${ sessionRows.join('') }`,
@@ -359,7 +357,7 @@ class View {
             this.addEditUserID.closest('.form-group').classList.add(dNone);
             this.addEditUserID.disabled = false;
             this.addEditProfileID.closest('.form-group').classList.add(dNone);
-            this.addEditSessionID.closest('.form-group').classList.add(dNone);
+            // this.addEditSessionID.closest('.form-group').classList.add(dNone);
             // this.addEditEventID.closest('.form-group').classList.add(dNone);
             this.buttonAddNew.classList.add(dNone);
             this.addRound.classList.add(dNone);
@@ -367,6 +365,7 @@ class View {
             // Showing some form fields
             this.profileId.closest('.form-group').classList.remove(dNone);
             this.buttonUpdate.classList.remove(dNone);
+            this.addEditWarmUpTime.closest('.form-group').classList.remove(dNone);
 
             // Setting form fields value
             this.editAddForm.dataset.id = id;
@@ -398,11 +397,12 @@ class View {
             this.profileId.closest('.form-group').classList.add(dNone);
             this.buttonUpdate.classList.add(dNone);
             this.addRound.classList.remove(dNone);
+            this.addEditWarmUpTime.closest('.form-group').classList.add(dNone);
 
             // Showing some form fields
             this.addEditUserID.closest('.form-group').classList.remove(dNone);
             this.addEditProfileID.closest('.form-group').classList.remove(dNone);
-            this.addEditSessionID.closest('.form-group').classList.remove(dNone);
+            // this.addEditSessionID.closest('.form-group').classList.remove(dNone);
             this.addEditEventID.closest('.form-group').classList.remove(dNone);
             this.buttonAddNew.classList.remove(dNone);
 
@@ -415,13 +415,13 @@ class View {
             document.getElementById('addSessionDateStart-0').value = dateTimeFormater(todayDateTime()).fromUTCToLocal;
             document.getElementById('addSessionDateStart-0').setAttribute('min', todayDateTime());
             this.addEditUserID.value = this.userId;
-            this.addEditUserID.disabled = true;
+            // this.addEditUserID.disabled = true;
             this.addEditProfileID.value = '';
-            this.addEditSessionID.value = '';
+            // this.addEditSessionID.value = '';
             // this.addEditEventID.value = 'all';
-            this.addEditMaxUsers.value = 10;
+            // this.addEditMaxUsers.value = 10;
             this.addEditrealWeather.value = 'yes';
-            this.addEditWarmUpTime.value = 600;
+            // this.addEditWarmUpTime.value = 600;
             this.addEditMainPartMinSecconds.value = 300;
             
             // Styling featured users toggle buttons
@@ -653,7 +653,7 @@ class View {
             this.addEditProfileID.classList.remove('profileChecked');
 
             // Reset event select value
-            this.addEditEventID.value = this.addEditEventID.options[0].value;
+            this.addEditEventID.value = this.addEditEventID.options[0].value || '';
         });
         
         // Submmiting data
@@ -686,7 +686,7 @@ class View {
             const updatedGlobalData = {
                 userId: this.userId,
                 profileId: this.addEditProfileID.value,
-                sessionId: this.addEditSessionID.value,
+                sessionId: '', // this.addEditSessionID.value,
                 eventId: this.addEditEventID.value,
                 roundsDefinition: roundsDefinition().sort(function compare(a, b) {
                     var dateA = new Date(a.startDate);
@@ -700,20 +700,20 @@ class View {
                     maxInstances: 3,
                     maxSeconds: 300
                 },
-                warmupSeconds: parseInt(this.addEditWarmUpTime.value),
+                warmupSeconds: 600, // parseInt(this.addEditWarmUpTime.value),
                 mainPartMinSeconds: parseInt(this.addEditMainPartMinSecconds.value)
             };
 
             // Form validation
             //- Check sessionId value
-            if (this.addEditSessionID.value === '') {
-                this.addEditSessionID.classList.add(isInvalid);
-            } else {
-                this.addEditSessionID.classList.remove(isInvalid);
-            }
-            this.addEditSessionID.addEventListener('input', event => {
-                this.addEditSessionID.classList.remove(isInvalid);
-            });
+            // if (this.addEditSessionID.value === '') {
+            //     this.addEditSessionID.classList.add(isInvalid);
+            // } else {
+            //     this.addEditSessionID.classList.remove(isInvalid);
+            // }
+            // this.addEditSessionID.addEventListener('input', event => {
+            //     this.addEditSessionID.classList.remove(isInvalid);
+            // });
 
             //- Check profileId value
             if (!this.addEditProfileID.classList.contains('profileChecked')) {
@@ -728,12 +728,18 @@ class View {
             console.log(updatedGlobalData, allInputsValid);
 
             // Submit
-            if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
+            if (this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
                 handler(updatedGlobalData, filterObject);
 
                 // Hide modal
                 this.myModal.hide();
             }
+            // if (this.addEditSessionID.value !== '' && this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
+            //     handler(updatedGlobalData, filterObject);
+
+            //     // Hide modal
+            //     this.myModal.hide();
+            // }
         });
     }
 

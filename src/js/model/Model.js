@@ -30,15 +30,6 @@ class Model {
             });
     }
 
-    checkForToken() {
-        return apiServices.checkForToken()
-            .then((token) => {
-                return token;
-            }).catch((error) => {
-                console.log(error);
-            });
-    }
-
     // Get users and events
     loadFeaturedUsersAndEvents() {
         return new Promise((resolve, reject) => {
@@ -111,32 +102,6 @@ class Model {
 
         });
     }
-    // getScheduledSessions(filterObject) {
-    //     return new Promise((resolve, reject) => {
-    //         apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
-    //             .then((scheduledSessions) => {
-    //                 // Filling our data model object
-    //                 this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
-                        
-    //                     // Creating single session object
-    //                     const singleSession = {
-    //                         ...singleScheduledSession
-    //                     };
-    //                     return singleSession;
-    //                 });
-    //                 this._sessionFilter = {
-    //                     ...filterObject
-    //                 }
-    //                 console.log(this._sessionFilter);
-    //                 resolve(this._scheduledSessions);
-    //             })
-    //             .catch((error) => {
-    //                 reject(error);
-    //                 console.log(error);
-    //             });
-
-    //     });
-    // }
 
     deleteScheduledSession(id, sessionDate, isSingleRound) {
         // Get session item

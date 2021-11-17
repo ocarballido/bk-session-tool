@@ -30,58 +30,28 @@ class Controller {
         // Binding check profile id action
         this.view.checkProfileIdAction(this.checkProfileIdHandler.bind(this));
 
-        // Get token and load
-        this.model.checkForToken()
-            .then((token) => {
-                console.log(token)
-                return token;
-            })
-            .then(() => {
-                this.model.getScheduledSessions()
-                    .then((scheduledSessions) => {
-                        console.log(scheduledSessions);
-                        this.view.renderScheduledSessions(scheduledSessions);
-                        if (!scheduledSessions.length) {
-                            this.view.renderAlertMessages('No existen sesiones programadas en adelante. Filtra de nuevo', 'info');
-                        }
+        // Load data action
+        this.model.getScheduledSessions()
+            .then((scheduledSessions) => {
+                console.log(scheduledSessions);
+                // Load featured users and events
+                this.model.loadFeaturedUsersAndEvents()
+                    .then(([featuredUsers, events]) => {
+                        this.view.firstUiAppRender(featuredUsers, events);
+                    })
+                    .catch((error) => {
+                        this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');
+                        console.log(error);
                     });
-                    this.model.loadFeaturedUsersAndEvents()
-                        .then(([featuredUsers, events]) => {
-                            this.view.firstUiAppRender(featuredUsers, events);
-                        })
-                        .catch((error) => {
-                            this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');
-                            console.log(error);
-                        });
+                this.view.renderScheduledSessions(scheduledSessions);
+                if (!scheduledSessions.length) {
+                    this.view.renderAlertMessages('No existen sesiones programadas en adelante. Filtra de nuevo', 'info');
+                }
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas. Vuelve a intentarlo mas tarde', 'danger');
             })
             .finally(() => this.view.toggleSpinner());
-
-        // Load data action
-        // this.model.getScheduledSessions()
-        //     .then((scheduledSessions) => {
-        //         console.log(scheduledSessions);
-        //         this.view.renderScheduledSessions(scheduledSessions);
-        //         if (!scheduledSessions.length) {
-        //             this.view.renderAlertMessages('No existen sesiones programadas en adelante. Filtra de nuevo', 'info');
-        //         }
-        //     })
-        //     .catch(() => {
-        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas. Vuelve a intentarlo mas tarde', 'danger');
-        //     })
-        //     .finally(() => this.view.toggleSpinner());
-
-        // Load featured users and events
-        // this.model.loadFeaturedUsersAndEvents()
-        //     .then(([featuredUsers, events]) => {
-        //         this.view.firstUiAppRender(featuredUsers, events);
-        //     })
-        //     .catch((error) => {
-        //         this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de los usuarios pro o los eventos de BKOOL. Vuelve a intentarlo mas tarde', 'danger');
-        //         console.log(error);
-        //     });
     }
 
     // Delete scheduled session handler

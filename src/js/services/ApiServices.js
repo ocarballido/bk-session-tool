@@ -1,6 +1,6 @@
 import { getToken } from './KeyCloak';
 
-const SCHEDULED_SESSIONS_SERVER_RPUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
+const SCHEDULED_SESSIONS_SERVER_ROUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
 const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions`;
 const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
 const EVENTS_SERVER = `https://events-staging.bkool.com/events`;
@@ -88,18 +88,9 @@ class ApiServices {
     // Load scheduled sessions
     loadScheduledSessions(filterObject) {
         return fetchDb(
-            SCHEDULED_SESSIONS_SERVER_RPUNDS,
-            // END_POINT,
+            SCHEDULED_SESSIONS_SERVER_ROUNDS,
             METHODS.GET,
             filterObject
-        );
-    }
-
-    // Load sessions
-    loadSessions() {
-        return fetchDb(
-            SESSIONS_SERVER,
-            METHODS.GET
         );
     }
 

@@ -1,9 +1,6 @@
 // Load Bootstrap JS
 import bootstrap from 'bootstrap'
 
-// Load Keycloak JS
-import Keycloak from 'keycloak-js';
-
 // Load Styles
 import '../scss/main.scss';
 

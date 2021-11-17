@@ -17,7 +17,6 @@ export const getToken = () => new Promise((resolve, reject) => {
             .catch(() => reject());
 
     } else {
-
         keycloak.init({
             onLoad: 'login-required',
             checkLoginIframe: false
