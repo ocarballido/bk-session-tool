@@ -51,29 +51,52 @@ class Model {
         return new Promise((resolve, reject) => {
             apiServices.loadScheduledSessions(filterObject ? filterObject : this._sessionFilter)
                 .then((scheduledSessions) => {
-                    // Filling our data model object
-                    this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
-                        
-                        // Creating single session object
-                        const singleSession = {
-                            ...singleScheduledSession
-                        };
-                        return singleSession;
-                    });
-                    this._sessionFilter = {
-                        ...filterObject
+                    try {
+                        const idProfilePromises = scheduledSessions.map(singleProfileId => {
+                            return apiServices.loadSingleSession(singleProfileId.profileId)
+                                .then((session) => session.profileName);
+                        });
+                        Promise.all(idProfilePromises)
+                            .then((results) => {
+                                console.log(results);
+                                this._scheduledSessions = scheduledSessions.map((singleScheduledSession, index) => {
+                                    // Creating single session object
+                                    console.log(results[index])
+                                    const singleSession = {
+                                        ...singleScheduledSession,
+                                        sessionName: results[index]
+                                    };
+                                    return singleSession;
+                                });
+                                this._sessionFilter = {
+                                    ...filterObject
+                                }
+                                console.log(this._scheduledSessions);
+                                resolve(this._scheduledSessions);
+                            });
+                    } catch (error) {
+                        console.log(error)
+                        if (error) {
+                            // Filling our data model object
+                            this._scheduledSessions = scheduledSessions.map(singleScheduledSession => {
+                                
+                                // Creating single session object
+                                const singleSession = {
+                                    ...singleScheduledSession
+                                };
+                                return singleSession;
+                            });
+                            this._sessionFilter = {
+                                ...filterObject
+                            }
+                            console.log(this._sessionFilter);
+                            resolve(this._scheduledSessions);
+                        }
                     }
-                    console.log(this._sessionFilter);
-                    resolve(this._scheduledSessions);
+                    
                 })
                 .catch((error) => {
                     reject(error);
-                    // let offset = filterObject.offset - 1;
-                    // this._sessionFilter = {
-                    //     ...filterObject,
-                    //     offset: offset--
-                    // }
-                    // console.log(filterObject, this._sessionFilter, offset);
                     console.log(error);
                 });
 

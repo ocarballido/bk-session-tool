@@ -1,9 +1,10 @@
-const SCHEDULED_SESSIONS_SERVER_RPUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
+import { getToken } from './KeyCloak';
+
+const SCHEDULED_SESSIONS_SERVER_ROUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
 const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions`;
 const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
 const EVENTS_SERVER = `https://events-staging.bkool.com/events`;
 const USERS_SERVER = `https://users-staging.bkool.com/users`;
-const ACCESS_TOKEN = sessionStorage.getItem('accessToken');
 
 const METHODS = {
     GET: 'GET',
@@ -17,7 +18,7 @@ const fetchDb = (endpoint, method, data) => {
     const options = { method, redirect: 'follow' };
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN}`);
+    
     // myHeaders.append("Cookie", "JSESSIONID=9kXZFLASkjNzDXINzV2rg4DH3I7-0AD2HBpX64rk");
 
     if (data) {
@@ -34,29 +35,35 @@ const fetchDb = (endpoint, method, data) => {
     options.headers = myHeaders;
 
     return new Promise((resolve, reject) => {
-        fetch(endpoint, options)
-            .then(response => {
-                if (response.ok) {
-                    if (method === METHODS.GET) {
-                        if (response.status === 204) {
-                            console.log('204');
-                            resolve([]);
+        getToken()
+            .then((token) => {
+                myHeaders.append("Authorization", `Bearer ${token}`);
+                fetch(endpoint, options)
+                    .then(response => {
+                        if (response.ok) {
+                            if (method === METHODS.GET) {
+                                if (response.status === 204) {
+                                    console.log('204');
+                                    resolve([]);
+                                } else {
+                                    response
+                                        .json()
+                                        .then(json => resolve(json))
+                                        .catch(error => reject(error));
+                                }
+                            } else {
+                                response
+                                    .text()
+                                    .then(text => resolve(text));
+                            }
                         } else {
-                            response
-                                .json()
-                                .then(json => resolve(json))
-                                .catch(error => reject(error));
+                            reject('Server error');
                         }
-                    } else {
-                        response
-                            .text()
-                            .then(text => resolve(text));
-                    }
-                } else {
-                    reject('Server error');
-                }
+                    })
+                    .catch(error => reject(error));
+
             })
-            .catch(error => reject(error));
+            .catch(() => reject('Error retriving token'));
 
     });
 };
@@ -81,18 +88,9 @@ class ApiServices {
     // Load scheduled sessions
     loadScheduledSessions(filterObject) {
         return fetchDb(
-            SCHEDULED_SESSIONS_SERVER_RPUNDS,
-            // END_POINT,
+            SCHEDULED_SESSIONS_SERVER_ROUNDS,
             METHODS.GET,
             filterObject
-        );
-    }
-
-    // Load sessions
-    loadSessions() {
-        return fetchDb(
-            SESSIONS_SERVER,
-            METHODS.GET
         );
     }
 

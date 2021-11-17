@@ -59,6 +59,12 @@ body {
             pointer-events: none;
         }
     }
+    #btnLogOut {
+        span {
+            color: white;
+            pointer-events: none;
+        }
+    }
     #rounds {
         .singleRound {
             border-bottom: 1px solid $light;
