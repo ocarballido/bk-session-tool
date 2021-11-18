@@ -46,6 +46,12 @@ El archivo .env debe contener todas las variables de entorno que necesita la apl
 
 Es un esquema común usar una sintaxis en mayúsculas para las variables de entorno, como puede ver en el siguiente Los comentarios dentro de los archivos .env comienzan con un hash (#).
 
+Para acceder a las variables hacerlo de la siguiente forma:
+
+```sh
+`${process.env.VAR_NAME}`
+```
+
 ## 4. Compilar carpeta /dist
 Se creará la carpeta dist con toda la estructura de la app.
 ```sh
