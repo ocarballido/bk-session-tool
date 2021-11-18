@@ -49,7 +49,7 @@ Es un esquema común usar una sintaxis en mayúsculas para las variables de ento
 Para acceder a las variables hacerlo de la siguiente forma:
 
 ```sh
-`${process.env.SCHEDULED_SESSIONS_SERVER_ROUNDS}`
+`${process.env.VAR_NAME}`
 ```
 
 ## 4. Compilar carpeta /dist
