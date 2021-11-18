@@ -39,7 +39,14 @@ $ npm run dev
 
 El comando dev iniciará Webpack y le indicará que esté atento a los cambios en los archivos JS y SCSS, para volver a compilar los assets.
 
-## Compilar carpeta /dist
+## 3. Configuración del entorno
+El plugin dotenv-webpack se incluye en este proyecto. Este le permite almacenar toda su información confidencial en un archivo .env.
+
+El archivo .env debe contener todas las variables de entorno que necesita la aplicación, pero sin los datos reales y debe contener variables vacías o valores predeterminados que puedan ser utilizados por todos. Las variables se reemplazarán durante la compilación de activos para que solo se agreguen aquellas variables a las que se hace referencia en el código.
+
+Es un esquema común usar una sintaxis en mayúsculas para las variables de entorno, como puede ver en el siguiente Los comentarios dentro de los archivos .env comienzan con un hash (#).
+
+## 4. Compilar carpeta /dist
 Se creará la carpeta dist con toda la estructura de la app.
 ```sh
 $ npm run build
