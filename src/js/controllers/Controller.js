@@ -33,7 +33,6 @@ class Controller {
         // Load data action
         this.model.getScheduledSessions()
             .then((scheduledSessions) => {
-                console.log(scheduledSessions);
                 // Load featured users and events
                 this.model.loadFeaturedUsersAndEvents()
                     .then(([featuredUsers, events]) => {
@@ -60,8 +59,6 @@ class Controller {
         this.model.deleteScheduledSession(id, sessionDate, isSingleRound)
             .then(() => {
                 if (isSingleRound) {
-                    // this.view.renderDeletedSession(id);
-                    console.log(filterObject)
                     this.model.getScheduledSessions(filterObject)
                         .then((scheduledSessions) => {
                             this.view.renderScheduledSessions(scheduledSessions);
@@ -84,7 +81,6 @@ class Controller {
     editScheduledSessionModalHandler(id, sessionDate) {
         const sessionData = this.model.editScheduledSessionFormData(id);
         this.view.renderForm(sessionData, sessionDate, 'edit');
-        console.log(sessionDate)
     }
 
     // Edit scheduled session handler
@@ -94,7 +90,6 @@ class Controller {
             .then((data) => {
                 this.view.renderUpdatedSession(id, sessionDate, updatedRound);
                 this.view.renderAlertMessages('La sesión se ha actualizado con éxito', 'success');
-                console.log(data);
             })
             .catch(() => {
                 this.view.renderAlertMessages('Ha ocurrido un error. No se ha podido conectar con la base de datos de las sesiones programdas', 'danger');
@@ -104,17 +99,14 @@ class Controller {
 
     // Check profile Id handler
     checkProfileIdHandler(sessionId) {
-        console.log(sessionId);
         this.view.toggleSpinner();
 
         this.model.checkProfileId(sessionId)
             .then((session) => {
                 this.view.renderCheckProfileIdAction(sessionId, session.profileName);
-                console.log(session.profileName);
             }).catch((error) => {
                 this.view.renderCheckProfileIdAction(undefined);
                 console.log(error);
-                console.log(session.profileId);
             })
             .finally(() => this.view.toggleSpinner());
     }
@@ -126,7 +118,6 @@ class Controller {
         this.model.addScheduledSession(postData)
             .then(() => this.model.getScheduledSessions(filterObject))
             .then((scheduledSessions) => {
-                console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 this.view.renderAlertMessages('La sesión se ha añadido con éxito', 'success');
             })
@@ -135,16 +126,12 @@ class Controller {
                 console.log(error);
             })
             .finally(() => this.view.toggleSpinner());
-
-        console.log(postData);
     }
 
     filterScheduledSessionsHandler(filterObject) {
-        console.log(filterObject);
         this.view.toggleSpinner();
         this.model.getScheduledSessions(filterObject)
             .then((scheduledSessions) => {
-                console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 if (!scheduledSessions.length) {
                     this.view.renderAlertMessages('No existen sesiones programadas para el filtro seleccionado. Filtra de nuevo', 'info');
@@ -158,11 +145,9 @@ class Controller {
     }
 
     paginationHandler(filterObject) {
-        console.log(filterObject);
         this.view.toggleSpinner();
         this.model.getScheduledSessions(filterObject)
             .then((scheduledSessions) => {
-                console.log(scheduledSessions);
                 this.view.renderScheduledSessions(scheduledSessions);
                 if (!scheduledSessions.length) {
                     this.view.renderAlertMessages('No existen más sesiones programadas en adelante. Filtra de nuevo', 'info');

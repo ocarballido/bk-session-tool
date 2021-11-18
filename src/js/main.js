@@ -6,4 +6,4 @@ import '../scss/main.scss';
 
 import { app } from './controllers/Controller';
 
-console.log('sdsds');
+console.log('Loaded');

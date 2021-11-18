@@ -58,10 +58,8 @@ class Model {
                         });
                         Promise.all(idProfilePromises)
                             .then((results) => {
-                                console.log(results);
                                 this._scheduledSessions = scheduledSessions.map((singleScheduledSession, index) => {
                                     // Creating single session object
-                                    console.log(results[index])
                                     const singleSession = {
                                         ...singleScheduledSession,
                                         sessionName: results[index]
@@ -89,7 +87,6 @@ class Model {
                             this._sessionFilter = {
                                 ...filterObject
                             }
-                            console.log(this._sessionFilter);
                             resolve(this._scheduledSessions);
                         }
                     }
@@ -112,20 +109,15 @@ class Model {
 
         // If have just 1 session round we'll 'DELETE'
         if (isSingleRound) {
-            console.log('lo es ', isSingleRound)
             return apiServices
                 .deleteScheduledSession(id)
                 .then(() => {
                     // Update local data
                     this._scheduledSessions = [];
-                    console.log(this._scheduledSessions)
-                    // return true;
                 });
         } else { // If have more than 1 session round we'll 'PUT'
             // Filtering roundsDefinition to remove deleted round
             sessionItem.roundsDefinition = sessionItem.roundsDefinition.filter( round => round.startDate !== sessionDate );
-            console.log('no lo es ', isSingleRound)
-            console.log(sessionItem)
             return apiServices
                 .updateScheduledSession(id, sessionItem)
                 .then(() => {
@@ -164,16 +156,12 @@ class Model {
             roundsDefinition: sessionItem.roundsDefinition
         }
 
-        console.log(sessionItem, sessionItemUpdated, sessionDate, updatedGlobalData, updatedRound, edittedRoundIndex, this._scheduledSessions);
-
         return apiServices
             .updateScheduledSession(id, sessionItemUpdated)
             .then((scheduledSessions) => {
-                console.log(scheduledSessions);
                 const updatedLocalData = {...sessionItemUpdated, sessionName: sessionName}
                 const edittedSessionIndex = this._scheduledSessions.findIndex( session => session.id === id );
                 this._scheduledSessions.splice(edittedSessionIndex, 1, updatedLocalData);
-                console.log(this._scheduledSessions);
             });
     }
 

@@ -90,15 +90,10 @@ class View {
         // Clear ul 
         this.scheduledSessionsList.innerHTML = '';
 
-        console.log(scheduledSessions);
-        console.log(scheduledSessions[0]);
-        console.log(scheduledSessions[0].sessionName);
-
         // Populate ul
         scheduledSessions.forEach((session, index) => {
             // Getting session values
             const { sessionName, id, roundsDefinition, userId, profileId, sessionId, eventId, maxUsers, rules, isRealWeather, warmupSeconds, mainPartMinSeconds } = session;
-            console.log(sessionName);
 
             const sessionRows = roundsDefinition.map((round, index) => {
                 // Adding sessions table row
@@ -347,8 +342,8 @@ class View {
     // Render edit form
     renderForm(sessionData, sessionDate, type) {
         if (type === 'edit') {
-            console.log(dateTimeFormater(sessionDate).date);
-            console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
+            // console.log(dateTimeFormater(sessionDate).date);
+            // console.log(dateTimeFormater(sessionDate).fromUTCToLocal);
             // Form fields values
             const { profileId, maxUsers, isRealWeather, warmupSeconds, mainPartMinSeconds, id, eventId } = sessionData;
             let proUsers = sessionData.roundsDefinition.filter( round => round.startDate === sessionDate )[0].featuredUserIds;
@@ -513,7 +508,6 @@ class View {
 
     // Render profileId checked
     renderCheckProfileIdAction(isChecked, profileName) {
-        console.log(isChecked)
         // this.checkProfileId.classList.toggle(dNone, isChecked);
         if (isChecked) {
             this.profileIdChecked.classList.remove(dNone);
@@ -603,7 +597,6 @@ class View {
                 allDatetimeInput.forEach((input, inputIndex, arr) => {
                     input.addEventListener('change', (event) => {
                         markDuplicated(getDuplicates(allDatetimeInput), arr);
-                        console.log(getDuplicates(arr));
                     })
                 });
                 
@@ -619,7 +612,6 @@ class View {
 
                 // Check for duplicates dates
                 allDatetimeInput = document.querySelectorAll('#rounds input[type=datetime-local]');
-                console.log(allDatetimeInput)
                 markDuplicated(getDuplicates(allDatetimeInput), allDatetimeInput);
             }
         });
@@ -724,8 +716,6 @@ class View {
 
             // Check for isInvalid class on datetime inputs
             const allInputsValid = Array.prototype.slice.call(allDatetimeInput).find(input => input.classList.contains(isInvalid));
-
-            console.log(updatedGlobalData, allInputsValid);
 
             // Submit
             if (this.addEditProfileID.classList.contains('profileChecked') && allInputsValid === undefined) {
@@ -880,7 +870,6 @@ class View {
         } else if (alertType === 'info') {
             // Reset offsetLimit pagination
             this.offsetLimit.offset = 0;
-            console.log(this.offsetLimit)
         }
     }
 };

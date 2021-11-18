@@ -1,10 +1,10 @@
 import { getToken } from './KeyCloak';
 
-const SCHEDULED_SESSIONS_SERVER_ROUNDS = `https://sessions-staging.bkool.com/sessions/scheduledSessions/availableRounds`;
-const SCHEDULED_SESSIONS_SERVER = `https://sessions-staging.bkool.com/sessions/scheduledSessions`;
-const SESSIONS_SERVER = `https://api-staging.bkool.com/api/v1.0/profiles`;
-const EVENTS_SERVER = `https://events-staging.bkool.com/events`;
-const USERS_SERVER = `https://users-staging.bkool.com/users`;
+const SCHEDULED_SESSIONS_SERVER_ROUNDS = `${process.env.SCHEDULED_SESSIONS_SERVER_ROUNDS}`;
+const SCHEDULED_SESSIONS_SERVER = `${process.env.SCHEDULED_SESSIONS_SERVER}`;
+const SESSIONS_SERVER = `${process.env.SESSIONS_SERVER}`;
+const EVENTS_SERVER = `${process.env.EVENTS_SERVER}`;
+const USERS_SERVER = `${process.env.USERS_SERVER}`;
 
 const METHODS = {
     GET: 'GET',
